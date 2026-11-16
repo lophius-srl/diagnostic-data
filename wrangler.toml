@@ -9,5 +9,5 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "diagnostic-leads"
-database_id = "00000000-0000-0000-0000-000000000000" # PLACEHOLDER : identifiant renvoyé par « wrangler d1 create »
+database_id = "c22941d0-97ae-4895-94ce-62c5005db0c1" # base créée le 2026-11-16, région WEUR
 migrations_dir = "migrations"
