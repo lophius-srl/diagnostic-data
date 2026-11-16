@@ -155,13 +155,13 @@ describe('réception d’un lead (/api/lead)', () => {
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true, id: 'lead-1' });
     const row = store.rows[0]!;
-    expect(row.scoreGlobal).toBe(32);
+    expect(row.scoreGlobal).toBe(31);
     expect(row.level).toBe('structure');
-    expect(row.hiddenCost).toBe(15500);
+    expect(row.hiddenCost).toBe(9900);
     expect(row.contact.bce).toBe('0123.456.749');
     expect(row.consentVersion).toBe('2026-11-v1');
     expect(row.emailStatus).toBe('sent');
-    expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (32/100)');
+    expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (31/100)');
     expect(sent[0]?.replyTo.email).toBe('marie@exemple.be');
     expect(sent[0]?.text).toMatch(/Vous recopiez des infos d'un logiciel à l'autre \? → Oui, souvent/);
   });
@@ -215,7 +215,7 @@ describe('réception d’un lead (/api/lead)', () => {
     expect((await handleLead(post(validBody(), 'https://evil.example'), deps)).status).toBe(403);
     expect((await handleLead(post('{oops'), deps)).status).toBe(400);
     expect((await handleLead(post(validBody({ padding: 'x'.repeat(30_000) })), deps)).status).toBe(413);
-    expect((await handleLead(post(validBody({ answers: { secteur: 'commerce' } })), deps)).status).toBe(400);
+    expect((await handleLead(post(validBody({ answers: { outils: ['odoo'] } })), deps)).status).toBe(400);
   });
 
   it('ne fait pas confiance aux réponses : options inconnues écartées', async () => {
@@ -235,7 +235,7 @@ describe('notification et adaptateurs', () => {
 
   it('les réponses en clair suivent le parcours visible', () => {
     const qa = readableAnswers(content, profile('ecommerce-6.yaml').answers);
-    expect(qa[2]).toEqual({
+    expect(qa[0]).toEqual({
       question: 'Où sont vos chiffres ? Cochez tout ce que vous utilisez.',
       answer: 'Yuki, Shopify, Chez notre fiduciaire',
     });

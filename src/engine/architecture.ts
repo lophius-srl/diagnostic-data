@@ -114,7 +114,7 @@ export function buildArchitecture(content: Content, rawAnswers: Answers): { toda
     : (todaySources.find((n) => content.tools.find((t) => t.id === n.toolId)?.category === 'compta') ?? todaySources[0])
         ?.id;
   if (feeder) {
-    const style = holds(cfg.today.externalAutoWhen) ? 'auto' : 'manual';
+    const style = cfg.today.externalAutoWhen && holds(cfg.today.externalAutoWhen) ? 'auto' : 'manual';
     externalNodes.forEach((n) => todayEdges.push({ from: feeder, to: n.id, style }));
   }
   todayRows.push({ nodes: [people, ...externalNodes] });

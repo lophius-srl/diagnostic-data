@@ -13,7 +13,6 @@ export function ArchitectureSection({ answers, locked }: { answers: Answers; loc
   return (
     <section aria-labelledby="arch-title">
       <h2 id="arch-title">{t('results_architecture')}</h2>
-      <p class="muted">{t('results_architecture_intro')}</p>
       <div class="arch-grid">
         <Diagram diagram={today} />
         {locked ? (

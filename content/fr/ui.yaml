@@ -1,59 +1,54 @@
-# Textes d'interface (préparés pour une future version anglaise : content/en/ui.yaml).
+# Textes d'interface (préparés pour une future version anglaise : content/en/ui.yaml). Courts, directs.
 brand: Lophius
-nav_contact: Contact
-start_duration: 'Environ {minutes} minutes · 12 à 15 questions · aucune inscription pour voir votre score'
+# Barre de navigation et pied de page : identiques à lophius.be (textes du site, en anglais).
+nav_about: about me
+nav_work: my work
+nav_contact: Contact Me
+nav_menu: Menu
 start_button: Commencer le diagnostic
 resume_button: Reprendre où j'en étais
 restart_button: Recommencer
-question_counter: 'Question {current} sur {total} environ'
+question_counter: 'Question {current} sur {total}'
 back_button: Précédent
 next_button: Suivant
 multi_hint: Plusieurs réponses possibles
 feedback_label: Le regard de l'expert
 continue_button: Continuer
-storage_unavailable: Votre navigateur ne permet pas de sauvegarder la progression. Gardez cet onglet ouvert jusqu'à la fin.
+storage_unavailable: Progression non sauvegardée par votre navigateur. Gardez cet onglet ouvert.
+# ---------- Résultats ----------
 results_eyebrow: Votre diagnostic data
-results_title_light: Votre entreprise est au niveau
+results_title_light: Votre niveau
 results_score: Score global
 results_score_unit: sur 100
 results_levels_scale: Les 5 niveaux
 results_capped: 'Votre score vous placerait au niveau « {level} ».'
 results_dimensions: Vos 7 axes
-results_dimensions_intro: Plus la forme est grande, plus vos chiffres travaillent pour vous.
 results_radar_label: 'Radar des 7 axes : {values}'
 results_not_evaluated: non évalué
-results_strengths: Ce qui fonctionne déjà
-results_weaknesses: Vos points d'attention
-results_hidden_cost: Ce que vous coûte le reporting manuel
+results_reading: Votre lecture, axe par axe
+results_hidden_cost: Votre coût caché
 results_hidden_cost_unit: par an
-results_hidden_cost_detail: "{hoursWeek} h par semaine × {weeks} semaines × {rate} € de l'heure, soit {hours} h par an."
-results_hidden_cost_note: Une estimation à partir de vos réponses. Adaptez le coût horaire à votre réalité, charges comprises.
-results_hourly_rate: Coût horaire (€)
-results_architecture: Comment circulent vos chiffres
-results_architecture_intro: D'abord ce que vos réponses décrivent aujourd'hui, puis l'organisation que nous recommandons, avec vos outils actuels.
-results_quick_wins: Vos 3 quick wins
-results_quick_wins_intro: Les actions qui rapportent le plus, le plus vite, avec vos outils actuels.
+results_hidden_cost_detail: "{hours} h par an passées à préparer des chiffres, à {rate} € de l'heure."
+results_hourly_rate: Votre coût horaire (€)
+results_hidden_cost_meaning: Du temps qui pourrait servir à vendre, à suivre vos clients ou à décider.
+results_architecture: Vos chiffres, aujourd'hui et demain
+results_quick_wins: 3 actions pour commencer
 results_effort: Effort
 results_impact: Impact
 level_faible: faible
 level_moyen: moyen
 level_eleve: élevé
 results_roadmap: Votre feuille de route
-results_roadmap_intro: Trois étapes réalistes, dans l'ordre où elles rapportent.
-results_offers: La suite logique
-results_offers_intro: Si vous souhaitez être accompagné, voici ce qui correspond à votre situation.
-results_offer_duration: Durée
-results_offer_price: Prix
+results_offers: Pour aller plus vite
 results_offer_cta: En parler
 results_restart: Refaire le diagnostic
-summary_strength: 'Votre point fort : {dimension}.'
-summary_weakness: "C'est sur {dimension} que vous gagnerez le plus, et le plus vite."
+summary_strength: 'Point fort : {dimension}.'
+summary_weakness: 'Le plus gros gain : {dimension}.'
 # ---------- Rapport complet et capture de leads ----------
-gate_title: Recevez votre rapport complet
-gate_intro: Le détail de vos quick wins, l'architecture cible recommandée, votre feuille de route sur 90 jours et le rapport PDF à transmettre en interne.
-gate_locked_qw: Le détail de chaque action est dans votre rapport complet.
-gate_locked_target: La cible recommandée pour votre entreprise est dans votre rapport complet.
-gate_locked_cta: Débloquer le rapport complet
+gate_title: Débloquez votre rapport complet
+gate_intro: Le détail des actions, l'architecture cible, la feuille de route et le PDF.
+gate_locked_target: Débloquez la cible recommandée pour votre entreprise.
+gate_locked_cta: Débloquer le rapport
 lead_first_name: Prénom
 lead_last_name: Nom
 lead_email: E-mail professionnel
@@ -62,42 +57,45 @@ lead_bce: N° d'entreprise (BCE)
 lead_phone: Téléphone
 lead_optional: facultatif
 lead_bce_hint: 'Ex. 0123.456.749'
-lead_consent: J'accepte que Lophius SRL utilise ces informations et mes réponses pour m'envoyer ce rapport et me recontacter à propos de ce diagnostic. Aucune autre utilisation, aucune revente.
-lead_privacy_link: Politique de confidentialité
-lead_submit: Recevoir mon rapport complet
-lead_sending: Envoi en cours…
-lead_error_required: Ce champ est obligatoire.
-lead_error_email: Cette adresse e-mail ne semble pas valide.
-lead_error_bce: 'Ce numéro BCE ne semble pas valide (10 chiffres, ex. 0123.456.749).'
-lead_error_phone: Ce numéro de téléphone ne semble pas valide.
-lead_error_consent: Votre accord est nécessaire pour recevoir le rapport.
-lead_error_network: L'envoi n'a pas abouti. Vérifiez votre connexion et réessayez.
-lead_error_rate: Plusieurs demandes ont déjà été envoyées avec cette adresse. Réessayez dans une heure.
+lead_consent: J'accepte que Lophius SRL utilise ces informations et mes réponses pour m'envoyer ce rapport et me recontacter à ce sujet. Rien d'autre, aucune revente.
+lead_privacy_link: Confidentialité
+lead_submit: Recevoir mon rapport
+lead_sending: Envoi…
+lead_error_required: Obligatoire.
+lead_error_email: Adresse e-mail non valide.
+lead_error_bce: 'Numéro BCE non valide (ex. 0123.456.749).'
+lead_error_phone: Numéro de téléphone non valide.
+lead_error_consent: Votre accord est nécessaire.
+lead_error_network: L'envoi n'a pas abouti. Réessayez.
+lead_error_rate: Trop de demandes avec cette adresse. Réessayez dans une heure.
 lead_error_summary: Quelques champs sont à corriger.
-lead_thanks_title: 'Merci {firstName}, votre rapport complet est débloqué.'
-lead_thanks_text: Je reviens vers vous personnellement. Si vous voulez en parler tout de suite, choisissez un créneau.
-lead_booking: Réserver 30 minutes pour en parler
+lead_thanks_title: 'Merci {firstName}, votre rapport est débloqué.'
+lead_thanks_text: Je reviens vers vous personnellement. Envie d'en parler tout de suite ?
+lead_booking: Réserver 30 minutes
 # ---------- Partage ----------
-share_title: Partager ce diagnostic
-share_text: Envoyez ce résultat à votre associé ou à votre comptable. Le lien contient vos réponses, rien n'est stocké chez nous.
-share_button: Partager le lien
+share_button: Partager ce résultat
+share_text: Le lien contient vos réponses ; rien n'est stocké chez nous.
 share_copied: Lien copié.
 share_copy_label: Lien de partage
 share_native_title: Notre diagnostic data
-shared_banner: Ce diagnostic vous a été transmis. Il reflète les réponses de la personne qui l'a rempli.
-shared_old_version: Les questions ont évolué depuis la création de ce lien. Le résultat peut légèrement différer.
+shared_banner: Diagnostic transmis par un tiers, avec ses propres réponses.
+shared_old_version: Les questions ont évolué depuis ce lien ; le résultat peut différer légèrement.
 shared_invalid: Ce lien de partage est incomplet ou abîmé.
 shared_own_cta: Faire mon propre diagnostic
 # ---------- Rapport PDF ----------
 pdf_download: Télécharger le rapport PDF
-pdf_working: Préparation du rapport…
-pdf_error: Le rapport n'a pas pu être généré. Réessayez, ou contactez-nous.
-pdf_title: Votre rapport à transmettre
-pdf_text: Une synthèse en une page, le détail de vos 7 axes, vos schémas, votre feuille de route et les prochaines étapes. À faire circuler en interne.
-# ---------- Pied de page et navigation ----------
+pdf_working: Préparation…
+pdf_error: Le rapport n'a pas pu être généré. Réessayez.
+# ---------- Pied de page (copie de lophius.be) ----------
 skip_link: Aller au contenu
-footer_tagline: Your software, driven by data.
-footer_site: lophius.be
+footer_name: Antoine Stas
+footer_tagline: Freelance Lead Developer specializing in building high-performance, data-driven digital solutions.
+footer_linkedin: LinkedIn
+footer_email: E-mail
+footer_links: Quick Links
+footer_home: Home
+footer_about: About me
+footer_work: My work
 footer_contact: Contact
-footer_privacy: Politique de confidentialité
-footer_legal: '© {year} Lophius SRL'
+footer_privacy: Confidentialité
+footer_legal: '© {year} Antoine Stas'

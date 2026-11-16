@@ -1,17 +1,12 @@
 # E-commerce de 6 personnes, sur Shopify + Yuki, avec une fiduciaire.
 name: E-commerce, 6 personnes, Shopify + Yuki
 answers:
-  secteur: en_ligne
-  taille: t5_19
   outils: [shopify, yuki, fiduciaire]
   recopie: souvent
-  fiduciaire: direct
-  ventes_en_ligne: main
   ventes_mois: minutes
   frequence: semaine
   justesse: pas_toujours
-  memes_chiffres: pas_toujours
-  heures_excel: h2_5
+  temps_tableaux: journee
   autonomie: demander
   ordinateur: sauvegarde
   microsoft: eviter

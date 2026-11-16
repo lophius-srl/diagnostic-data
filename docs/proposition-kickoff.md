@@ -1,5 +1,7 @@
 # Proposition de démarrage — Diagnostic Data PME
 
+> **Mise à jour du 2026-11-16 (après mise en ligne)** : le questionnaire passe à 10 questions (9 ou 10 vues par PME), à la demande d'Antoine ; voir `content/fr/questions.yaml`. La liste (d) ci-dessous décrit la version initiale.
+>
 > Statut : **validé le 2026-11-16** (Cloudflare Pages + sous-domaine, valeurs par défaut ci-dessous).
 > Écarts depuis la proposition : schéma Zod dans `src/content/schema.ts` ; plafonds de niveau (`blockedBy`) ;
 > Montserrat auto-hébergée (`@fontsource`) plutôt que Google Fonts, pour le RGPD.

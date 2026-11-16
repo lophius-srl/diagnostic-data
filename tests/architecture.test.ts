@@ -47,10 +47,10 @@ describe('modèle des schémas', () => {
     expect(nodesOf(today).find((n) => n.id === 'excel')?.notes).toContain('tenus par une seule personne');
   });
 
-  it('e-commerce : signale l’export manuel et les outils qui ne se parlent pas', () => {
+  it('e-commerce : signale les outils qui ne se parlent pas et montre la fiduciaire', () => {
     const { today } = buildArchitecture(content, profile('ecommerce-6.yaml').answers);
-    expect(nodesOf(today).find((n) => n.toolId === 'shopify')?.detail).toBe('ventes exportées à la main');
     expect(today.rows[0]?.caption).toBe('Des outils qui ne se parlent pas');
+    expect(nodesOf(today).find((n) => n.toolId === 'fiduciaire')?.detail).toBe('partenaire externe');
   });
 
   it('chaque lien relie deux nœuds existants', () => {

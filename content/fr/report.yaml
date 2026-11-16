@@ -21,8 +21,8 @@ texts:
   scoreUnit: '/100'
   costLabel: Coût caché estimé
   costUnit: par an
-  costDetail: "{hoursWeek} h par semaine × {weeks} semaines × {rate} € de l'heure, soit {hours} h par an."
-  costNote: Estimation à partir de vos réponses, à affiner avec votre coût horaire réel (charges comprises). Ce temps n'est pas perdu, mais il pourrait servir à autre chose qu'au copier-coller.
+  costDetail: "{hoursMonth} h par mois × {months} mois × {rate} € de l'heure, soit {hours} h par an."
+  costNote: Estimation à partir de vos réponses, à affiner avec votre coût horaire réel, charges comprises.
   quickWinsLabel: Vos 3 premières actions
   nextStepShort: 'Prochaine étape : 30 minutes pour en parler, sans engagement.'
   dimensionsIntro: "Chaque axe est noté sur 100 à partir de vos réponses. Le terme entre parenthèses est celui qu'utilisent les spécialistes."

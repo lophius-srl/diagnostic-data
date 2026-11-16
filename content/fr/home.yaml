@@ -1,50 +1,18 @@
-# Page d'accueil. Bio reprise de lophius.be (à relire). Aucune statistique, aucun logo client.
+# Page d'accueil : courte, centrée, dans le style de lophius.be. Aucune statistique, aucun logo client.
 hero:
-  eyebrow: Diagnostic data gratuit pour les PME
-  titleLight: En 5 minutes, découvrez
-  titleStrong: ce que vos données vous coûtent
-  titleEnd: ", et ce qu'elles pourraient vous rapporter."
-  lead: Des questions simples, sans jargon. Un résultat concret, avec vos propres logiciels.
+  eyebrow: Diagnostic data gratuit pour PME
+  titleLight: Ce que vos données
+  titleStrong: vous coûtent
+  lead: Et ce qu'elles pourraient vous rapporter.
+  meta: '10 questions · {minutes} minutes · résultat immédiat'
+  reassurance: Sans inscription. Vos réponses restent dans votre navigateur.
 
 benefits:
-  title: Ce que vous allez recevoir
-  items:
-    - title: Votre niveau sur 7 axes
-      text: Fiabilité, pilotage, automatisation, sécurité… Un score clair, et ce qu'il veut dire pour vous.
-    - title: Le coût caché, chiffré
-      text: Ce que le reporting fait à la main coûte chaque année à votre entreprise.
-    - title: Le schéma de vos outils
-      text: Comment vos chiffres circulent aujourd'hui, et l'organisation que nous recommandons.
-    - title: Un plan d'action
-      text: 3 actions rapides, une feuille de route sur 90 jours et un rapport PDF à faire circuler.
+  - { title: Votre score, text: sur 7 axes clés }
+  - { title: Votre coût caché, text: chiffré en euros par an }
+  - { title: Votre plan d'action, text: avec vos propres logiciels }
 
-steps:
-  title: Comment ça marche
-  items:
-    - title: Répondez
-      text: 12 à 15 questions de tous les jours. Vous pouvez fermer l'onglet et reprendre plus tard.
-    - title: Découvrez votre résultat
-      text: Score, radar et coût caché s'affichent tout de suite, sans inscription.
-    - title: Recevez le rapport complet
-      text: Le détail des recommandations et le rapport PDF, contre vos coordonnées.
-
-about:
-  title: Qui est derrière ce diagnostic ?
-  name: Antoine Stas
-  role: Architecte et lead developer freelance, Lophius SRL (Liège)
-  photo: brand/portrait-placeholder.svg # PLACEHOLDER : remplacer par une photo (JPG/WebP carré, 400 px)
-  photoAlt: Portrait d'Antoine Stas
-  bio:
-    - 13 ans dans l'écosystème tech liégeois, avec une double expertise en développement logiciel et en data.
-    - Modélisation, entrepôts de données, automatisation du reporting et tableaux de bord pour des organisations comme TotalEnergies, Ores, le Parlement européen ou Gaming1.
-    - "Aujourd'hui, j'aide les PME de la région à tirer le meilleur de leurs chiffres, avec des missions courtes et au forfait."
-  link: En savoir plus sur Lophius
-
-reassurance:
-  title: Vos données restent chez vous
-  text: Vos réponses restent dans votre navigateur tant que vous ne demandez pas le rapport complet. Aucun cookie de suivi, aucune revente.
-
-# Témoignages : section masquée tant que settings.features.testimonials = false OU que la liste est vide.
+# Témoignages : masqués tant que settings.features.testimonials = false OU que la liste est vide.
 # N'y mettre QUE de vrais témoignages, avec l'accord écrit de la personne.
 testimonials:
   title: Ils ont fait le diagnostic

@@ -6,61 +6,42 @@ interface Props {
   onResume: () => void;
 }
 
+/** Accueil court et centré, sur le modèle de lophius.be : promesse, bouton, trois bénéfices. */
 export function Home({ canResume, onStart, onResume }: Props) {
-  const { hero, benefits, steps, about, reassurance, testimonials } = content.home;
+  const { hero, benefits, testimonials } = content.home;
   const showTestimonials = content.settings.features.testimonials && testimonials.items.length > 0;
-  const start = (
-    <div class="actions">
-      {canResume && (
-        <button type="button" class="btn btn-primary" onClick={onResume}>
-          {t('resume_button')}
-        </button>
-      )}
-      <button type="button" class={canResume ? 'btn btn-secondary' : 'btn btn-primary'} onClick={onStart}>
-        {canResume ? t('restart_button') : t('start_button')}
-      </button>
-    </div>
-  );
 
   return (
     <div class="home">
       <section class="home-hero" aria-labelledby="home-title">
         <p class="eyebrow">{hero.eyebrow}</p>
-        <h1 id="home-title" class="hero-title home-title" tabIndex={-1}>
-          {hero.titleLight} <strong>{hero.titleStrong}</strong>
-          {hero.titleEnd}
+        <h1 id="home-title" class="home-title" tabIndex={-1}>
+          {hero.titleLight}
+          <strong>{hero.titleStrong}</strong>
         </h1>
         <p class="lead">{hero.lead}</p>
-        <p class="muted">{t('start_duration', { minutes: content.settings.estimatedMinutes })}</p>
-        {start}
+        <div class="actions actions-center">
+          {canResume && (
+            <button type="button" class="btn btn-primary" onClick={onResume}>
+              {t('resume_button')}
+            </button>
+          )}
+          <button type="button" class={canResume ? 'btn btn-secondary' : 'btn btn-primary btn-large'} onClick={onStart}>
+            {canResume ? t('restart_button') : t('start_button')}
+          </button>
+        </div>
+        <p class="muted small">{fill(hero.meta, { minutes: content.settings.estimatedMinutes })}</p>
+        <p class="muted small">{hero.reassurance}</p>
       </section>
 
-      <section aria-labelledby="benefits-title">
-        <h2 id="benefits-title">{benefits.title}</h2>
-        <ul class="benefits">
-          {benefits.items.map((b, i) => (
-            <li key={b.title} class="card benefit">
-              <span class="benefit-index" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <h3>{b.title}</h3>
-              <p>{b.text}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section aria-labelledby="steps-title">
-        <h2 id="steps-title">{steps.title}</h2>
-        <ol class="steps">
-          {steps.items.map((s) => (
-            <li key={s.title}>
-              <h3>{s.title}</h3>
-              <p class="muted">{s.text}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <ul class="benefits" aria-label={hero.eyebrow}>
+        {benefits.map((b) => (
+          <li key={b.title}>
+            <strong>{b.title}</strong>
+            <span class="muted">{b.text}</span>
+          </li>
+        ))}
+      </ul>
 
       {showTestimonials && (
         <section aria-labelledby="testimonials-title">
@@ -78,35 +59,9 @@ export function Home({ canResume, onStart, onResume }: Props) {
           </div>
         </section>
       )}
-
-      <section class="card about" aria-labelledby="about-title">
-        <img
-          class="about-photo"
-          src={`${import.meta.env.BASE_URL}${about.photo}`}
-          alt={about.photoAlt}
-          width="120"
-          height="120"
-          loading="lazy"
-        />
-        <div>
-          <h2 id="about-title">{about.title}</h2>
-          <p class="about-name">
-            <strong>{about.name}</strong>
-            <br />
-            <span class="muted">{about.role}</span>
-          </p>
-          {about.bio.map((line) => (
-            <p key={line}>{line}</p>
-          ))}
-          <a href={content.settings.links.site}>{about.link}</a>
-        </div>
-      </section>
-
-      <section class="reassurance" aria-labelledby="reassurance-title">
-        <h2 id="reassurance-title">{reassurance.title}</h2>
-        <p class="muted">{reassurance.text}</p>
-        {start}
-      </section>
     </div>
   );
 }
+
+const fill = (text: string, vars: Record<string, string | number>) =>
+  text.replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k] ?? ''));

@@ -1,17 +1,12 @@
 # PME de négoce de 12 personnes, sur Excel + WinBooks, comptabilité chez une fiduciaire.
 name: Négoce, 12 personnes, Excel + WinBooks
 answers:
-  secteur: commerce
-  taille: t5_19
   outils: [excel, winbooks, fiduciaire]
   recopie: souvent
-  fiduciaire: email
-  rentabilite: a_peu_pres
   ventes_mois: heures
   frequence: mois
   justesse: pas_toujours
-  memes_chiffres: pas_toujours
-  heures_excel: h5_10
+  temps_tableaux: jours
   personne_excel: perdus
   ordinateur: quelques_uns
   microsoft: oui

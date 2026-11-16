@@ -23,23 +23,19 @@ export function ShareBox({ answers, unlocked }: { answers: Answers; unlocked: bo
   };
 
   return (
-    <section class="card share" aria-labelledby="share-title">
-      <h2 id="share-title">{t('share_title')}</h2>
-      <p class="muted">{t('share_text')}</p>
-      <div class="actions">
-        <button type="button" class="btn btn-secondary" onClick={share}>
-          {t('share_button')}
-        </button>
-        <span role="status" class="muted small share-status">
-          {state === 'copied' ? t('share_copied') : ''}
-        </span>
-      </div>
+    <div class="share">
+      <button type="button" class="btn btn-secondary btn-small" onClick={share}>
+        {t('share_button')}
+      </button>
+      <span role="status" class="muted small">
+        {state === 'copied' ? t('share_copied') : t('share_text')}
+      </span>
       {state === 'manual' && (
         <label class="share-manual">
           {t('share_copy_label')}
           <input type="text" readOnly value={url} onFocus={(e) => (e.currentTarget as HTMLInputElement).select()} />
         </label>
       )}
-    </section>
+    </div>
   );
 }

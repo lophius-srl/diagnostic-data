@@ -28,7 +28,7 @@
                   "type": "string",
                   "pattern": "^[a-z][a-z0-9_]*$"
                 },
-                "hoursPerWeek": {
+                "hoursPerMonth": {
                   "type": "object",
                   "additionalProperties": {
                     "type": "number",
@@ -38,10 +38,10 @@
                     "pattern": "^[a-z][a-z0-9_]*$"
                   }
                 },
-                "weeksPerYear": {
+                "monthsPerYear": {
                   "type": "integer",
                   "minimum": 1,
-                  "maximum": 52
+                  "maximum": 12
                 },
                 "defaultHourlyRate": {
                   "type": "number",
@@ -54,8 +54,8 @@
               },
               "required": [
                 "question",
-                "hoursPerWeek",
-                "weeksPerYear",
+                "hoursPerMonth",
+                "monthsPerYear",
                 "defaultHourlyRate",
                 "roundTo"
               ],
@@ -76,13 +76,22 @@
                 },
                 "baseUrl": {
                   "type": "string"
+                },
+                "linkedin": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "email": {
+                  "type": "string"
                 }
               },
               "required": [
                 "site",
                 "contact",
                 "booking",
-                "baseUrl"
+                "baseUrl",
+                "linkedin",
+                "email"
               ],
               "additionalProperties": false
             },
@@ -988,7 +997,6 @@
                 "unknownTools",
                 "silo",
                 "toolNotes",
-                "externalAutoWhen",
                 "excel",
                 "people"
               ],
@@ -1206,10 +1214,13 @@
                 "titleStrong": {
                   "type": "string"
                 },
-                "titleEnd": {
+                "lead": {
                   "type": "string"
                 },
-                "lead": {
+                "meta": {
+                  "type": "string"
+                },
+                "reassurance": {
                   "type": "string"
                 }
               },
@@ -1217,108 +1228,32 @@
                 "eyebrow",
                 "titleLight",
                 "titleStrong",
-                "titleEnd",
-                "lead"
+                "lead",
+                "meta",
+                "reassurance"
               ],
               "additionalProperties": false
             },
             "benefits": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "title": {
-                        "type": "string"
-                      },
-                      "text": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "title",
-                      "text"
-                    ],
-                    "additionalProperties": false
-                  },
-                  "minItems": 1,
-                  "maxItems": 6
-                }
-              },
-              "required": [
-                "title",
-                "items"
-              ],
-              "additionalProperties": false
-            },
-            "steps": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/content/properties/home/properties/benefits/properties/items/items"
-                  },
-                  "minItems": 1,
-                  "maxItems": 5
-                }
-              },
-              "required": [
-                "title",
-                "items"
-              ],
-              "additionalProperties": false
-            },
-            "about": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "photo": {
-                  "type": "string"
-                },
-                "photoAlt": {
-                  "type": "string"
-                },
-                "bio": {
-                  "type": "array",
-                  "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
                     "type": "string"
                   },
-                  "minItems": 1
+                  "text": {
+                    "type": "string"
+                  }
                 },
-                "link": {
-                  "type": "string"
-                }
+                "required": [
+                  "title",
+                  "text"
+                ],
+                "additionalProperties": false
               },
-              "required": [
-                "title",
-                "name",
-                "role",
-                "photo",
-                "photoAlt",
-                "bio",
-                "link"
-              ],
-              "additionalProperties": false
-            },
-            "reassurance": {
-              "$ref": "#/definitions/content/properties/home/properties/benefits/properties/items/items"
+              "minItems": 1,
+              "maxItems": 4
             },
             "testimonials": {
               "type": "object",
@@ -1360,9 +1295,6 @@
           "required": [
             "hero",
             "benefits",
-            "steps",
-            "about",
-            "reassurance",
             "testimonials"
           ],
           "additionalProperties": false

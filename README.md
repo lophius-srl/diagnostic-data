@@ -1,6 +1,6 @@
 # Diagnostic Data PME — Lophius
 
-Diagnostic de maturité data en ligne pour PME wallonnes : 12 à 15 questions simples, un score sur 7 axes,
+Diagnostic de maturité data en ligne pour PME wallonnes : 10 questions simples (3 minutes), un score sur 7 axes,
 le coût caché du reporting manuel, et (étapes suivantes) des recommandations, des schémas d'architecture et un rapport PDF.
 
 ## Installation (Windows, sans droits admin)
@@ -58,7 +58,7 @@ Tout le contenu est dans `content/fr/` :
 | `ui.yaml` | textes d'interface |
 
 Après une modification, `make content` valide tout et explique les erreurs en clair.
-`make test` vérifie aussi les règles de rédaction (15 mots, 4 réponses, pas de jargon) et les parcours (12 à 15 questions).
+`make test` vérifie aussi les règles de rédaction (15 mots, 4 réponses, pas de jargon) et les parcours (8 à 10 questions vues).
 
 ## Mise en ligne
 Cloudflare Pages + D1 + Brevo, tout gratuit : voir `docs/deploiement.md`, dont la liste de tout ce qui reste à remplir.

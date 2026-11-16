@@ -1,4 +1,4 @@
-import type { Content, Level } from '../content/schema';
+import type { Content, Dimension, Level } from '../content/schema';
 import { evaluate, factsOf, selected, type Answers } from './conditions';
 import { effectiveAnswers, visibleQuestions } from './flow';
 
@@ -70,4 +70,11 @@ export function levelFor(content: Content, globalScore: number, answers?: Answer
     if (!answers || !level.blockedBy || !evaluate(level.blockedBy, answers, facts)) return level;
   }
   return content.levels[0] as Level;
+}
+
+/** Phrase d'interprétation d'un axe selon son score : bas (< 40), moyen (< 70) ou haut. */
+export function insightFor(dimension: Dimension, score: number | null): string {
+  if (score === null) return '';
+  if (score < 40) return dimension.insights.low;
+  return score < 70 ? dimension.insights.mid : dimension.insights.high;
 }

@@ -44,7 +44,7 @@ describe('validation du contenu', () => {
 
   it('refuse un coût caché sans heures pour une tranche', () => {
     const c = clone();
-    delete c.settings.hiddenCost.hoursPerWeek.plus_10;
+    delete c.settings.hiddenCost.hoursPerMonth.semaine;
     expect(validateContent(c).join()).toMatch(/heures manquantes/);
   });
 
