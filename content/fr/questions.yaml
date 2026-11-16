@@ -1,0 +1,221 @@
+# Questions du diagnostic, dans l'ordre du parcours.
+#
+# Règles de rédaction (vérifiées par tests/content.rules.test.ts) :
+#   - 15 mots maximum par question, langage de tous les jours ;
+#   - 4 réponses maximum (sauf le sélecteur d'outils, type « tools ») ;
+#   - aucun mot de la liste interdite (KPI, indicateur, connecteur, ERP, RGPD, maturité…).
+#
+# `scores` : points de 0 à 3 par dimension. `facts` : faits utilisés par les recommandations.
+# `showIf` : condition d'affichage, uniquement sur des questions posées AVANT.
+
+# ---------- Profil ----------
+- id: secteur
+  text: Votre activité, c'est plutôt…
+  type: single
+  options:
+    - { id: commerce, label: Commerce ou négoce }
+    - { id: services, label: Services }
+    - { id: production, label: 'Production, artisanat, construction' }
+    - { id: en_ligne, label: Vente en ligne }
+
+- id: taille
+  text: Combien de personnes travaillent dans l'entreprise ?
+  type: single
+  options:
+    - { id: t1_4, label: 1 à 4 }
+    - { id: t5_19, label: 5 à 19 }
+    - { id: t20_49, label: 20 à 49 }
+    - { id: t50p, label: 50 ou plus }
+
+- id: outils
+  text: Où sont vos chiffres ? Cochez tout ce que vous utilisez.
+  type: tools
+  options:
+    - { id: excel, tool: excel, label: Excel / Google Sheets, scores: { sources: 1 } }
+    - { id: odoo, tool: odoo, label: Odoo, scores: { sources: 3 } }
+    - { id: teamleader, tool: teamleader, label: Teamleader, scores: { sources: 2 } }
+    - { id: exact, tool: exact, label: Exact Online, scores: { sources: 3 } }
+    - { id: winbooks, tool: winbooks, label: WinBooks, scores: { sources: 2 } }
+    - { id: bob, tool: bob, label: BOB, scores: { sources: 2 } }
+    - { id: yuki, tool: yuki, label: Yuki, scores: { sources: 3 } }
+    - { id: billit, tool: billit, label: Billit, scores: { sources: 2 } }
+    - { id: sage, tool: sage, label: Sage, scores: { sources: 2 } }
+    - { id: shopify, tool: shopify, label: Shopify, scores: { sources: 3 } }
+    - { id: woocommerce, tool: woocommerce, label: WooCommerce, scores: { sources: 2 } }
+    - { id: lightspeed, tool: lightspeed, label: Lightspeed, scores: { sources: 3 } }
+    - { id: metier, tool: metier, label: Logiciel métier, scores: { sources: 2 } }
+    - { id: fiduciaire, tool: fiduciaire, label: Chez notre fiduciaire, scores: { sources: 1 } }
+    - { id: nesaispas, label: Je ne sais pas, exclusive: true, scores: { sources: 0 } }
+
+# ---------- Sources et centralisation ----------
+- id: recopie
+  text: Vous recopiez des infos d'un logiciel à l'autre ?
+  type: single
+  showIf: { q: outils, countAtLeast: 2, exclude: [fiduciaire, nesaispas] }
+  options:
+    - { id: non, label: Non, scores: { centralisation: 3, automatisation: 3 } }
+    - { id: parfois, label: Parfois, scores: { centralisation: 1, automatisation: 1 } }
+    - { id: souvent, label: 'Oui, souvent', scores: { centralisation: 0, automatisation: 0 }, facts: [double_saisie] }
+
+- id: fiduciaire
+  text: Votre fiduciaire reçoit vos factures et pièces comment ?
+  type: single
+  showIf:
+    all:
+      - { q: outils, has: fiduciaire }
+      - { q: taille, in: [t1_4, t5_19] }
+  options:
+    - { id: direct, label: Directement dans son logiciel, scores: { automatisation: 3, sources: 3 } }
+    - { id: email, label: Par e-mail ou en PDF, scores: { automatisation: 1, sources: 2 } }
+    - {
+        id: papier,
+        label: 'En papier, dans une farde',
+        scores: { automatisation: 0, sources: 0 },
+        facts: [pieces_papier],
+      }
+
+- id: ventes_en_ligne
+  text: Vos ventes en ligne arrivent-elles toutes seules dans la comptabilité ?
+  type: single
+  showIf:
+    any:
+      - { q: secteur, is: en_ligne }
+      - { q: outils, hasAny: [shopify, woocommerce] }
+  options:
+    - { id: auto, label: 'Oui, automatiquement', scores: { centralisation: 3, automatisation: 3 } }
+    - {
+        id: main,
+        label: On les exporte à la main,
+        scores: { centralisation: 0, automatisation: 0 },
+        facts: [export_manuel],
+      }
+    - { id: fiduciaire, label: La fiduciaire s'en charge, scores: { centralisation: 1, automatisation: 1 } }
+    - { id: nesaispas, label: Je ne sais pas, scores: { centralisation: 0, automatisation: 0 } }
+
+- id: rentabilite
+  text: Savez-vous quels produits ou clients vous rapportent vraiment ?
+  textVariants:
+    - when: { q: secteur, is: services }
+      text: Savez-vous quels clients ou projets vous rapportent vraiment ?
+    - when: { q: secteur, is: production }
+      text: Savez-vous ce que vous rapporte vraiment chaque chantier ou commande ?
+  type: single
+  showIf:
+    not:
+      any:
+        - { q: secteur, is: en_ligne }
+        - { q: outils, hasAny: [shopify, woocommerce] }
+  options:
+    - { id: precis, label: 'Oui, précisément', scores: { pilotage: 3 } }
+    - { id: a_peu_pres, label: À peu près, scores: { pilotage: 1 } }
+    - { id: pas_vraiment, label: Pas vraiment, scores: { pilotage: 0 }, facts: [marge_inconnue] }
+
+# ---------- Pilotage et fiabilité ----------
+- id: ventes_mois
+  text: Pour connaître vos ventes du mois dernier, il vous faut…
+  type: single
+  options:
+    - { id: minutes, label: Quelques minutes, scores: { pilotage: 3, centralisation: 3, autonomie: 3 } }
+    - { id: heures, label: Quelques heures, scores: { pilotage: 1, centralisation: 1, autonomie: 1 } }
+    - {
+        id: jours,
+        label: Plusieurs jours,
+        scores: { pilotage: 0, centralisation: 0, autonomie: 0 },
+        facts: [chiffres_lents],
+      }
+
+- id: frequence
+  text: Vous regardez vos chiffres…
+  type: single
+  options:
+    - { id: semaine, label: Chaque semaine, scores: { pilotage: 3 } }
+    - { id: mois, label: Chaque mois, scores: { pilotage: 2 } }
+    - { id: bilan, label: Surtout au bilan, scores: { pilotage: 1 }, facts: [pilotage_annuel] }
+    - { id: rarement, label: Rarement, scores: { pilotage: 0 }, facts: [pilotage_annuel] }
+
+- id: justesse
+  text: Vos chiffres sont-ils toujours justes ?
+  type: single
+  options:
+    - { id: confiance, label: 'Oui, on a confiance', scores: { fiabilite: 3 } }
+    - { id: pas_toujours, label: Pas toujours, scores: { fiabilite: 1 } }
+    - { id: discussion, label: 'Souvent, on en discute', scores: { fiabilite: 0 }, facts: [versions_multiples] }
+
+- id: memes_chiffres
+  text: En réunion, tout le monde a-t-il les mêmes chiffres ?
+  type: single
+  showIf: { q: taille, in: [t5_19, t20_49, t50p] }
+  options:
+    - { id: oui, label: Oui, scores: { fiabilite: 3, centralisation: 3 } }
+    - { id: pas_toujours, label: Pas toujours, scores: { fiabilite: 1, centralisation: 1 } }
+    - {
+        id: chacun,
+        label: Chacun a les siens,
+        scores: { fiabilite: 0, centralisation: 0 },
+        facts: [versions_multiples],
+      }
+
+# ---------- Automatisation (coût caché) ----------
+- id: heures_excel
+  text: Combien d'heures par semaine, toute l'équipe, sur des tableaux Excel ?
+  type: single
+  options:
+    - { id: moins_2, label: Moins de 2 h, scores: { automatisation: 3 } }
+    - { id: h2_5, label: 2 à 5 h, scores: { automatisation: 2 } }
+    - { id: h5_10, label: 5 à 10 h, scores: { automatisation: 1 }, facts: [reporting_manuel] }
+    - { id: plus_10, label: Plus de 10 h, scores: { automatisation: 0 }, facts: [reporting_manuel] }
+
+# ---------- Autonomie et continuité ----------
+- id: personne_excel
+  text: Si votre « personne Excel » est absente un mois…
+  type: single
+  showIf: { q: outils, has: excel }
+  options:
+    - { id: pas_de_souci, label: Pas de souci, scores: { autonomie: 3, securite: 3 } }
+    - { id: complique, label: Ce serait compliqué, scores: { autonomie: 1, securite: 1 }, facts: [dependance_personne] }
+    - { id: perdus, label: On serait perdus, scores: { autonomie: 0, securite: 0 }, facts: [dependance_personne] }
+
+- id: autonomie
+  text: 'Une question sur vos chiffres : vous trouvez la réponse seul ?'
+  type: single
+  showIf: { not: { q: outils, has: excel } }
+  options:
+    - { id: clics, label: 'Oui, en quelques clics', scores: { autonomie: 3 } }
+    - { id: demander, label: Il faut demander, scores: { autonomie: 1 }, facts: [dependance_personne] }
+    - { id: introuvable, label: 'Souvent, on ne trouve pas', scores: { autonomie: 0 } }
+
+# ---------- Sécurité ----------
+- id: ordinateur
+  text: 'Un ordinateur volé demain : vous perdez des fichiers importants ?'
+  type: single
+  options:
+    - { id: sauvegarde, label: 'Non, tout est sauvegardé', scores: { securite: 3 } }
+    - { id: quelques_uns, label: Peut-être quelques-uns, scores: { securite: 1 }, facts: [sauvegarde_partielle] }
+    - { id: oui, label: 'Oui, sûrement', scores: { securite: 0 }, facts: [sauvegarde_partielle] }
+
+- id: acces
+  text: Qui peut ouvrir le fichier des salaires ou des marges ?
+  type: single
+  showIf: { q: taille, in: [t20_49, t50p] }
+  options:
+    - { id: prevues, label: Seulement les personnes prévues, scores: { securite: 3 } }
+    - { id: pas_sur, label: Je ne suis pas sûr, scores: { securite: 1 }, facts: [acces_flous] }
+    - { id: tous, label: Un peu tout le monde, scores: { securite: 0 }, facts: [acces_flous] }
+
+# ---------- Préférences (orientent les recommandations, sans score) ----------
+- id: microsoft
+  text: Vous travaillez avec Microsoft 365 (Outlook, Teams) ?
+  type: single
+  options:
+    - { id: oui, label: Oui }
+    - { id: google, label: 'Non, plutôt Google' }
+    - { id: eviter, label: 'Non, et on préfère éviter Microsoft' }
+
+- id: priorite
+  text: Si vous pouviez régler une seule chose demain ?
+  type: single
+  options:
+    - { id: vue, label: Voir mes chiffres d'un coup d'œil }
+    - { id: doubles, label: Arrêter les doubles encodages }
+    - { id: marge, label: Savoir où je gagne de l'argent }
+    - { id: dependance, label: Ne plus dépendre d'une seule personne }

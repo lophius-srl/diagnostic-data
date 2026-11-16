@@ -1,0 +1,26 @@
+# Textes d'interface (préparés pour une future version anglaise : content/en/ui.yaml).
+brand: Lophius
+nav_contact: Contact
+start_title_light: En 5 minutes, découvrez
+start_title_strong: ce que vos données vous coûtent
+start_title_end: et ce qu'elles pourraient vous rapporter.
+start_duration: 'Environ {minutes} minutes · 12 à 15 questions · aucune inscription pour voir votre score'
+start_button: Commencer le diagnostic
+resume_button: Reprendre où j'en étais
+restart_button: Recommencer
+question_counter: 'Question {current} sur {total} environ'
+back_button: Précédent
+next_button: Suivant
+multi_hint: Plusieurs réponses possibles
+feedback_label: Le regard de l'expert
+continue_button: Continuer
+storage_unavailable: Votre navigateur ne permet pas de sauvegarder la progression. Gardez cet onglet ouvert jusqu'à la fin.
+results_title: Votre diagnostic
+results_score: Score global
+results_level: Votre niveau
+results_dimensions: Vos 7 axes
+results_hidden_cost: Ce que vous coûte le reporting manuel
+results_hidden_cost_detail: "{hours} h par an × {rate} € de l'heure"
+results_hourly_rate: Coût horaire (€)
+results_not_evaluated: non évalué
+results_preview_note: Aperçu de l'étape 1. La page de résultats complète arrive à l'étape 2.

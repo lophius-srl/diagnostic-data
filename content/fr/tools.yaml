@@ -1,0 +1,15 @@
+# Catalogue des outils de l'écosystème belge. `logo` : fichier dans public/brand/tools/ (facultatif).
+- { id: excel, name: Excel / Google Sheets, category: tableur }
+- { id: odoo, name: Odoo, category: gestion }
+- { id: teamleader, name: Teamleader, category: crm }
+- { id: exact, name: Exact Online, category: compta }
+- { id: winbooks, name: WinBooks, category: compta }
+- { id: bob, name: BOB, category: compta }
+- { id: yuki, name: Yuki, category: compta }
+- { id: billit, name: Billit, category: compta }
+- { id: sage, name: Sage, category: compta }
+- { id: shopify, name: Shopify, category: ecommerce }
+- { id: woocommerce, name: WooCommerce, category: ecommerce }
+- { id: lightspeed, name: Lightspeed, category: caisse }
+- { id: metier, name: Logiciel métier, category: metier }
+- { id: fiduciaire, name: Fiduciaire, category: externe }

@@ -1,0 +1,28 @@
+# Réglages généraux du diagnostic. Tout est modifiable sans toucher au code.
+locale: fr-BE
+contentVersion: '2026-11-v1' # à incrémenter quand les questions changent (invalide les sauvegardes locales incompatibles)
+estimatedMinutes: 5 # durée affichée honnêtement sur la page d'accueil
+feedbackMinGap: 3 # au plus un retour d'expert toutes les 3 questions
+
+hiddenCost:
+  question: heures_excel
+  # Heures par semaine retenues pour chaque tranche (milieu de tranche ; borne prudente pour « plus de 10 h »).
+  hoursPerWeek:
+    moins_2: 1
+    h2_5: 3.5
+    h5_10: 7.5
+    plus_10: 12
+  weeksPerYear: 46 # 52 semaines moins congés et jours fériés
+  defaultHourlyRate: 45 # € / heure, coût chargé d'un employé administratif — À VALIDER
+  roundTo: 100
+
+links:
+  site: https://www.lophius.be
+  contact: https://www.lophius.be/#contact # À VÉRIFIER
+  booking: '[[lien de prise de rendez-vous]]' # PLACEHOLDER : agenda Google, Calendly…
+  baseUrl: https://diagnostic.lophius.be # sous-domaine prévu (Cloudflare Pages)
+
+features:
+  testimonials: false # à activer uniquement avec de vrais témoignages
+  chequesEntreprises: false # à activer quand la labellisation et l'éligibilité sont confirmées
+  analytics: false # Cloudflare Web Analytics (sans cookies)

@@ -1,0 +1,36 @@
+# Les 7 axes du radar. `label` parle le langage du gérant ; `technicalLabel` est réservé au rapport PDF.
+- id: sources
+  label: Sources
+  technicalLabel: Systèmes sources
+  description: Les logiciels où naissent vos chiffres, et leur capacité à les partager.
+  weight: 1
+- id: fiabilite
+  label: Fiabilité
+  technicalLabel: Qualité des données
+  description: La confiance que vous pouvez accorder à vos chiffres.
+  weight: 1
+- id: centralisation
+  label: Centralisation
+  technicalLabel: Intégration et référentiel unique
+  description: Vos chiffres sont-ils réunis à un seul endroit, sans recopie ?
+  weight: 1
+- id: pilotage
+  label: Pilotage
+  technicalLabel: Reporting et tableaux de bord
+  description: Votre capacité à suivre l'activité et à décider à temps.
+  weight: 1
+- id: automatisation
+  label: Automatisation
+  technicalLabel: Automatisation des flux (ETL)
+  description: La part du travail répétitif faite par les machines plutôt que par vos équipes.
+  weight: 1
+- id: securite
+  label: Sécurité
+  technicalLabel: Sécurité, sauvegarde et continuité
+  description: Vos chiffres sont-ils protégés, sauvegardés, et pas dans une seule tête ?
+  weight: 1
+- id: autonomie
+  label: Autonomie
+  technicalLabel: Self-service et culture data
+  description: Chacun trouve-t-il seul la réponse à ses questions ?
+  weight: 1

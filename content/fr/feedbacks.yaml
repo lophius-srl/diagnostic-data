@@ -1,0 +1,75 @@
+# Retours d'expert affichés juste après une réponse.
+# 2 phrases maximum, mots simples, ton bienveillant, jamais culpabilisant, aucune statistique.
+# Le moteur en affiche au plus un toutes les `feedbackMinGap` questions (settings.yaml), le plus prioritaire.
+
+- id: outils_nombreux
+  after: outils
+  when: { q: outils, countAtLeast: 4, exclude: [fiduciaire, nesaispas] }
+  text: Quatre outils ou plus, c'est souvent le signe d'une entreprise qui s'est équipée au fil des besoins. La vraie question est de savoir s'ils se parlent.
+  priority: 1
+
+- id: recopie_souvent
+  after: recopie
+  when: { q: recopie, is: souvent }
+  text: "Vous n'êtes pas seul : c'est le cas typique d'une PME qui a grandi plus vite que ses outils. C'est aussi ce qui se corrige le plus vite."
+  priority: 3
+
+- id: fiduciaire_papier
+  after: fiduciaire
+  when: { q: fiduciaire, is: papier }
+  text: Depuis 2026, la facture électronique entre entreprises est obligatoire en Belgique. C'est le bon moment pour envoyer vos pièces directement à votre fiduciaire.
+  priority: 3
+
+- id: ventes_export_manuel
+  after: ventes_en_ligne
+  when: { q: ventes_en_ligne, is: main }
+  text: Chaque export à la main est une occasion d'oublier une commande ou un remboursement. Ce lien-là s'automatise en général très bien.
+  priority: 2
+
+- id: rentabilite_inconnue
+  after: rentabilite
+  when: { q: rentabilite, is: pas_vraiment }
+  text: C'est souvent l'information la plus utile, et la plus difficile à obtenir sans aide. Elle dort pourtant déjà dans vos logiciels.
+  priority: 2
+
+- id: ventes_rapides
+  after: ventes_mois
+  when: { q: ventes_mois, is: minutes }
+  text: "Très bon signe : c'est la base de tout pilotage, et vous l'avez déjà."
+  priority: 1
+
+- id: ventes_lentes
+  after: ventes_mois
+  when: { q: ventes_mois, is: jours }
+  text: Plusieurs jours pour un chiffre aussi simple, c'est du temps qui manque pour décider. Ce délai peut presque toujours tomber à quelques minutes.
+  priority: 2
+
+- id: chiffres_discutes
+  after: justesse
+  when: { q: justesse, is: discussion }
+  text: Quand on discute des chiffres plutôt que des décisions, il existe souvent plusieurs versions du même fichier.
+  priority: 3
+
+- id: chacun_ses_chiffres
+  after: memes_chiffres
+  when: { q: memes_chiffres, is: chacun }
+  text: Chacun a fait ses calculs de bonne foi, mais pas avec les mêmes règles. Une seule source de vérité met fin à ces débats.
+  priority: 2
+
+- id: excel_beaucoup
+  after: heures_excel
+  when: { q: heures_excel, in: [h5_10, plus_10] }
+  text: Ce temps a un coût bien réel, que nous chiffrerons ensemble dans vos résultats.
+  priority: 2
+
+- id: personne_cle
+  after: personne_excel
+  when: { q: personne_excel, is: perdus }
+  text: C'est très courant, et c'est un vrai risque pour l'entreprise. Ce savoir se transmet et se documente en quelques jours.
+  priority: 3
+
+- id: sauvegarde_absente
+  after: ordinateur
+  when: { q: ordinateur, is: oui }
+  text: C'est le point le plus simple à régler de tout ce diagnostic. Une sauvegarde automatique se met en place en une demi-journée.
+  priority: 3

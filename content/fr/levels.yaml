@@ -1,0 +1,37 @@
+# 5 niveaux, du plus simple au plus avancé. `min` = score global minimum (0 à 100).
+- id: artisanal
+  label: Artisanal
+  min: 0
+  summary: Vos chiffres existent, mais ils demandent du temps et de la mémoire pour être réunis.
+- id: structure
+  label: Structuré
+  min: 20
+  summary: Les bons outils sont là. Ils ne se parlent pas encore, et Excel fait le lien à la main.
+- id: pilote
+  label: Piloté
+  min: 40
+  summary: Vous suivez vos chiffres régulièrement. Le temps passé à les préparer reste élevé.
+- id: automatise
+  label: Automatisé
+  min: 60
+  summary: L'essentiel se met à jour seul. Il reste à fiabiliser et à partager plus largement.
+  # Plafond : impossible d'être « automatisé » tant que des chiffres sont recopiés ou exportés à la main.
+  blockedBy:
+    any:
+      - { fact: double_saisie }
+      - { fact: export_manuel }
+      - { fact: reporting_manuel }
+  blockedReason: Des chiffres passent encore à la main d'un outil à l'autre, ce qui vous retient au niveau précédent.
+- id: data_driven
+  label: Data-driven
+  min: 80
+  summary: Vos chiffres guident vos décisions au quotidien. Il s'agit maintenant d'aller plus loin.
+  blockedBy:
+    any:
+      - { fact: double_saisie }
+      - { fact: export_manuel }
+      - { fact: reporting_manuel }
+      - { fact: versions_multiples }
+      - { fact: dependance_personne }
+      - { fact: pilotage_annuel }
+  blockedReason: Un point de fragilité (chiffres discutés, dépendance à une personne ou suivi trop espacé) vous retient au niveau précédent.
