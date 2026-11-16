@@ -1,0 +1,54 @@
+# Textes du rapport PDF. Variables : {company}, {firstName}, {date}, {level}, {score}, {cost}, {hours}, {rate}, {weeks}, {hoursWeek}.
+# Le vocabulaire technique est autorisé ici, mais toujours expliqué (glossaire et explications par axe).
+fileName: 'Diagnostic-data-{company}.pdf'
+title: Diagnostic data
+preparedFor: 'Préparé pour {company}, le {date}'
+preparedForAnonymous: 'Établi le {date}'
+author: 'Antoine Stas · Lophius SRL'
+
+sections:
+  synthesis: Synthèse
+  dimensions: Vos 7 axes en détail
+  architecture: Comment circulent vos chiffres
+  cost: Le coût caché du reporting manuel
+  quickWins: Vos 3 quick wins
+  roadmap: Votre feuille de route
+  glossary: Les mots du métier, en clair
+  nextSteps: Prochaines étapes
+
+texts:
+  levelLine: 'Votre entreprise est au niveau'
+  scoreUnit: '/100'
+  costLabel: Coût caché estimé
+  costUnit: par an
+  costDetail: "{hoursWeek} h par semaine × {weeks} semaines × {rate} € de l'heure, soit {hours} h par an."
+  costNote: Estimation à partir de vos réponses, à affiner avec votre coût horaire réel (charges comprises). Ce temps n'est pas perdu, mais il pourrait servir à autre chose qu'au copier-coller.
+  quickWinsLabel: Vos 3 premières actions
+  nextStepShort: 'Prochaine étape : 30 minutes pour en parler, sans engagement.'
+  dimensionsIntro: "Chaque axe est noté sur 100 à partir de vos réponses. Le terme entre parenthèses est celui qu'utilisent les spécialistes."
+  architectureIntro: "À gauche, ce que vos réponses décrivent aujourd'hui. À droite, l'organisation recommandée, avec vos outils actuels."
+  legendAuto: 'Trait plein : automatique'
+  legendManual: 'Pointillés : à la main'
+  effort: Effort
+  impact: Impact
+  nextStepsIntro: 'Ce diagnostic est un point de départ. Si vous souhaitez être accompagné, voici ce qui correspond à votre situation.'
+  booking: 'Réserver 30 minutes pour en parler'
+  contact: 'Contact'
+  duration: Durée
+  price: Prix
+  capped: 'Votre score vous placerait au niveau « {level} ».'
+
+glossary:
+  - term: Base centrale (entrepôt de données, data warehouse)
+    definition: Une base qui réunit les chiffres de tous vos logiciels, avec leur historique. C'est la « source unique de vérité » de l'entreprise.
+  - term: Synchronisation automatique (ETL)
+    definition: 'Le programme qui va chercher les données dans vos logiciels, les met au propre et les range dans la base centrale, par exemple chaque nuit.'
+  - term: Tableau de bord (outil de BI)
+    definition: "L'écran qui affiche vos chiffres clés à jour (business intelligence). Dans votre cas, nous recommandons {tableau}."
+  - term: API
+    definition: 'La « prise » par laquelle un logiciel accepte de partager ses données avec un autre, sans copier-coller.'
+  - term: Indicateur clé (KPI)
+    definition: "Un chiffre suivi régulièrement parce qu'il aide à décider : marge, trésorerie, délai de paiement, panier moyen…"
+
+disclaimer: "Ce diagnostic est indicatif : il repose sur vos réponses et sur des règles d'expertise, sans accès à vos données. Il ne remplace pas un audit sur pièces."
+footer: 'Lophius SRL · www.lophius.be'

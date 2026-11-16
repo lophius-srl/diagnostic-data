@@ -1,0 +1,18 @@
+# Société de services de 40 personnes, sur Odoo (+ Excel pour les tableaux), compta en interne.
+name: Services, 40 personnes, Odoo
+answers:
+  secteur: services
+  taille: t20_49
+  outils: [odoo, excel]
+  recopie: parfois
+  rentabilite: a_peu_pres
+  ventes_mois: minutes
+  frequence: semaine
+  justesse: pas_toujours
+  memes_chiffres: chacun
+  heures_excel: h2_5
+  personne_excel: complique
+  ordinateur: sauvegarde
+  acces: pas_sur
+  microsoft: oui
+  priorite: marge

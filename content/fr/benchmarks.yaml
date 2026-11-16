@@ -1,0 +1,10 @@
+# Repères indicatifs issus de l'expérience terrain. AUCUN n'est affiché tant que `enabled: false`.
+# Le schéma refuse `enabled: true` sans `source`. À valider par Antoine avant toute activation.
+- id: reporting_mensuel
+  text: Dans les PME accompagnées, la préparation du reporting mensuel prend souvent une à deux journées.
+  source: null
+  enabled: false
+- id: fichiers_excel
+  text: Un fichier Excel central qui a grandi pendant plusieurs années contient presque toujours des formules cassées.
+  source: null
+  enabled: false

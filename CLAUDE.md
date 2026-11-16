@@ -4,9 +4,11 @@
 > Complète les sections marquées `TODO` au démarrage de chaque nouveau projet.
 
 ## Le projet
-- **Nom** : TODO
-- **But** : TODO (1–2 phrases : quel problème, pour qui)
-- **Stack** : TODO (langage, framework, base de données, hébergement)
+- **Nom** : Diagnostic Data PME (Lophius)
+- **But** : diagnostic de maturité data en ligne pour PME wallonnes, principal outil d'acquisition de clients
+  de Lophius SRL. Questions ultra simples, expertise visible dans les retours et les résultats.
+- **Stack** : Vite + TypeScript + Preact (SPA statique), contenu YAML validé par Zod, moteur de règles déterministe,
+  Cloudflare Pages (+ Pages Function, D1 en Europe de l'Ouest et Brevo pour les leads, à l'étape 4). Tout est gratuit.
 - **Décisions d'architecture** : voir `docs/adr/`
 
 ## Commandes (toujours passer par le Makefile)
@@ -51,7 +53,14 @@ Pour rester un usage « humain » :
 - Noms explicites, fonctions courtes, pas de code mort ni de `console.log`/`print` de debug.
 - Pas de secrets dans le code : variables d'environnement + `.env.example` tenu à jour.
 - Toute décision technique structurante → un ADR dans `docs/adr/`.
-- TODO : ajouter les conventions propres à la stack (style, structure des dossiers…).
+- **Contenu hors du code** : questions, branches, scores, retours, niveaux, textes d'interface → `content/<langue>/*.yaml`.
+  Aucun texte affiché à l'utilisateur dans `src/` (passer par `t()` ou la config).
+- **Moteur pur** : `src/engine/` ne dépend ni du DOM ni de Preact ; toute règle y est testée.
+- **Règles de rédaction** (testées) : 15 mots max par question, 4 réponses max (sauf sélecteur d'outils),
+  aucun jargon (KPI, indicateur, connecteur, ERP, RGPD, maturité, source de données, gouvernance).
+- **Crédibilité** : aucune statistique inventée ; repères indicatifs désactivés tant que `source` est vide.
+- **Style** : Prettier (120 colonnes, guillemets simples), ESLint strict, TypeScript `strict` + `noUncheckedIndexedAccess`.
+- **Branche de cette session cloud** : `claude/new-session-kjxci2` (un commit par issue, un push par étape).
 
 ## Équipe d'agents (`.claude/agents/`)
 | Agent | Rôle | Quand l'appeler |

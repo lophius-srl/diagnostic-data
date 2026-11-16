@@ -1,0 +1,28 @@
+# Politique de confidentialité — MODÈLE À COMPLÉTER ET À FAIRE VALIDER (les éléments entre [[ ]] sont à remplir).
+title: Politique de confidentialité
+updated: '[[date de mise à jour]]'
+sections:
+  - title: Qui est responsable de vos données ?
+    paragraphs:
+      - "Lophius SRL, [[adresse du siège]], numéro d'entreprise [[BCE]], représentée par Antoine Stas. Contact : [[adresse e-mail de contact]]."
+  - title: Quelles données, et pourquoi ?
+    paragraphs:
+      - Vos réponses au diagnostic servent à calculer votre résultat. Tant que vous ne laissez pas vos coordonnées, elles restent dans votre navigateur et ne nous sont pas transmises.
+      - Si vous demandez le rapport complet, nous recevons vos coordonnées (prénom, nom, e-mail, entreprise, et si vous les donnez, numéro BCE et téléphone), vos réponses et votre résultat. Ils servent uniquement à vous envoyer ce rapport et à vous recontacter à propos du diagnostic.
+      - 'Base légale : votre consentement, donné en cochant la case prévue. Vous pouvez le retirer à tout moment.'
+  - title: Où sont-elles stockées ?
+    paragraphs:
+      - "Le site est hébergé par Cloudflare. Les coordonnées sont enregistrées dans une base Cloudflare D1 située en Europe de l'Ouest. La notification par e-mail passe par Brevo (Sendinblue SAS, France). [[À vérifier : contrats de sous-traitance (DPA) signés avec Cloudflare et Brevo.]]"
+  - title: Combien de temps ?
+    paragraphs:
+      - '[[Durée de conservation, ex. 24 mois après le dernier échange]], puis suppression.'
+  - title: Cookies et statistiques
+    paragraphs:
+      - Aucun cookie de suivi. La progression du questionnaire est gardée dans votre propre navigateur (stockage local) pour que vous puissiez reprendre plus tard ; vous pouvez l'effacer avec « Recommencer ».
+      - Si des statistiques de visite sont activées, elles sont anonymes et sans cookie.
+  - title: Le lien de partage
+    paragraphs:
+      - "Le lien de partage contient vos réponses, encodées dans l'adresse elle-même. Il n'est pas stocké chez nous. Toute personne qui le reçoit peut voir le résultat : ne le transmettez qu'aux personnes de votre choix."
+  - title: Vos droits
+    paragraphs:
+      - "Vous pouvez demander l'accès, la rectification ou la suppression de vos données, ou retirer votre consentement, en écrivant à [[adresse e-mail de contact]]. Vous pouvez aussi introduire une plainte auprès de l'Autorité de protection des données (www.autoriteprotectiondonnees.be)."

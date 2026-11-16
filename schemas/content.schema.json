@@ -1,0 +1,1397 @@
+{
+  "$ref": "#/definitions/content",
+  "definitions": {
+    "content": {
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {
+            "locale": {
+              "type": "string"
+            },
+            "contentVersion": {
+              "type": "string"
+            },
+            "estimatedMinutes": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "feedbackMinGap": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "hiddenCost": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*$"
+                },
+                "hoursPerWeek": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "propertyNames": {
+                    "pattern": "^[a-z][a-z0-9_]*$"
+                  }
+                },
+                "weeksPerYear": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 52
+                },
+                "defaultHourlyRate": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "roundTo": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "question",
+                "hoursPerWeek",
+                "weeksPerYear",
+                "defaultHourlyRate",
+                "roundTo"
+              ],
+              "additionalProperties": false
+            },
+            "links": {
+              "type": "object",
+              "properties": {
+                "site": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "contact": {
+                  "type": "string"
+                },
+                "booking": {
+                  "type": "string"
+                },
+                "baseUrl": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "site",
+                "contact",
+                "booking",
+                "baseUrl"
+              ],
+              "additionalProperties": false
+            },
+            "analyticsToken": {
+              "type": "string",
+              "default": ""
+            },
+            "features": {
+              "type": "object",
+              "properties": {
+                "testimonials": {
+                  "type": "boolean"
+                },
+                "chequesEntreprises": {
+                  "type": "boolean"
+                },
+                "analytics": {
+                  "type": "boolean"
+                },
+                "leadGate": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "testimonials",
+                "chequesEntreprises",
+                "analytics",
+                "leadGate"
+              ],
+              "additionalProperties": false
+            },
+            "lead": {
+              "type": "object",
+              "properties": {
+                "consentVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minFillMs": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "maxPerEmailPerHour": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "consentVersion",
+                "minFillMs",
+                "maxPerEmailPerHour"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "locale",
+            "contentVersion",
+            "estimatedMinutes",
+            "feedbackMinGap",
+            "hiddenCost",
+            "links",
+            "features",
+            "lead"
+          ],
+          "additionalProperties": false
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "label": {
+                "type": "string"
+              },
+              "technicalLabel": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "phrase": {
+                "type": "string"
+              },
+              "technicalExplanation": {
+                "type": "string"
+              },
+              "insights": {
+                "type": "object",
+                "properties": {
+                  "low": {
+                    "type": "string"
+                  },
+                  "mid": {
+                    "type": "string"
+                  },
+                  "high": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "low",
+                  "mid",
+                  "high"
+                ],
+                "additionalProperties": false
+              },
+              "strengthCandidate": {
+                "type": "boolean",
+                "default": true
+              },
+              "weight": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "technicalLabel",
+              "description",
+              "phrase",
+              "technicalExplanation",
+              "insights",
+              "weight"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "label": {
+                "type": "string"
+              },
+              "min": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "summary": {
+                "type": "string"
+              },
+              "blockedBy": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "all": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "all"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "any": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "any"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "not": {
+                        "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                      }
+                    },
+                    "required": [
+                      "not"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "fact": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      }
+                    },
+                    "required": [
+                      "fact"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "q": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      },
+                      "is": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      },
+                      "in": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        },
+                        "minItems": 1
+                      },
+                      "has": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      },
+                      "hasAny": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        },
+                        "minItems": 1
+                      },
+                      "countAtLeast": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "exclude": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        }
+                      }
+                    },
+                    "required": [
+                      "q"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "blockedReason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "min",
+              "summary"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "name": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "tableur",
+                  "compta",
+                  "gestion",
+                  "crm",
+                  "ecommerce",
+                  "caisse",
+                  "metier",
+                  "externe",
+                  "inconnu"
+                ]
+              },
+              "logo": {
+                "type": "string"
+              },
+              "shortName": {
+                "type": "string",
+                "maxLength": 18
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "category"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "textVariants": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "when": {
+                      "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "when",
+                    "text"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "hint": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "single",
+                  "multi",
+                  "tools"
+                ]
+              },
+              "showIf": {
+                "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "scores": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 3
+                      },
+                      "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "default": {}
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      },
+                      "default": []
+                    },
+                    "exclusive": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "tool": {
+                      "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 2
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "type",
+              "options"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "feedbacks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "after": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "when": {
+                "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "priority": {
+                "type": "integer",
+                "default": 0
+              }
+            },
+            "required": [
+              "id",
+              "after",
+              "when",
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "benchmarks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+              },
+              "text": {
+                "type": "string"
+              },
+              "source": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "enabled": {
+                "type": "boolean",
+                "default": false
+              }
+            },
+            "required": [
+              "id",
+              "text",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "recommendations": {
+          "type": "object",
+          "properties": {
+            "variables": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "rules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "when": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "rules"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "quickWins": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "detail": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "when": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "excludeIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "requiresTools": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      },
+                      "minItems": 1
+                    },
+                    "propertyNames": {
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "default": {}
+                  },
+                  "dimension": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "effort": {
+                    "type": "string",
+                    "enum": [
+                      "faible",
+                      "moyen",
+                      "eleve"
+                    ]
+                  },
+                  "impact": {
+                    "$ref": "#/definitions/content/properties/recommendations/properties/quickWins/items/properties/effort"
+                  },
+                  "boostIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "fallback": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "detail",
+                  "dimension",
+                  "effort",
+                  "impact"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 3
+            },
+            "roadmap": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 6
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "when": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "excludeIf": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "requiresTools": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                            },
+                            "minItems": 1
+                          },
+                          "propertyNames": {
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          },
+                          "default": {}
+                        },
+                        "unlessQuickWin": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "detail"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "title",
+                  "max",
+                  "actions"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "variables",
+            "quickWins",
+            "roadmap"
+          ],
+          "additionalProperties": false
+        },
+        "offers": {
+          "type": "object",
+          "properties": {
+            "maxRecommended": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            },
+            "offers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "duration": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "deliverables": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  },
+                  "why": {
+                    "type": "string"
+                  },
+                  "recommendIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "recommendBelowScore": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "preferredIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "default": 0
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "duration",
+                  "price",
+                  "summary",
+                  "deliverables",
+                  "why"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "cheques": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "maxRecommended",
+            "offers",
+            "cheques"
+          ],
+          "additionalProperties": false
+        },
+        "architecture": {
+          "type": "object",
+          "properties": {
+            "legend": {
+              "type": "object",
+              "properties": {
+                "auto": {
+                  "type": "string"
+                },
+                "manual": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "auto",
+                "manual"
+              ],
+              "additionalProperties": false
+            },
+            "today": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "subtitle": {
+                  "type": "string"
+                },
+                "unknownTools": {
+                  "type": "string"
+                },
+                "silo": {
+                  "type": "object",
+                  "properties": {
+                    "when": {
+                      "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "when",
+                    "text"
+                  ],
+                  "additionalProperties": false
+                },
+                "toolNotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "when": {
+                        "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "tools": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "tools"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "externalAutoWhen": {
+                  "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                },
+                "excel": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "when": {
+                            "$ref": "#/definitions/content/properties/architecture/properties/today/properties/toolNotes/items/properties/when"
+                          },
+                          "text": {
+                            "$ref": "#/definitions/content/properties/architecture/properties/today/properties/toolNotes/items/properties/text"
+                          }
+                        },
+                        "required": [
+                          "text"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "detail",
+                    "notes"
+                  ],
+                  "additionalProperties": false
+                },
+                "people": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "autoWhen": {
+                      "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                    },
+                    "detailManual": {
+                      "type": "string"
+                    },
+                    "detailAuto": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "autoWhen",
+                    "detailManual",
+                    "detailAuto"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "title",
+                "subtitle",
+                "unknownTools",
+                "silo",
+                "toolNotes",
+                "externalAutoWhen",
+                "excel",
+                "people"
+              ],
+              "additionalProperties": false
+            },
+            "target": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "subtitle": {
+                  "type": "string"
+                },
+                "unknownTools": {
+                  "type": "string"
+                },
+                "excelSource": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/label"
+                    },
+                    "detail": {
+                      "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/detail"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "detail"
+                  ],
+                  "additionalProperties": false
+                },
+                "integration": {
+                  "$ref": "#/definitions/content/properties/architecture/properties/target/properties/excelSource"
+                },
+                "base": {
+                  "$ref": "#/definitions/content/properties/architecture/properties/target/properties/excelSource"
+                },
+                "outputs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/label"
+                      },
+                      "detail": {
+                        "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/detail"
+                      },
+                      "when": {
+                        "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                      },
+                      "requiresTools": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        }
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "detail"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "people": {
+                  "$ref": "#/definitions/content/properties/architecture/properties/target/properties/excelSource"
+                }
+              },
+              "required": [
+                "title",
+                "subtitle",
+                "unknownTools",
+                "excelSource",
+                "integration",
+                "base",
+                "outputs",
+                "people"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "legend",
+            "today",
+            "target"
+          ],
+          "additionalProperties": false
+        },
+        "privacy": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "updated": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "paragraphs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "title",
+                  "paragraphs"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "title",
+            "updated",
+            "sections"
+          ],
+          "additionalProperties": false
+        },
+        "report": {
+          "type": "object",
+          "properties": {
+            "fileName": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "preparedFor": {
+              "type": "string"
+            },
+            "preparedForAnonymous": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "texts": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "glossary": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "term": {
+                    "type": "string"
+                  },
+                  "definition": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "term",
+                  "definition"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "disclaimer": {
+              "type": "string"
+            },
+            "footer": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "fileName",
+            "title",
+            "preparedFor",
+            "preparedForAnonymous",
+            "author",
+            "sections",
+            "texts",
+            "glossary",
+            "disclaimer",
+            "footer"
+          ],
+          "additionalProperties": false
+        },
+        "home": {
+          "type": "object",
+          "properties": {
+            "hero": {
+              "type": "object",
+              "properties": {
+                "eyebrow": {
+                  "type": "string"
+                },
+                "titleLight": {
+                  "type": "string"
+                },
+                "titleStrong": {
+                  "type": "string"
+                },
+                "titleEnd": {
+                  "type": "string"
+                },
+                "lead": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "eyebrow",
+                "titleLight",
+                "titleStrong",
+                "titleEnd",
+                "lead"
+              ],
+              "additionalProperties": false
+            },
+            "benefits": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 6
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ],
+              "additionalProperties": false
+            },
+            "steps": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/content/properties/home/properties/benefits/properties/items/items"
+                  },
+                  "minItems": 1,
+                  "maxItems": 5
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ],
+              "additionalProperties": false
+            },
+            "about": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "photo": {
+                  "type": "string"
+                },
+                "photoAlt": {
+                  "type": "string"
+                },
+                "bio": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                "link": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "name",
+                "role",
+                "photo",
+                "photoAlt",
+                "bio",
+                "link"
+              ],
+              "additionalProperties": false
+            },
+            "reassurance": {
+              "$ref": "#/definitions/content/properties/home/properties/benefits/properties/items/items"
+            },
+            "testimonials": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quote": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "quote",
+                      "name",
+                      "role"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "hero",
+            "benefits",
+            "steps",
+            "about",
+            "reassurance",
+            "testimonials"
+          ],
+          "additionalProperties": false
+        },
+        "ui": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "settings",
+        "dimensions",
+        "levels",
+        "tools",
+        "questions",
+        "feedbacks",
+        "benchmarks",
+        "recommendations",
+        "offers",
+        "architecture",
+        "privacy",
+        "report",
+        "home",
+        "ui"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

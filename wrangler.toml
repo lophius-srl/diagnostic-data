@@ -1,0 +1,13 @@
+# Cloudflare Pages : site statique (dist/) + fonctions (functions/) + base D1 des leads.
+# Création de la base (une fois, en Europe de l'Ouest) :
+#   npx wrangler d1 create diagnostic-leads --location weur
+# puis copier l'identifiant affiché dans database_id ci-dessous.
+name = "diagnostic-data"
+compatibility_date = "2026-11-01"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "diagnostic-leads"
+database_id = "00000000-0000-0000-0000-000000000000" # PLACEHOLDER : identifiant renvoyé par « wrangler d1 create »
+migrations_dir = "migrations"
