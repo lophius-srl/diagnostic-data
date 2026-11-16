@@ -1,7 +1,8 @@
 # Proposition de démarrage — Diagnostic Data PME
 
-> Statut : **proposé, en attente de validation** (étape 1 du brief). Aucun code applicatif n'est écrit.
-> Points à trancher : voir la section « À valider » en fin de document.
+> Statut : **validé le 2026-11-16** (Cloudflare Pages + sous-domaine, valeurs par défaut ci-dessous).
+> Écarts depuis la proposition : schéma Zod dans `src/content/schema.ts` ; plafonds de niveau (`blockedBy`) ;
+> Montserrat auto-hébergée (`@fontsource`) plutôt que Google Fonts, pour le RGPD.
 
 ---
 

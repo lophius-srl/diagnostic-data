@@ -1,32 +1,31 @@
-# Point d'entrée unique pour toutes les commandes du projet.
-# La CI lance `make install lint test build` : remplace les cibles ci-dessous par les vraies commandes de ta stack.
-# (L'agent `architect` le fait pendant le /kickoff.)
-#
-# Exemples :
-#   Node       install: npm ci         lint: npm run lint      test: npm test        build: npm run build
-#   Python     install: pip install -e ".[dev]"  lint: ruff check .  test: pytest    build: python -m build
-#   Go         install: go mod download  lint: go vet ./...    test: go test ./...   build: go build ./...
-#   Flutter    install: flutter pub get  lint: flutter analyze  test: flutter test  build: flutter build web
+# Point d'entrée unique pour toutes les commandes du projet (la CI lance `make install lint test build`).
+# Sous Windows sans droits admin : `scoop install nodejs-lts make`, ou lancer directement les `npm run …` ci-dessous.
 
-.PHONY: install dev lint format test build deploy
+.PHONY: install dev lint format test build preview content
 
 install:
-	@echo "TODO: installer les dépendances"
+	npm ci
 
 dev:
-	@echo "TODO: lancer l'app en local"
+	npm run content
+	npm run dev
 
 lint:
-	@echo "TODO: lint"
+	npm run content
+	npm run lint
 
 format:
-	@echo "TODO: formater le code"
+	npm run format
 
 test:
-	@echo "TODO: tests"
+	npm test
 
 build:
-	@echo "TODO: build"
+	npm run build
 
-deploy:
-	@echo "TODO: déploiement (optionnel, voir .github/workflows/deploy.yml)"
+preview:
+	npm run preview
+
+# Valide le contenu YAML (content/) sans lancer l'app.
+content:
+	npm run content
