@@ -14,4 +14,6 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
     },
   },
+  // Fonctions serveur : console.error alimente les journaux Cloudflare.
+  { files: ['functions/**/*.ts'], rules: { 'no-console': ['error', { allow: ['error'] }] } },
 );

@@ -97,12 +97,39 @@
                 },
                 "analytics": {
                   "type": "boolean"
+                },
+                "leadGate": {
+                  "type": "boolean"
                 }
               },
               "required": [
                 "testimonials",
                 "chequesEntreprises",
-                "analytics"
+                "analytics",
+                "leadGate"
+              ],
+              "additionalProperties": false
+            },
+            "lead": {
+              "type": "object",
+              "properties": {
+                "consentVersion": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minFillMs": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "maxPerEmailPerHour": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "consentVersion",
+                "minFillMs",
+                "maxPerEmailPerHour"
               ],
               "additionalProperties": false
             }
@@ -114,7 +141,8 @@
             "feedbackMinGap",
             "hiddenCost",
             "links",
-            "features"
+            "features",
+            "lead"
           ],
           "additionalProperties": false
         },
@@ -1023,6 +1051,47 @@
           ],
           "additionalProperties": false
         },
+        "privacy": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "updated": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "paragraphs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "title",
+                  "paragraphs"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "title",
+            "updated",
+            "sections"
+          ],
+          "additionalProperties": false
+        },
         "ui": {
           "type": "object",
           "additionalProperties": {
@@ -1041,6 +1110,7 @@
         "recommendations",
         "offers",
         "architecture",
+        "privacy",
         "ui"
       ],
       "additionalProperties": false

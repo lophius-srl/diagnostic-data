@@ -6,13 +6,16 @@
   "description": "Diagnostic de maturité data en ligne pour PME wallonnes (Lophius)",
   "scripts": {
     "dev": "npm run content && vite",
-    "build": "npm run content && tsc --noEmit && vite build",
+    "build": "npm run content && tsc --noEmit && tsc -p functions --noEmit && vite build",
     "content": "tsx scripts/build-content.ts",
     "preview": "vite preview",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write . && eslint . --fix",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "dev:full": "npm run build && wrangler d1 migrations apply diagnostic-leads --local && wrangler pages dev dist --port 8788",
+    "leads:export": "tsx scripts/export-leads.ts",
+    "db:migrate": "wrangler d1 migrations apply diagnostic-leads --remote"
   },
   "engines": {
     "node": ">=20"
@@ -23,6 +26,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261116.1",
     "@eslint/js": "^9.39.5",
     "@preact/preset-vite": "^2.10.6",
     "@types/node": "^26.6.6",
@@ -36,6 +40,7 @@
     "typescript-eslint": "^8.72.2",
     "vite": "^6.4.6",
     "vitest": "^3.2.7",
+    "wrangler": "^4.163.0",
     "yaml": "^2.9.1",
     "zod-to-json-schema": "^3.25.2"
   }

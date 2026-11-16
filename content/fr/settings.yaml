@@ -26,3 +26,9 @@ features:
   testimonials: false # à activer uniquement avec de vrais témoignages
   chequesEntreprises: false # à activer quand la labellisation et l'éligibilité sont confirmées
   analytics: false # Cloudflare Web Analytics (sans cookies)
+  leadGate: true # détails, schéma cible, feuille de route, forfaits et PDF contre les coordonnées
+
+lead:
+  consentVersion: '2026-11-v1' # à changer si le texte de consentement (ui.yaml : lead_consent) change
+  minFillMs: 2500 # anti-robot : envoi plus rapide = ignoré
+  maxPerEmailPerHour: 3

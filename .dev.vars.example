@@ -1,0 +1,8 @@
+# Copier en .dev.vars pour tester la fonction /api/lead en local (fichier ignoré par git).
+# Sans BREVO_API_KEY, les leads sont stockés en local mais aucun e-mail n'est envoyé.
+BREVO_API_KEY=
+LEAD_NOTIFY_EMAIL=
+LEAD_SENDER_EMAIL=
+LEAD_SENDER_NAME=Diagnostic Lophius
+# En production : https://diagnostic.lophius.be (vide = pas de contrôle d'origine)
+ALLOWED_ORIGIN=

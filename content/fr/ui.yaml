@@ -51,3 +51,43 @@ results_offer_cta: En parler
 results_restart: Refaire le diagnostic
 summary_strength: 'Votre point fort : {dimension}.'
 summary_weakness: "C'est sur {dimension} que vous gagnerez le plus, et le plus vite."
+# ---------- Rapport complet et capture de leads ----------
+gate_title: Recevez votre rapport complet
+gate_intro: Le détail de vos quick wins, l'architecture cible recommandée, votre feuille de route sur 90 jours et le rapport PDF à transmettre en interne.
+gate_locked_qw: Le détail de chaque action est dans votre rapport complet.
+gate_locked_target: La cible recommandée pour votre entreprise est dans votre rapport complet.
+gate_locked_cta: Débloquer le rapport complet
+lead_first_name: Prénom
+lead_last_name: Nom
+lead_email: E-mail professionnel
+lead_company: Entreprise
+lead_bce: N° d'entreprise (BCE)
+lead_phone: Téléphone
+lead_optional: facultatif
+lead_bce_hint: 'Ex. 0123.456.749'
+lead_consent: J'accepte que Lophius SRL utilise ces informations et mes réponses pour m'envoyer ce rapport et me recontacter à propos de ce diagnostic. Aucune autre utilisation, aucune revente.
+lead_privacy_link: Politique de confidentialité
+lead_submit: Recevoir mon rapport complet
+lead_sending: Envoi en cours…
+lead_error_required: Ce champ est obligatoire.
+lead_error_email: Cette adresse e-mail ne semble pas valide.
+lead_error_bce: 'Ce numéro BCE ne semble pas valide (10 chiffres, ex. 0123.456.749).'
+lead_error_phone: Ce numéro de téléphone ne semble pas valide.
+lead_error_consent: Votre accord est nécessaire pour recevoir le rapport.
+lead_error_network: L'envoi n'a pas abouti. Vérifiez votre connexion et réessayez.
+lead_error_rate: Plusieurs demandes ont déjà été envoyées avec cette adresse. Réessayez dans une heure.
+lead_error_summary: Quelques champs sont à corriger.
+lead_thanks_title: 'Merci {firstName}, votre rapport complet est débloqué.'
+lead_thanks_text: Je reviens vers vous personnellement. Si vous voulez en parler tout de suite, choisissez un créneau.
+lead_booking: Réserver 30 minutes pour en parler
+# ---------- Partage ----------
+share_title: Partager ce diagnostic
+share_text: Envoyez ce résultat à votre associé ou à votre comptable. Le lien contient vos réponses, rien n'est stocké chez nous.
+share_button: Partager le lien
+share_copied: Lien copié.
+share_copy_label: Lien de partage
+share_native_title: Notre diagnostic data
+shared_banner: Ce diagnostic vous a été transmis. Il reflète les réponses de la personne qui l'a rempli.
+shared_old_version: Les questions ont évolué depuis la création de ce lien. Le résultat peut légèrement différer.
+shared_invalid: Ce lien de partage est incomplet ou abîmé.
+shared_own_cta: Faire mon propre diagnostic

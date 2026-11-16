@@ -280,6 +280,14 @@ export const ArchitectureSchema = z
   })
   .strict();
 
+export const PrivacySchema = z
+  .object({
+    title: z.string(),
+    updated: z.string(),
+    sections: z.array(z.object({ title: z.string(), paragraphs: z.array(z.string()).min(1) }).strict()).min(1),
+  })
+  .strict();
+
 export const SettingsSchema = z
   .object({
     locale: z.string(),
@@ -308,6 +316,17 @@ export const SettingsSchema = z
         testimonials: z.boolean(),
         chequesEntreprises: z.boolean(),
         analytics: z.boolean(),
+        /** Rapport complet (détails, schéma cible, feuille de route, forfaits, PDF) débloqué contre les coordonnées. */
+        leadGate: z.boolean(),
+      })
+      .strict(),
+    lead: z
+      .object({
+        /** Version du texte de consentement, stockée avec chaque lead (à changer si le texte change). */
+        consentVersion: z.string().min(1),
+        /** Délai minimal (ms) entre l'affichage du formulaire et l'envoi : en dessous, c'est un robot. */
+        minFillMs: z.number().int().min(0),
+        maxPerEmailPerHour: z.number().int().min(1),
       })
       .strict(),
   })
@@ -325,6 +344,7 @@ export const ContentSchema = z
     recommendations: RecommendationsSchema,
     offers: OffersSchema,
     architecture: ArchitectureSchema,
+    privacy: PrivacySchema,
     ui: z.record(z.string(), z.string()),
   })
   .strict();
@@ -352,5 +372,6 @@ export const CONTENT_FILES = {
   recommendations: 'recommendations.yaml',
   offers: 'offers.yaml',
   architecture: 'architecture.yaml',
+  privacy: 'privacy.yaml',
   ui: 'ui.yaml',
 } as const satisfies Record<keyof Content, string>;

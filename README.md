@@ -32,6 +32,8 @@ L'app tourne sur http://localhost:5173.
 | Lint / format | `make lint` / `make format` |
 | Tests | `make test` |
 | Build | `make build` puis `make preview` |
+| App + fonction des leads + base locale | `make dev-full` (http://localhost:8788) |
+| Export des leads en CSV | `make leads-export` |
 
 ## Modifier le diagnostic sans toucher au code
 
@@ -50,6 +52,9 @@ Tout le contenu est dans `content/fr/` :
 
 Après une modification, `make content` valide tout et explique les erreurs en clair.
 `make test` vérifie aussi les règles de rédaction (15 mots, 4 réponses, pas de jargon) et les parcours (12 à 15 questions).
+
+## Mise en ligne
+Cloudflare Pages + D1 + Brevo, tout gratuit : voir `docs/deploiement.md`.
 
 ## Documentation
 - `docs/decisions.md` : la stack en 5 lignes ; `docs/adr/` : décisions d'architecture.

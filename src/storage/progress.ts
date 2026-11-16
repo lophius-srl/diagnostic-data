@@ -14,6 +14,8 @@ export interface SavedProgress {
   seenFeedbacks: string[];
   /** Coût horaire personnalisé sur la page de résultats. */
   hourlyRate?: number;
+  /** Rapport complet débloqué (coordonnées envoyées), avec le prénom pour le remerciement. */
+  unlocked?: { firstName: string };
 }
 
 export const STORAGE_KEY = 'lophius-diagnostic';
@@ -61,6 +63,10 @@ export function loadProgress(storage: SafeStorage, content: Content): SavedProgr
     lastFeedbackAt: sameVersion && typeof data.lastFeedbackAt === 'number' ? data.lastFeedbackAt : null,
     seenFeedbacks: Array.isArray(data.seenFeedbacks) ? data.seenFeedbacks.filter((s) => typeof s === 'string') : [],
     ...(typeof data.hourlyRate === 'number' && data.hourlyRate > 0 && { hourlyRate: data.hourlyRate }),
+    ...(sameVersion &&
+      typeof data.unlocked?.firstName === 'string' && {
+        unlocked: { firstName: data.unlocked.firstName.slice(0, 60) },
+      }),
   };
 }
 

@@ -4,10 +4,10 @@ import { layoutDiagram } from '../../diagram/layout';
 import { renderDiagramSvg } from '../../diagram/svg';
 import { buildArchitecture, describeDiagram, type ArchDiagram } from '../../engine/architecture';
 import type { Answers } from '../../engine/conditions';
-import { useRevealOnScroll } from '../motion';
+import { prefersReducedMotion, useRevealOnScroll } from '../motion';
 
 /** Les deux schémas « Aujourd'hui » et « Cible recommandée », générés à partir des réponses. */
-export function ArchitectureSection({ answers }: { answers: Answers }) {
+export function ArchitectureSection({ answers, locked }: { answers: Answers; locked: boolean }) {
   const { today, target } = useMemo(() => buildArchitecture(content, answers), [answers]);
   const { legend } = content.architecture;
   return (
@@ -16,7 +16,19 @@ export function ArchitectureSection({ answers }: { answers: Answers }) {
       <p class="muted">{t('results_architecture_intro')}</p>
       <div class="arch-grid">
         <Diagram diagram={today} />
-        <Diagram diagram={target} />
+        {locked ? (
+          <figure class="card arch arch-locked">
+            <figcaption>
+              <h3>{target.title}</h3>
+              <p class="muted small">{t('gate_locked_target')}</p>
+            </figcaption>
+            <button type="button" class="btn btn-primary" onClick={goToReportForm}>
+              {t('gate_locked_cta')}
+            </button>
+          </figure>
+        ) : (
+          <Diagram diagram={target} />
+        )}
       </div>
       <p class="arch-legend" aria-hidden="true">
         <span class="legend-auto">{legend.auto}</span>
@@ -24,6 +36,13 @@ export function ArchitectureSection({ answers }: { answers: Answers }) {
       </p>
     </section>
   );
+}
+
+/** Fait défiler jusqu'au formulaire et y place le focus (pas d'ancre : le routeur utilise le fragment). */
+function goToReportForm() {
+  const form = document.getElementById('rapport');
+  form?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  form?.querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true });
 }
 
 function Diagram({ diagram }: { diagram: ArchDiagram }) {

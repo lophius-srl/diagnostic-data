@@ -18,3 +18,8 @@ coverage/
 
 # Contenu généré au build (npm run content)
 src/generated/
+
+# Cloudflare (local)
+.dev.vars
+.wrangler/
+exports/

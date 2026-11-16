@@ -2,6 +2,8 @@ import { content, t } from '../../content';
 import type { Answers } from '../../engine/conditions';
 import { buildDiagnostic } from '../../engine/diagnostic';
 import type { RenderedAction } from '../../engine/recommend';
+import { LeadForm } from '../lead/LeadForm';
+import { ShareBox } from '../lead/ShareBox';
 import { useCountUp } from '../motion';
 import { ArchitectureSection } from './ArchitectureSection';
 import { HiddenCostCard } from './HiddenCostCard';
@@ -12,18 +14,40 @@ interface Props {
   hourlyRate: number | undefined;
   onRateChange: (rate: number) => void;
   onRestart: () => void;
+  /** Rapport complet débloqué (coordonnées envoyées, ou lien partagé après déblocage). */
+  unlocked: { firstName: string } | undefined;
+  /** Absent en mode « lien partagé » : pas de formulaire, on invite à faire son propre diagnostic. */
+  onUnlock?: (firstName: string) => void;
+  /** Texte d'avertissement en haut de page (mode partagé). */
+  banner?: string[];
 }
 
 const dimension = (id: string | undefined) => content.dimensions.find((d) => d.id === id);
 
-export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart }: Props) {
+/** Lien de prise de rendez-vous, ou la page contact tant qu'il n'est pas configuré. */
+export const bookingLink = () =>
+  content.settings.links.booking.startsWith('[[') ? content.settings.links.contact : content.settings.links.booking;
+
+export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlocked, onUnlock, banner }: Props) {
   const result = buildDiagnostic(content, answers, hourlyRate === undefined ? {} : { hourlyRate });
   const { score } = result;
   const shownScore = useCountUp(score.global, true);
   const { features } = content.settings;
+  const locked = features.leadGate && !unlocked;
+  const shared = onUnlock === undefined;
 
   return (
     <article class="results">
+      {banner && banner.length > 0 && (
+        <aside class="notice shared-banner">
+          {banner.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+          <button type="button" class="btn btn-primary btn-small" onClick={onRestart}>
+            {t('shared_own_cta')}
+          </button>
+        </aside>
+      )}
       {/* ---------- Synthèse ---------- */}
       <header class="results-hero">
         <p class="eyebrow">{t('results_eyebrow')}</p>
@@ -75,7 +99,7 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart }: Pr
       {result.hiddenCost && <HiddenCostCard cost={result.hiddenCost} onRateChange={onRateChange} />}
 
       {/* ---------- Schémas d'architecture ---------- */}
-      <ArchitectureSection answers={answers} />
+      <ArchitectureSection answers={answers} locked={locked} />
 
       {/* ---------- Quick wins ---------- */}
       <section aria-labelledby="qw-title">
@@ -83,11 +107,48 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart }: Pr
         <p class="muted">{t('results_quick_wins_intro')}</p>
         <ol class="quick-wins">
           {result.quickWins.map((qw, i) => (
-            <QuickWin key={qw.id} action={qw} index={i + 1} />
+            <QuickWin key={qw.id} action={qw} index={i + 1} locked={locked} />
           ))}
         </ol>
+        {locked && <p class="muted">{t('gate_locked_qw')}</p>}
       </section>
 
+      {/* ---------- Déblocage du rapport complet ---------- */}
+      {locked && !shared && (
+        <section class="card gate" id="rapport" aria-labelledby="gate-title">
+          <h2 id="gate-title">{t('gate_title')}</h2>
+          <p>{t('gate_intro')}</p>
+          <LeadForm answers={answers} hourlyRate={hourlyRate} onSuccess={onUnlock} />
+        </section>
+      )}
+      {unlocked && !shared && (
+        <section class="card thanks" aria-labelledby="thanks-title" tabIndex={-1} id="merci">
+          <h2 id="thanks-title">{t('lead_thanks_title', { firstName: unlocked.firstName })}</h2>
+          <p>{t('lead_thanks_text')}</p>
+          <a class="btn btn-primary" href={bookingLink()} target="_blank" rel="noopener">
+            {t('lead_booking')}
+          </a>
+        </section>
+      )}
+
+      {!locked && <FullReport result={result} />}
+
+      <ShareBox answers={answers} unlocked={!locked} />
+
+      <div class="actions">
+        <button type="button" class="btn btn-secondary" onClick={onRestart}>
+          {shared ? t('shared_own_cta') : t('results_restart')}
+        </button>
+      </div>
+    </article>
+  );
+}
+
+/** Partie du rapport réservée au rapport complet : feuille de route et forfaits. */
+function FullReport({ result }: { result: ReturnType<typeof buildDiagnostic> }) {
+  const { features } = content.settings;
+  return (
+    <>
       {/* ---------- Feuille de route ---------- */}
       <section aria-labelledby="roadmap-title">
         <h2 id="roadmap-title">{t('results_roadmap')}</h2>
@@ -132,7 +193,7 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart }: Pr
                   <dd>{o.price}</dd>
                 </div>
               </dl>
-              <a class="btn btn-secondary" href={content.settings.links.contact}>
+              <a class="btn btn-secondary" href={bookingLink()} target="_blank" rel="noopener">
                 {t('results_offer_cta')}
               </a>
             </section>
@@ -145,13 +206,7 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart }: Pr
           </aside>
         )}
       </section>
-
-      <div class="actions">
-        <button type="button" class="btn btn-secondary" onClick={onRestart}>
-          {t('results_restart')}
-        </button>
-      </div>
-    </article>
+    </>
   );
 }
 
@@ -171,7 +226,7 @@ function DimensionList({ title, ids }: { title: string; ids: string[] }) {
   );
 }
 
-function QuickWin({ action, index }: { action: RenderedAction; index: number }) {
+function QuickWin({ action, index, locked }: { action: RenderedAction; index: number; locked: boolean }) {
   return (
     <li class="card quick-win">
       <p class="qw-meta">
@@ -179,7 +234,7 @@ function QuickWin({ action, index }: { action: RenderedAction; index: number }) 
         <span class="chip">{dimension(action.dimension)?.label}</span>
       </p>
       <h3>{action.title}</h3>
-      <p>{action.detail}</p>
+      {!locked && <p>{action.detail}</p>}
       <p class="qw-badges">
         <span>
           {t('results_effort')} : <strong>{t(`level_${action.effort}`)}</strong>
