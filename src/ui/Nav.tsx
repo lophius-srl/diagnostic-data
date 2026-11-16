@@ -1,10 +1,21 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { content, t } from '../content';
+
+/** Défilement (px) au-delà duquel le bouton « Contact Me » apparaît. */
+const SHOW_CTA_AFTER_PX = 400;
 
 export function Nav() {
   const { links } = content.settings;
   const site = links.site.replace(/\/+$/, '');
   const [menuOpen, setMenuOpen] = useState(false);
+  // Comme sur lophius.be : « Contact Me » n'apparaît qu'après avoir fait défiler la page.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SHOW_CTA_AFTER_PX);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const skip = (event: MouseEvent) => {
     // Pas de changement d'URL : le fragment (#) sert au routage.
     event.preventDefault();
@@ -42,9 +53,11 @@ export function Nav() {
             <a class="nav-link" href={`${site}/#work`}>
               {t('nav_work')}
             </a>
-            <a class="btn btn-primary btn-small nav-cta" href={`${site}/#contact`}>
-              {t('nav_contact')}
-            </a>
+            {scrolled && (
+              <a class="btn btn-primary btn-small nav-cta" href={`${site}/#contact`}>
+                {t('nav_contact')}
+              </a>
+            )}
             <button
               type="button"
               class="nav-burger"
