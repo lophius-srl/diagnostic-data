@@ -7,7 +7,7 @@ import { FeedbackView } from './FeedbackView';
 import { Home } from './Home';
 import { Nav } from './Nav';
 import { QuestionView } from './QuestionView';
-import { ResultsPreview } from './ResultsPreview';
+import { ResultsPage } from './results/ResultsPage';
 import { currentQuestion, isComplete, questionnaireReducer } from './questionnaire-state';
 
 type Route = 'home' | 'diagnostic' | 'resultats';
@@ -89,7 +89,7 @@ export function App() {
           />
         )}
         {route === 'resultats' && complete && (
-          <ResultsPreview
+          <ResultsPage
             answers={state.answers}
             hourlyRate={hourlyRate}
             onRateChange={setHourlyRate}
