@@ -321,6 +321,10 @@
               },
               "logo": {
                 "type": "string"
+              },
+              "shortName": {
+                "type": "string",
+                "maxLength": 18
               }
             },
             "required": [
@@ -785,6 +789,240 @@
           ],
           "additionalProperties": false
         },
+        "architecture": {
+          "type": "object",
+          "properties": {
+            "legend": {
+              "type": "object",
+              "properties": {
+                "auto": {
+                  "type": "string"
+                },
+                "manual": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "auto",
+                "manual"
+              ],
+              "additionalProperties": false
+            },
+            "today": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "subtitle": {
+                  "type": "string"
+                },
+                "unknownTools": {
+                  "type": "string"
+                },
+                "silo": {
+                  "type": "object",
+                  "properties": {
+                    "when": {
+                      "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "when",
+                    "text"
+                  ],
+                  "additionalProperties": false
+                },
+                "toolNotes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "when": {
+                        "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "tools": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "tools"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "externalAutoWhen": {
+                  "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                },
+                "excel": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "notes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "when": {
+                            "$ref": "#/definitions/content/properties/architecture/properties/today/properties/toolNotes/items/properties/when"
+                          },
+                          "text": {
+                            "$ref": "#/definitions/content/properties/architecture/properties/today/properties/toolNotes/items/properties/text"
+                          }
+                        },
+                        "required": [
+                          "text"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "detail",
+                    "notes"
+                  ],
+                  "additionalProperties": false
+                },
+                "people": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "autoWhen": {
+                      "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                    },
+                    "detailManual": {
+                      "type": "string"
+                    },
+                    "detailAuto": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "autoWhen",
+                    "detailManual",
+                    "detailAuto"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "title",
+                "subtitle",
+                "unknownTools",
+                "silo",
+                "toolNotes",
+                "externalAutoWhen",
+                "excel",
+                "people"
+              ],
+              "additionalProperties": false
+            },
+            "target": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "subtitle": {
+                  "type": "string"
+                },
+                "unknownTools": {
+                  "type": "string"
+                },
+                "excelSource": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/label"
+                    },
+                    "detail": {
+                      "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/detail"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "detail"
+                  ],
+                  "additionalProperties": false
+                },
+                "integration": {
+                  "$ref": "#/definitions/content/properties/architecture/properties/target/properties/excelSource"
+                },
+                "base": {
+                  "$ref": "#/definitions/content/properties/architecture/properties/target/properties/excelSource"
+                },
+                "outputs": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/label"
+                      },
+                      "detail": {
+                        "$ref": "#/definitions/content/properties/architecture/properties/today/properties/excel/properties/detail"
+                      },
+                      "when": {
+                        "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                      },
+                      "requiresTools": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        }
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "detail"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "people": {
+                  "$ref": "#/definitions/content/properties/architecture/properties/target/properties/excelSource"
+                }
+              },
+              "required": [
+                "title",
+                "subtitle",
+                "unknownTools",
+                "excelSource",
+                "integration",
+                "base",
+                "outputs",
+                "people"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "legend",
+            "today",
+            "target"
+          ],
+          "additionalProperties": false
+        },
         "ui": {
           "type": "object",
           "additionalProperties": {
@@ -802,6 +1040,7 @@
         "benchmarks",
         "recommendations",
         "offers",
+        "architecture",
         "ui"
       ],
       "additionalProperties": false

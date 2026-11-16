@@ -32,6 +32,8 @@ results_hidden_cost_unit: par an
 results_hidden_cost_detail: "{hoursWeek} h par semaine × {weeks} semaines × {rate} € de l'heure, soit {hours} h par an."
 results_hidden_cost_note: Une estimation à partir de vos réponses. Adaptez le coût horaire à votre réalité, charges comprises.
 results_hourly_rate: Coût horaire (€)
+results_architecture: Comment circulent vos chiffres
+results_architecture_intro: D'abord ce que vos réponses décrivent aujourd'hui, puis l'organisation que nous recommandons, avec vos outils actuels.
 results_quick_wins: Vos 3 quick wins
 results_quick_wins_intro: Les actions qui rapportent le plus, le plus vite, avec vos outils actuels.
 results_effort: Effort

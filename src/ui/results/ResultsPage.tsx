@@ -3,6 +3,7 @@ import type { Answers } from '../../engine/conditions';
 import { buildDiagnostic } from '../../engine/diagnostic';
 import type { RenderedAction } from '../../engine/recommend';
 import { useCountUp } from '../motion';
+import { ArchitectureSection } from './ArchitectureSection';
 import { HiddenCostCard } from './HiddenCostCard';
 import { Radar } from './Radar';
 
@@ -72,6 +73,9 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart }: Pr
 
       {/* ---------- Coût caché ---------- */}
       {result.hiddenCost && <HiddenCostCard cost={result.hiddenCost} onRateChange={onRateChange} />}
+
+      {/* ---------- Schémas d'architecture ---------- */}
+      <ArchitectureSection answers={answers} />
 
       {/* ---------- Quick wins ---------- */}
       <section aria-labelledby="qw-title">

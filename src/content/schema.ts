@@ -118,6 +118,8 @@ export const ToolSchema = z
     category: z.enum(['tableur', 'compta', 'gestion', 'crm', 'ecommerce', 'caisse', 'metier', 'externe', 'inconnu']),
     /** Chemin du logo dans public/ (facultatif : sinon pastille avec initiales). */
     logo: z.string().optional(),
+    /** Nom court pour les schémas (sinon `name`). */
+    shortName: z.string().max(18).optional(),
   })
   .strict();
 
@@ -240,6 +242,44 @@ export const OffersSchema = z
   })
   .strict();
 
+const LabelDetail = z.object({ label: z.string(), detail: z.string() }).strict();
+const ConditionalText = z.object({ when: ConditionSchema.optional(), text: z.string() }).strict();
+
+export const ArchitectureSchema = z
+  .object({
+    legend: z.object({ auto: z.string(), manual: z.string() }).strict(),
+    today: z
+      .object({
+        title: z.string(),
+        subtitle: z.string(),
+        unknownTools: z.string(),
+        silo: z.object({ when: ConditionSchema, text: z.string() }).strict(),
+        toolNotes: z.array(ConditionalText.extend({ tools: z.array(Id).min(1) }).strict()),
+        /** Lien vers la fiduciaire dessiné « automatique » si cette condition est vraie. */
+        externalAutoWhen: ConditionSchema,
+        excel: LabelDetail.extend({ notes: z.array(ConditionalText) }).strict(),
+        people: z
+          .object({ label: z.string(), autoWhen: ConditionSchema, detailManual: z.string(), detailAuto: z.string() })
+          .strict(),
+      })
+      .strict(),
+    target: z
+      .object({
+        title: z.string(),
+        subtitle: z.string(),
+        unknownTools: z.string(),
+        excelSource: LabelDetail,
+        integration: LabelDetail,
+        base: LabelDetail,
+        outputs: z.array(
+          LabelDetail.extend({ when: ConditionSchema.optional(), requiresTools: z.array(Id).optional() }).strict(),
+        ),
+        people: LabelDetail,
+      })
+      .strict(),
+  })
+  .strict();
+
 export const SettingsSchema = z
   .object({
     locale: z.string(),
@@ -284,6 +324,7 @@ export const ContentSchema = z
     benchmarks: z.array(BenchmarkSchema),
     recommendations: RecommendationsSchema,
     offers: OffersSchema,
+    architecture: ArchitectureSchema,
     ui: z.record(z.string(), z.string()),
   })
   .strict();
@@ -310,5 +351,6 @@ export const CONTENT_FILES = {
   benchmarks: 'benchmarks.yaml',
   recommendations: 'recommendations.yaml',
   offers: 'offers.yaml',
+  architecture: 'architecture.yaml',
   ui: 'ui.yaml',
 } as const satisfies Record<keyof Content, string>;

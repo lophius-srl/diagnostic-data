@@ -1,5 +1,5 @@
 # Catalogue des outils de l'écosystème belge. `logo` : fichier dans public/brand/tools/ (facultatif).
-- { id: excel, name: Excel / Google Sheets, category: tableur }
+- { id: excel, name: Excel / Google Sheets, shortName: Excel / Sheets, category: tableur }
 - { id: odoo, name: Odoo, category: gestion }
 - { id: teamleader, name: Teamleader, category: crm }
 - { id: exact, name: Exact Online, category: compta }

@@ -86,7 +86,9 @@ export function validateContent(content: Content): string[] {
     for (const o of hcQuestion.options)
       if (!(o.id in hc.hoursPerWeek)) errors.push(`coût caché : heures manquantes pour « ${o.id} »`);
 
-  validateRecommendations(content, errors, (cond, where) => checkCondition(cond, where, content.questions.length - 1));
+  const checkLate = (cond: Condition, where: string) => checkCondition(cond, where, content.questions.length - 1);
+  validateRecommendations(content, errors, checkLate);
+  validateArchitecture(content, errors, checkLate);
   return errors;
 }
 
@@ -139,6 +141,30 @@ function validateRecommendations(
     for (const c of [o.recommendIf, o.preferredIf]) if (c) checkCondition(c, where);
     checkTexts(where, [o.title, o.summary, o.why, ...o.deliverables], {});
   }
+}
+
+function validateArchitecture(
+  content: Content,
+  errors: string[],
+  checkCondition: (cond: Condition, where: string) => void,
+): void {
+  const { today, target } = content.architecture;
+  const toolIds = new Set(content.tools.map((t) => t.id));
+  const variableIds = new Set(content.recommendations.variables.map((v) => v.id));
+  checkCondition(today.silo.when, 'schéma : silo');
+  checkCondition(today.people.autoWhen, 'schéma : direction');
+  checkCondition(today.externalAutoWhen, 'schéma : fiduciaire');
+  today.toolNotes.forEach((n, i) => {
+    if (n.when) checkCondition(n.when, `schéma : note d'outil ${i}`);
+    for (const id of n.tools) if (!toolIds.has(id)) errors.push(`schéma : outil inconnu « ${id} »`);
+  });
+  today.excel.notes.forEach((n, i) => n.when && checkCondition(n.when, `schéma : note Excel ${i}`));
+  target.outputs.forEach((o, i) => {
+    if (o.when) checkCondition(o.when, `schéma : sortie ${i}`);
+    for (const id of o.requiresTools ?? []) if (!toolIds.has(id)) errors.push(`schéma : outil inconnu « ${id} »`);
+    for (const slot of placeholders(o.label + o.detail))
+      if (!variableIds.has(slot)) errors.push(`schéma : sortie ${i}, trou {${slot}} non défini`);
+  });
 }
 
 function duplicates(ids: readonly string[]): string[] {
