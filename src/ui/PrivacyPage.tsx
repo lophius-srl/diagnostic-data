@@ -4,7 +4,9 @@ export function PrivacyPage() {
   const { privacy } = content;
   return (
     <article class="prose">
-      <h1 class="hero-title">{privacy.title}</h1>
+      <h1 class="hero-title" tabIndex={-1}>
+        {privacy.title}
+      </h1>
       <p class="muted small">{privacy.updated}</p>
       {privacy.sections.map((s) => (
         <section key={s.title}>

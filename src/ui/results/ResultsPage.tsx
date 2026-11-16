@@ -52,7 +52,7 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
       {/* ---------- Synthèse ---------- */}
       <header class="results-hero">
         <p class="eyebrow">{t('results_eyebrow')}</p>
-        <h1 class="hero-title">
+        <h1 class="hero-title" tabIndex={-1}>
           {t('results_title_light')} <strong>{score.level.label}</strong>
         </h1>
         <div class="score-row">

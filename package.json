@@ -16,7 +16,8 @@
     "dev:full": "npm run build && wrangler d1 migrations apply diagnostic-leads --local && wrangler pages dev dist --port 8788",
     "leads:export": "tsx scripts/export-leads.ts",
     "db:migrate": "wrangler d1 migrations apply diagnostic-leads --remote",
-    "report:samples": "tsx scripts/render-sample-reports.ts"
+    "report:samples": "tsx scripts/render-sample-reports.ts",
+    "lighthouse": "tsx scripts/lighthouse.ts"
   },
   "engines": {
     "node": ">=20"
@@ -37,6 +38,7 @@
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^10.1.8",
     "jsdom": "^31.0.1",
+    "lighthouse": "^12.8.2",
     "prettier": "^3.10.1",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",

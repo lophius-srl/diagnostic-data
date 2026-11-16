@@ -86,6 +86,10 @@
               ],
               "additionalProperties": false
             },
+            "analyticsToken": {
+              "type": "string",
+              "default": ""
+            },
             "features": {
               "type": "object",
               "properties": {
@@ -1187,6 +1191,182 @@
           ],
           "additionalProperties": false
         },
+        "home": {
+          "type": "object",
+          "properties": {
+            "hero": {
+              "type": "object",
+              "properties": {
+                "eyebrow": {
+                  "type": "string"
+                },
+                "titleLight": {
+                  "type": "string"
+                },
+                "titleStrong": {
+                  "type": "string"
+                },
+                "titleEnd": {
+                  "type": "string"
+                },
+                "lead": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "eyebrow",
+                "titleLight",
+                "titleStrong",
+                "titleEnd",
+                "lead"
+              ],
+              "additionalProperties": false
+            },
+            "benefits": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "text"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1,
+                  "maxItems": 6
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ],
+              "additionalProperties": false
+            },
+            "steps": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/content/properties/home/properties/benefits/properties/items/items"
+                  },
+                  "minItems": 1,
+                  "maxItems": 5
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ],
+              "additionalProperties": false
+            },
+            "about": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "photo": {
+                  "type": "string"
+                },
+                "photoAlt": {
+                  "type": "string"
+                },
+                "bio": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                "link": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "name",
+                "role",
+                "photo",
+                "photoAlt",
+                "bio",
+                "link"
+              ],
+              "additionalProperties": false
+            },
+            "reassurance": {
+              "$ref": "#/definitions/content/properties/home/properties/benefits/properties/items/items"
+            },
+            "testimonials": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "quote": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "quote",
+                      "name",
+                      "role"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "title",
+                "items"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "hero",
+            "benefits",
+            "steps",
+            "about",
+            "reassurance",
+            "testimonials"
+          ],
+          "additionalProperties": false
+        },
         "ui": {
           "type": "object",
           "additionalProperties": {
@@ -1207,6 +1387,7 @@
         "architecture",
         "privacy",
         "report",
+        "home",
         "ui"
       ],
       "additionalProperties": false

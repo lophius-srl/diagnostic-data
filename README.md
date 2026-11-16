@@ -35,6 +35,7 @@ L'app tourne sur http://localhost:5173.
 | App + fonction des leads + base locale | `make dev-full` (http://localhost:8788) |
 | Export des leads en CSV | `make leads-export` |
 | Rapports PDF des 3 profils de test (relecture) | `make report-samples` → `exports/` |
+| Audit Lighthouse mobile (app lancée avec `make dev-full`) | `make lighthouse` |
 
 ## Modifier le diagnostic sans toucher au code
 
@@ -53,13 +54,14 @@ Tout le contenu est dans `content/fr/` :
 | `recommendations.yaml`, `offers.yaml` | quick wins, feuille de route, forfaits |
 | `report.yaml` | textes du rapport PDF et glossaire |
 | `privacy.yaml` | politique de confidentialité (modèle à compléter) |
+| `home.yaml` | page d'accueil, bio, témoignages (masqués par défaut) |
 | `ui.yaml` | textes d'interface |
 
 Après une modification, `make content` valide tout et explique les erreurs en clair.
 `make test` vérifie aussi les règles de rédaction (15 mots, 4 réponses, pas de jargon) et les parcours (12 à 15 questions).
 
 ## Mise en ligne
-Cloudflare Pages + D1 + Brevo, tout gratuit : voir `docs/deploiement.md`.
+Cloudflare Pages + D1 + Brevo, tout gratuit : voir `docs/deploiement.md`, dont la liste de tout ce qui reste à remplir.
 
 ## Documentation
 - `docs/decisions.md` : la stack en 5 lignes ; `docs/adr/` : décisions d'architecture.

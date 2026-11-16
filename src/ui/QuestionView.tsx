@@ -34,7 +34,7 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
   const toolsById = new Map(content.tools.map((tool) => [tool.id, tool]));
 
   return (
-    <section class="question" aria-labelledby="question-title">
+    <section class="question" aria-labelledby="question-title" key={question.id}>
       <div
         class="progress"
         role="progressbar"

@@ -1,9 +1,6 @@
 # Textes d'interface (préparés pour une future version anglaise : content/en/ui.yaml).
 brand: Lophius
 nav_contact: Contact
-start_title_light: En 5 minutes, découvrez
-start_title_strong: ce que vos données vous coûtent
-start_title_end: et ce qu'elles pourraient vous rapporter.
 start_duration: 'Environ {minutes} minutes · 12 à 15 questions · aucune inscription pour voir votre score'
 start_button: Commencer le diagnostic
 resume_button: Reprendre où j'en étais
@@ -97,3 +94,10 @@ pdf_working: Préparation du rapport…
 pdf_error: Le rapport n'a pas pu être généré. Réessayez, ou contactez-nous.
 pdf_title: Votre rapport à transmettre
 pdf_text: Une synthèse en une page, le détail de vos 7 axes, vos schémas, votre feuille de route et les prochaines étapes. À faire circuler en interne.
+# ---------- Pied de page et navigation ----------
+skip_link: Aller au contenu
+footer_tagline: Your software, driven by data.
+footer_site: lophius.be
+footer_contact: Contact
+footer_privacy: Politique de confidentialité
+footer_legal: '© {year} Lophius SRL'

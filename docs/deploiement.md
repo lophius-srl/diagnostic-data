@@ -78,3 +78,29 @@ LOCAL=1 make leads-export                # (dans Git Bash) ou : npm run leads:ex
 - Compléter `content/fr/privacy.yaml` (adresse, BCE, durée de conservation, contact).
 - Accepter les conditions de traitement des données (DPA) de Cloudflare et de Brevo dans leurs tableaux de bord.
 - Si le texte de consentement (`lead_consent` dans `ui.yaml`) change : incrémenter `lead.consentVersion` dans `settings.yaml`.
+
+## 7. Statistiques de visite (facultatif, sans cookie)
+
+Désactivées par défaut. Pour les activer avec Cloudflare Web Analytics :
+1. Cloudflare → *Analytics & Logs* → *Web Analytics* → ajoute le site, copie le jeton.
+2. `content/fr/settings.yaml` : `analyticsToken: "<jeton>"` et `features.analytics: true`.
+3. `public/_headers` : ajoute `https://static.cloudflareinsights.com` à `script-src`
+   et `https://cloudflareinsights.com` à `connect-src`.
+4. N'active **pas** l'injection automatique proposée par Cloudflare Pages : la politique de sécurité la bloquerait.
+
+## 8. Avant la mise en ligne : tout ce qui reste à remplir
+
+| Où | Quoi |
+|---|---|
+| `public/brand/logo.svg` | le vrai logo Lophius (même nom de fichier ; sert au site et au PDF) |
+| `public/brand/portrait-placeholder.svg` + `home.yaml` (`about.photo`) | ta photo |
+| `content/fr/home.yaml` | relire la bio |
+| `content/fr/settings.yaml` | `links.booking` (agenda), `links.contact`, `defaultHourlyRate` (45 € par défaut) |
+| `content/fr/offers.yaml` | durées et prix HTVA des 3 forfaits |
+| `content/fr/privacy.yaml` | adresse, BCE, durée de conservation, contact |
+| `content/fr/feedbacks.yaml` | vérifier la mention « facture électronique obligatoire depuis 2026 » |
+| `content/fr/benchmarks.yaml` | repères indicatifs : n'activer qu'avec une source |
+| `home.yaml` (`testimonials`) + `features.testimonials` | uniquement de vrais témoignages, avec accord écrit |
+| `features.chequesEntreprises` | à activer quand la labellisation et l'éligibilité sont confirmées |
+| `wrangler.toml` | `database_id` de la base D1 |
+| Cloudflare / Brevo | variables et secret (section 3), DPA acceptés |

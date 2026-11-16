@@ -22,6 +22,8 @@ links:
   booking: '[[lien de prise de rendez-vous]]' # PLACEHOLDER : agenda Google, Calendly…
   baseUrl: https://diagnostic.lophius.be # sous-domaine prévu (Cloudflare Pages)
 
+analyticsToken: '' # jeton public Cloudflare Web Analytics (si features.analytics = true)
+
 features:
   testimonials: false # à activer uniquement avec de vrais témoignages
   chequesEntreprises: false # à activer quand la labellisation et l'éligibilité sont confirmées

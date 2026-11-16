@@ -307,6 +307,42 @@ export const ReportSchema = z
   })
   .strict();
 
+const TitleText = z.object({ title: z.string(), text: z.string() }).strict();
+
+export const HomeSchema = z
+  .object({
+    hero: z
+      .object({
+        eyebrow: z.string(),
+        titleLight: z.string(),
+        titleStrong: z.string(),
+        titleEnd: z.string(),
+        lead: z.string(),
+      })
+      .strict(),
+    benefits: z.object({ title: z.string(), items: z.array(TitleText).min(1).max(6) }).strict(),
+    steps: z.object({ title: z.string(), items: z.array(TitleText).min(1).max(5) }).strict(),
+    about: z
+      .object({
+        title: z.string(),
+        name: z.string(),
+        role: z.string(),
+        photo: z.string(),
+        photoAlt: z.string(),
+        bio: z.array(z.string()).min(1),
+        link: z.string(),
+      })
+      .strict(),
+    reassurance: TitleText,
+    testimonials: z
+      .object({
+        title: z.string(),
+        items: z.array(z.object({ quote: z.string(), name: z.string(), role: z.string() }).strict()),
+      })
+      .strict(),
+  })
+  .strict();
+
 export const SettingsSchema = z
   .object({
     locale: z.string(),
@@ -330,10 +366,13 @@ export const SettingsSchema = z
         baseUrl: z.string(),
       })
       .strict(),
+    /** Jeton Cloudflare Web Analytics (public), utilisé seulement si features.analytics = true. */
+    analyticsToken: z.string().default(''),
     features: z
       .object({
         testimonials: z.boolean(),
         chequesEntreprises: z.boolean(),
+        /** Cloudflare Web Analytics (sans cookie) ; nécessite `analyticsToken` et l'ajout du domaine dans public/_headers. */
         analytics: z.boolean(),
         /** Rapport complet (détails, schéma cible, feuille de route, forfaits, PDF) débloqué contre les coordonnées. */
         leadGate: z.boolean(),
@@ -365,6 +404,7 @@ export const ContentSchema = z
     architecture: ArchitectureSchema,
     privacy: PrivacySchema,
     report: ReportSchema,
+    home: HomeSchema,
     ui: z.record(z.string(), z.string()),
   })
   .strict();
@@ -394,5 +434,6 @@ export const CONTENT_FILES = {
   architecture: 'architecture.yaml',
   privacy: 'privacy.yaml',
   report: 'report.yaml',
+  home: 'home.yaml',
   ui: 'ui.yaml',
 } as const satisfies Record<keyof Content, string>;

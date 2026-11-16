@@ -5,6 +5,7 @@ import { decodeShare } from '../lead/share';
 import { createSafeStorage } from '../storage/safe-storage';
 import { clearProgress, emptyProgress, loadProgress, saveProgress } from '../storage/progress';
 import { FeedbackView } from './FeedbackView';
+import { Footer } from './Footer';
 import { Home } from './Home';
 import { Nav } from './Nav';
 import { PrivacyPage } from './PrivacyPage';
@@ -45,6 +46,8 @@ export function App() {
     const onHash = () => {
       setRoute(parseRoute(window.location.hash));
       window.scrollTo(0, 0);
+      // Lecteurs d'écran : on annonce la nouvelle page en plaçant le focus sur son titre.
+      requestAnimationFrame(() => document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true }));
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
@@ -85,7 +88,7 @@ export function App() {
   return (
     <>
       <Nav />
-      <main id="main" class="container">
+      <main id="main" class="container" tabIndex={-1}>
         {!storage.persistent && route.name === 'diagnostic' && (
           <p class="notice" role="status">
             {t('storage_unavailable')}
@@ -124,6 +127,7 @@ export function App() {
         {route.name === 'partage' && <SharedResult code={route.code} onOwn={restart} />}
         {route.name === 'confidentialite' && <PrivacyPage />}
       </main>
+      <Footer />
     </>
   );
 }
