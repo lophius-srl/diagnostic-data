@@ -353,6 +353,8 @@ export const SettingsSchema = z
         contact: z.string(),
         booking: z.string(),
         baseUrl: z.string(),
+        linkedin: z.string().url(),
+        email: z.string(),
       })
       .strict(),
     /** Jeton Cloudflare Web Analytics (public), utilisé seulement si features.analytics = true. */

@@ -76,13 +76,22 @@
                 },
                 "baseUrl": {
                   "type": "string"
+                },
+                "linkedin": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "email": {
+                  "type": "string"
                 }
               },
               "required": [
                 "site",
                 "contact",
                 "booking",
-                "baseUrl"
+                "baseUrl",
+                "linkedin",
+                "email"
               ],
               "additionalProperties": false
             },

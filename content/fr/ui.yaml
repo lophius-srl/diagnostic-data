@@ -1,6 +1,10 @@
 # Textes d'interface (préparés pour une future version anglaise : content/en/ui.yaml). Courts, directs.
 brand: Lophius
-nav_contact: Contact
+# Barre de navigation et pied de page : identiques à lophius.be (textes du site, en anglais).
+nav_about: about me
+nav_work: my work
+nav_contact: Contact Me
+nav_menu: Menu
 start_button: Commencer le diagnostic
 resume_button: Reprendre où j'en étais
 restart_button: Recommencer
@@ -82,10 +86,16 @@ shared_own_cta: Faire mon propre diagnostic
 pdf_download: Télécharger le rapport PDF
 pdf_working: Préparation…
 pdf_error: Le rapport n'a pas pu être généré. Réessayez.
-# ---------- Pied de page et navigation ----------
+# ---------- Pied de page (copie de lophius.be) ----------
 skip_link: Aller au contenu
-footer_tagline: Your software, driven by data.
-footer_site: lophius.be
+footer_name: Antoine Stas
+footer_tagline: Freelance Lead Developer specializing in building high-performance, data-driven digital solutions.
+footer_linkedin: LinkedIn
+footer_email: E-mail
+footer_links: Quick Links
+footer_home: Home
+footer_about: About me
+footer_work: My work
 footer_contact: Contact
 footer_privacy: Confidentialité
-footer_legal: '© {year} Lophius SRL'
+footer_legal: '© {year} Antoine Stas'

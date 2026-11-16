@@ -18,9 +18,11 @@ hiddenCost:
 
 links:
   site: https://www.lophius.be
-  contact: https://www.lophius.be/#contact # À VÉRIFIER
+  contact: https://www.lophius.be/#contact
   booking: '[[lien de prise de rendez-vous]]' # PLACEHOLDER : agenda Google, Calendly…
   baseUrl: https://diagnostic.lophius.be # sous-domaine prévu (Cloudflare Pages)
+  linkedin: https://www.linkedin.com/in/antoine-stas-69a61941/ # repris de lophius.be
+  email: contact@lophius.be # repris de lophius.be
 
 analyticsToken: '' # jeton public Cloudflare Web Analytics (si features.analytics = true)
 
