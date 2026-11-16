@@ -67,7 +67,7 @@ export function validateContent(content: Content): string[] {
 
   for (const dim of content.dimensions) {
     const count = content.questions.filter((q) => q.options.some((o) => dim.id in o.scores)).length;
-    if (count < 2) errors.push(`dimension ${dim.id} : mesurée par moins de 2 questions`);
+    if (count < 1) errors.push(`dimension ${dim.id} : mesurée par aucune question`);
   }
 
   content.levels.forEach((l) => {
@@ -84,7 +84,7 @@ export function validateContent(content: Content): string[] {
   if (!hcQuestion) errors.push(`coût caché : question inconnue « ${hc.question} »`);
   else
     for (const o of hcQuestion.options)
-      if (!(o.id in hc.hoursPerWeek)) errors.push(`coût caché : heures manquantes pour « ${o.id} »`);
+      if (!(o.id in hc.hoursPerMonth)) errors.push(`coût caché : heures manquantes pour « ${o.id} »`);
 
   const checkLate = (cond: Condition, where: string) => checkCondition(cond, where, content.questions.length - 1);
   validateRecommendations(content, errors, checkLate);
@@ -153,7 +153,7 @@ function validateArchitecture(
   const variableIds = new Set(content.recommendations.variables.map((v) => v.id));
   checkCondition(today.silo.when, 'schéma : silo');
   checkCondition(today.people.autoWhen, 'schéma : direction');
-  checkCondition(today.externalAutoWhen, 'schéma : fiduciaire');
+  if (today.externalAutoWhen) checkCondition(today.externalAutoWhen, 'schéma : fiduciaire');
   today.toolNotes.forEach((n, i) => {
     if (n.when) checkCondition(n.when, `schéma : note d'outil ${i}`);
     for (const id of n.tools) if (!toolIds.has(id)) errors.push(`schéma : outil inconnu « ${id} »`);

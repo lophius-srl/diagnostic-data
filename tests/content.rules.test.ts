@@ -103,3 +103,10 @@ describe('countWords', () => {
     expect(countWords('Vos ventes arrivent-elles seules ?')).toBe(4);
   });
 });
+
+describe('typographie française', () => {
+  it('insère une espace insécable avant les signes doubles et dans les guillemets', async () => {
+    const { frenchSpacing } = await import('../src/content/frenchSpacing');
+    expect(frenchSpacing('Point fort : ok ? « oui »')).toBe('Point fort : ok ? « oui »');
+  });
+});

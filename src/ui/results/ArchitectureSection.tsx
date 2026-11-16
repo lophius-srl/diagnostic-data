@@ -13,7 +13,6 @@ export function ArchitectureSection({ answers, locked }: { answers: Answers; loc
   return (
     <section aria-labelledby="arch-title">
       <h2 id="arch-title">{t('results_architecture')}</h2>
-      <p class="muted">{t('results_architecture_intro')}</p>
       <div class="arch-grid">
         <Diagram diagram={today} />
         {locked ? (
@@ -61,7 +60,6 @@ function Diagram({ diagram }: { diagram: ArchDiagram }) {
     <figure class={visible ? 'card arch is-visible' : 'card arch'} ref={ref}>
       <figcaption>
         <h3>{diagram.title}</h3>
-        <p class="muted small">{diagram.subtitle}</p>
       </figcaption>
       {/* SVG généré par notre propre moteur, textes échappés (escapeXml). */}
       <div class="arch-svg" dangerouslySetInnerHTML={{ __html: svg }} />

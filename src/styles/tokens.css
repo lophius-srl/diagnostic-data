@@ -1,4 +1,4 @@
-/* Tokens de la marque Lophius (alignés sur lophius.be). */
+/* Tokens de la marque Lophius (relevés sur lophius.be). */
 :root {
   --blue: #324b84; /* bleu principal : titres en couleur, liens, accents */
   --blue-light: #4669b9;
@@ -9,19 +9,23 @@
   --surface: #ffffff;
   --page-edge: #f1f3f4;
   --border: #d5dae3;
+  --border-soft: #eceef2; /* bordure des cartes (gray-100 du site) */
   --alert: #b4532a; /* unique couleur d'alerte, réservée au coût caché */
 
   --font: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --radius-card: 24px;
+  --radius-card: 16px;
   --radius-btn: 12px;
   --shadow-nav: 0 3px 8px rgba(197, 206, 211, 0.15);
+  --shadow-card: 0 1px 3px rgba(28, 42, 74, 0.06), 0 1px 2px rgba(28, 42, 74, 0.04);
   --gradient-btn: linear-gradient(120deg, #4669b9 61%, #324b84);
-  --page-bg: radial-gradient(circle at center, #ffffff 0%, #ffffff 35%, var(--page-edge) 100%);
+  --page-bg: radial-gradient(ellipse at top, #ffffff 0%, #ffffff 40%, var(--page-edge) 100%);
 
+  --column: 48rem;
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
+  --space-5: 4rem;
   --duration: 300ms;
 }
 

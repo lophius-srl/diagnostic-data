@@ -259,8 +259,8 @@ export const ArchitectureSchema = z
         unknownTools: z.string(),
         silo: z.object({ when: ConditionSchema, text: z.string() }).strict(),
         toolNotes: z.array(ConditionalText.extend({ tools: z.array(Id).min(1) }).strict()),
-        /** Lien vers la fiduciaire dessiné « automatique » si cette condition est vraie. */
-        externalAutoWhen: ConditionSchema,
+        /** Lien vers la fiduciaire dessiné « automatique » si cette condition est vraie (sinon : à la main). */
+        externalAutoWhen: ConditionSchema.optional(),
         excel: LabelDetail.extend({ notes: z.array(ConditionalText) }).strict(),
         people: z
           .object({ label: z.string(), autoWhen: ConditionSchema, detailManual: z.string(), detailAuto: z.string() })
@@ -316,24 +316,22 @@ export const HomeSchema = z
         eyebrow: z.string(),
         titleLight: z.string(),
         titleStrong: z.string(),
-        titleEnd: z.string(),
         lead: z.string(),
+        meta: z.string(),
+        reassurance: z.string(),
       })
       .strict(),
-    benefits: z.object({ title: z.string(), items: z.array(TitleText).min(1).max(6) }).strict(),
-    steps: z.object({ title: z.string(), items: z.array(TitleText).min(1).max(5) }).strict(),
+    benefits: z.array(TitleText).min(1).max(4),
     about: z
       .object({
-        title: z.string(),
+        titleLight: z.string(),
         name: z.string(),
-        role: z.string(),
         photo: z.string(),
         photoAlt: z.string(),
-        bio: z.array(z.string()).min(1),
+        bio: z.array(z.string()).min(1).max(3),
         link: z.string(),
       })
       .strict(),
-    reassurance: TitleText,
     testimonials: z
       .object({
         title: z.string(),
@@ -352,8 +350,9 @@ export const SettingsSchema = z
     hiddenCost: z
       .object({
         question: Id,
-        hoursPerWeek: z.record(Id, z.number().min(0)),
-        weeksPerYear: z.number().int().min(1).max(52),
+        /** Heures par mois retenues pour chaque réponse. */
+        hoursPerMonth: z.record(Id, z.number().min(0)),
+        monthsPerYear: z.number().int().min(1).max(12),
         defaultHourlyRate: z.number().positive(),
         roundTo: z.number().int().positive(),
       })

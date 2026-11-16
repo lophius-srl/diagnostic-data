@@ -1,4 +1,4 @@
-import { content, formatNumber, t } from '../../content';
+import { formatNumber, t } from '../../content';
 import type { HiddenCost } from '../../engine/hidden-cost';
 import { useCountUp, useRevealOnScroll } from '../motion';
 
@@ -21,10 +21,8 @@ export function HiddenCostCard({ cost, onRateChange }: Props) {
       </p>
       <p class="muted">
         {t('results_hidden_cost_detail', {
-          hoursWeek: formatNumber(cost.hoursPerWeek, 1),
-          weeks: content.settings.hiddenCost.weeksPerYear,
-          rate: formatNumber(cost.hourlyRate),
           hours: formatNumber(cost.hoursPerYear),
+          rate: formatNumber(cost.hourlyRate),
         })}
       </p>
       <label class="rate-field">
@@ -41,7 +39,6 @@ export function HiddenCostCard({ cost, onRateChange }: Props) {
           }}
         />
       </label>
-      <p class="muted small">{t('results_hidden_cost_note')}</p>
     </section>
   );
 }

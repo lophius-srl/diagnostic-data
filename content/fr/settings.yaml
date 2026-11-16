@@ -1,18 +1,18 @@
 # Réglages généraux du diagnostic. Tout est modifiable sans toucher au code.
 locale: fr-BE
 contentVersion: '2026-11-v1' # à incrémenter quand les questions changent (invalide les sauvegardes locales incompatibles)
-estimatedMinutes: 5 # durée affichée honnêtement sur la page d'accueil
+estimatedMinutes: 3 # durée affichée honnêtement sur la page d'accueil
 feedbackMinGap: 3 # au plus un retour d'expert toutes les 3 questions
 
 hiddenCost:
-  question: heures_excel
-  # Heures par semaine retenues pour chaque tranche (milieu de tranche ; borne prudente pour « plus de 10 h »).
-  hoursPerWeek:
-    moins_2: 1
-    h2_5: 3.5
-    h5_10: 7.5
-    plus_10: 12
-  weeksPerYear: 46 # 52 semaines moins congés et jours fériés
+  question: temps_tableaux
+  # Heures par mois retenues pour chaque réponse (estimation prudente).
+  hoursPerMonth:
+    heures: 4
+    journee: 8
+    jours: 20
+    semaine: 40
+  monthsPerYear: 11 # 12 mois moins les congés
   defaultHourlyRate: 45 # € / heure, coût chargé d'un employé administratif — À VALIDER
   roundTo: 100
 

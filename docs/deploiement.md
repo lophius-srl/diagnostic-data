@@ -92,13 +92,11 @@ Désactivées par défaut. Pour les activer avec Cloudflare Web Analytics :
 
 | Où | Quoi |
 |---|---|
-| `public/brand/logo.svg` | le vrai logo Lophius (même nom de fichier ; sert au site et au PDF) |
-| `public/brand/portrait-placeholder.svg` + `home.yaml` (`about.photo`) | ta photo |
+| `public/brand/` | logo et photo repris de lophius.be (à remplacer si tu en changes) |
 | `content/fr/home.yaml` | relire la bio |
 | `content/fr/settings.yaml` | `links.booking` (agenda), `links.contact`, `defaultHourlyRate` (45 € par défaut) |
 | `content/fr/offers.yaml` | durées et prix HTVA des 3 forfaits |
 | `content/fr/privacy.yaml` | adresse, BCE, durée de conservation, contact |
-| `content/fr/feedbacks.yaml` | vérifier la mention « facture électronique obligatoire depuis 2026 » |
 | `content/fr/benchmarks.yaml` | repères indicatifs : n'activer qu'avec une source |
 | `home.yaml` (`testimonials`) + `features.testimonials` | uniquement de vrais témoignages, avec accord écrit |
 | `features.chequesEntreprises` | à activer quand la labellisation et l'éligibilité sont confirmées |

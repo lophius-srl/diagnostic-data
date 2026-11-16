@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Portrait (provisoire)">
-  <!-- PLACEHOLDER : remplacer par une vraie photo (voir content/fr/home.yaml, about.photo). -->
-  <rect width="200" height="200" fill="#E8EDF7"/>
-  <circle cx="100" cy="80" r="36" fill="#4669B9"/>
-  <path d="M34 186c6-38 34-62 66-62s60 24 66 62z" fill="#324B84"/>
-</svg>

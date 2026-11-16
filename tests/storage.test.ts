@@ -59,8 +59,8 @@ describe('stockage local robuste', () => {
 describe('sauvegarde de la progression', () => {
   it('relit ce qui a été sauvegardé', () => {
     const s = createSafeStorage(() => new MemoryStorage());
-    saveProgress(s, { ...emptyProgress(content), answers: { secteur: 'services' }, cursor: 1 });
-    expect(loadProgress(s, content)).toMatchObject({ answers: { secteur: 'services' }, cursor: 1 });
+    saveProgress(s, { ...emptyProgress(content), answers: { justesse: 'confiance' }, cursor: 1 });
+    expect(loadProgress(s, content)).toMatchObject({ answers: { justesse: 'confiance' }, cursor: 1 });
   });
 
   it('ignore une sauvegarde corrompue', () => {
@@ -75,12 +75,12 @@ describe('sauvegarde de la progression', () => {
       STORAGE_KEY,
       JSON.stringify({
         contentVersion: 'ancienne',
-        answers: { secteur: 'services', taille: 'inconnue', outils: ['odoo', 'zzz'], disparue: 'x' },
+        answers: { justesse: 'confiance', ordinateur: 'inconnue', outils: ['odoo', 'zzz'], disparue: 'x' },
         cursor: 7,
       }),
     );
     const p = loadProgress(s, content);
-    expect(p?.answers).toEqual({ secteur: 'services', outils: ['odoo'] });
+    expect(p?.answers).toEqual({ justesse: 'confiance', outils: ['odoo'] });
     expect(p?.cursor).toBe(0);
   });
 });

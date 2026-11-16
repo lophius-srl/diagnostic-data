@@ -47,49 +47,49 @@ describe('conditions', () => {
 });
 
 describe('parcours adaptatif', () => {
-  it('commence par le secteur puis enchaîne dans l’ordre', () => {
-    expect(nextQuestion(content, {})?.id).toBe('secteur');
-    expect(nextQuestion(content, { secteur: 'commerce' })?.id).toBe('taille');
+  it('commence par les outils puis saute les questions sans objet', () => {
+    expect(nextQuestion(content, {})?.id).toBe('outils');
+    expect(nextQuestion(content, { outils: ['excel', 'winbooks'] })?.id).toBe('recopie');
+    expect(nextQuestion(content, { outils: ['odoo'] })?.id).toBe('ventes_mois');
   });
 
   it('est terminé quand toutes les questions visibles ont une réponse', () => {
     for (const p of profiles) expect(nextQuestion(content, p.answers), p.file).toBeUndefined();
   });
 
-  it('affiche 15 à 20 questions au total dans la config', () => {
-    expect(content.questions.length).toBeGreaterThanOrEqual(15);
-    expect(content.questions.length).toBeLessThanOrEqual(20);
+  it('compte 8 à 12 questions au total dans la config', () => {
+    expect(content.questions.length).toBeGreaterThanOrEqual(8);
+    expect(content.questions.length).toBeLessThanOrEqual(12);
   });
 
   /**
    * Parcours exhaustif : on fait varier toutes les réponses des questions dont dépend une condition
    * (pour les cases à cocher : toutes les combinaisons des cases citées dans une condition),
-   * les autres réponses étant fixées. Chaque PME doit voir entre 12 et 15 questions.
+   * les autres réponses étant fixées. Chaque PME doit voir entre 8 et 10 questions.
    */
-  it('chaque parcours possible compte 12 à 15 questions', () => {
+  it('chaque parcours possible compte 8 à 10 questions', () => {
     const counts = new Set<number>();
     for (const answers of allBranchingPaths()) {
       const n = visibleQuestions(content, answers).length;
       counts.add(n);
-      expect(n, JSON.stringify(answers)).toBeGreaterThanOrEqual(12);
-      expect(n, JSON.stringify(answers)).toBeLessThanOrEqual(15);
+      expect(n, JSON.stringify(answers)).toBeGreaterThanOrEqual(8);
+      expect(n, JSON.stringify(answers)).toBeLessThanOrEqual(10);
     }
     expect(counts.size).toBeGreaterThan(1);
   });
 
-  it('pose exactement une des deux questions « ventes en ligne » / « rentabilité »', () => {
+  it('pose exactement une des deux questions « personne Excel » / « autonomie »', () => {
     for (const answers of allBranchingPaths()) {
       const ids = visibleQuestions(content, answers).map((q) => q.id);
-      expect(ids.filter((id) => id === 'ventes_en_ligne' || id === 'rentabilite')).toHaveLength(1);
       expect(ids.filter((id) => id === 'personne_excel' || id === 'autonomie')).toHaveLength(1);
     }
   });
 
-  it('adapte le texte de la question rentabilité au secteur', () => {
-    const q = content.questions.find((x) => x.id === 'rentabilite') as Question;
-    expect(questionText(q, { secteur: 'services' })).toMatch(/projets/);
-    expect(questionText(q, { secteur: 'production' })).toMatch(/chantier/);
-    expect(questionText(q, { secteur: 'commerce' })).toMatch(/produits/);
+  it('utilise une variante de texte quand sa condition est vraie', () => {
+    const base = content.questions.find((x) => x.id === 'justesse') as Question;
+    const q: Question = { ...base, textVariants: [{ when: { q: 'outils', has: 'odoo' }, text: 'Variante Odoo' }] };
+    expect(questionText(q, { outils: ['odoo'] })).toBe('Variante Odoo');
+    expect(questionText(q, { outils: ['excel'] })).toBe(base.text);
   });
 
   it('ignore les réponses d’une question devenue invisible', () => {
@@ -100,7 +100,7 @@ describe('parcours adaptatif', () => {
   });
 
   it('calcule la progression sur les questions visibles', () => {
-    expect(progress(content, { secteur: 'commerce' })).toMatchObject({ answered: 1 });
+    expect(progress(content, { outils: ['odoo'] })).toMatchObject({ answered: 1 });
     const p = profile('services-40.yaml');
     const done = progress(content, p.answers);
     expect(done.answered).toBe(done.total);
@@ -110,8 +110,6 @@ describe('parcours adaptatif', () => {
 describe('retours d’expert', () => {
   it('affiche le retour correspondant à la réponse', () => {
     const answers: Answers = {
-      secteur: 'commerce',
-      taille: 't5_19',
       outils: ['excel', 'winbooks'],
       recopie: 'souvent',
     };
@@ -120,8 +118,6 @@ describe('retours d’expert', () => {
 
   it('respecte un écart minimal entre deux retours', () => {
     const answers: Answers = {
-      secteur: 'commerce',
-      taille: 't5_19',
       outils: ['excel', 'winbooks'],
       recopie: 'souvent',
     };

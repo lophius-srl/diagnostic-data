@@ -38,7 +38,6 @@ offers:
         - { q: priorite, in: [vue, marge] }
         - { q: frequence, in: [bilan, rarement] }
         - { q: ventes_mois, in: [heures, jours] }
-        - { fact: marge_inconnue }
     preferredIf: { q: priorite, in: [vue, marge] }
     priority: 2
 
@@ -55,7 +54,6 @@ offers:
     recommendIf:
       any:
         - { fact: double_saisie }
-        - { fact: export_manuel }
         - { fact: reporting_manuel }
         - { q: priorite, is: doubles }
     preferredIf: { q: priorite, in: [doubles, dependance] }

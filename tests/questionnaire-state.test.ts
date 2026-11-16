@@ -41,8 +41,6 @@ describe('questionnaire', () => {
 
   it('affiche un retour d’expert puis avance après « Continuer »', () => {
     let s = initial();
-    s = reduce(s, { type: 'answer', questionId: 'secteur', value: 'commerce' });
-    s = reduce(s, { type: 'answer', questionId: 'taille', value: 't5_19' });
     s = reduce(s, { type: 'answer', questionId: 'outils', value: ['excel', 'winbooks'] });
     s = reduce(s, { type: 'answer', questionId: 'recopie', value: 'souvent' });
     expect(s.pendingFeedback).toBe('recopie_souvent');
@@ -54,8 +52,6 @@ describe('questionnaire', () => {
   it('ne réaffiche pas un retour déjà vu en revenant en arrière', () => {
     let s = initial();
     for (const [q, v] of [
-      ['secteur', 'commerce'],
-      ['taille', 't5_19'],
       ['outils', ['excel', 'winbooks']],
       ['recopie', 'souvent'],
     ] as const) {

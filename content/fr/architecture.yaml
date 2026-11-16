@@ -8,46 +8,28 @@ legend:
 
 today:
   title: Aujourd'hui
-  subtitle: Vos outils, et la façon dont vos chiffres circulent.
+  subtitle: Vos outils et vos flux de chiffres.
   unknownTools: Vos outils (à identifier)
   # Légende au-dessus des outils quand ils ne se parlent pas.
   silo:
-    when:
-      any:
-        - { q: recopie, in: [parfois, souvent] }
-        - { q: memes_chiffres, is: chacun }
-        - { q: ventes_en_ligne, is: main }
+    when: { q: recopie, in: [parfois, souvent] }
     text: Des outils qui ne se parlent pas
-  # Mentions sous un outil, selon les réponses (première règle vraie par outil).
+  # Mentions sous un outil (première règle vraie par outil).
   toolNotes:
-    - {
-        tools: [shopify, woocommerce, lightspeed],
-        when: { q: ventes_en_ligne, is: main },
-        text: ventes exportées à la main,
-      }
-    - {
-        tools: [shopify, woocommerce, lightspeed],
-        when: { q: ventes_en_ligne, is: auto },
-        text: relié à la comptabilité,
-      }
-    - { tools: [fiduciaire], when: { q: fiduciaire, is: direct }, text: reçoit vos pièces directement }
-    - { tools: [fiduciaire], when: { q: fiduciaire, is: email }, text: reçoit vos pièces par e-mail }
-    - { tools: [fiduciaire], when: { q: fiduciaire, is: papier }, text: reçoit vos pièces en papier }
     - { tools: [fiduciaire], text: partenaire externe }
-  externalAutoWhen: { q: fiduciaire, is: direct }
   excel:
     label: Fichiers Excel
-    detail: là où vos chiffres sont réunis
+    detail: là où tout se rejoint
     notes:
       - { when: { fact: dependance_personne }, text: tenus par une seule personne }
       - { when: { fact: versions_multiples }, text: plusieurs versions des chiffres }
-      - { when: { fact: reporting_manuel }, text: des heures de copier-coller }
+      - { when: { fact: reporting_manuel }, text: des jours de copier-coller }
   people:
     label: Vous et la direction
     # Sans Excel : lecture outil par outil, sauf si les chiffres sont disponibles en quelques minutes.
     autoWhen: { q: ventes_mois, is: minutes }
     detailManual: chiffres réunis à la main
-    detailAuto: chiffres consultés dans chaque outil
+    detailAuto: chiffres lus outil par outil
 
 target:
   title: Cible recommandée
@@ -58,15 +40,14 @@ target:
     detail: importés, plus recopiés
   integration:
     label: Synchronisation automatique
-    detail: chaque nuit, sans intervention
+    detail: chaque nuit
   base:
     label: Base centrale
     detail: une seule version des chiffres
   outputs:
-    - { label: 'Tableau de bord {tableau}', detail: sur ordinateur et téléphone }
+    - { label: 'Tableau de bord {tableau}', detail: ordinateur et téléphone }
     - { label: Rapports automatiques, detail: dans votre boîte mail }
     - { label: Votre fiduciaire, detail: reçoit tout au bon format, requiresTools: [fiduciaire] }
-    - { label: Alertes, detail: quand un chiffre sort de l'ordinaire, when: { q: taille, in: [t20_49, t50p] } }
   people:
     label: Vous et l'équipe
     detail: chacun voit ses chiffres

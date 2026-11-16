@@ -68,7 +68,8 @@ describe('règles de crédibilité des recommandations (3 000 parcours simulés)
       if (ids.includes('qw_sauvegarde')) expect(['quelques_uns', 'oui']).toContain(answers.ordinateur);
       if (ids.includes('qw_documenter_excel')) expect(['complique', 'perdus']).toContain(answers.personne_excel);
       if (ids.includes('qw_relier_ventes_compta')) expect(['parfois', 'souvent']).toContain(answers.recopie);
-      if (ids.includes('qw_pieces_fiduciaire')) expect(['email', 'papier']).toContain(answers.fiduciaire);
+      if (ids.includes('qw_pieces_fiduciaire'))
+        expect(['journee', 'jours', 'semaine']).toContain(answers.temps_tableaux);
     }
   });
 
@@ -108,9 +109,9 @@ describe('les 3 profils reçoivent des recommandations crédibles et différente
     expect(r.offers[0]?.id).toBe('centralisation');
   });
 
-  it('services : marge par client et par projet, Power BI (Microsoft 365)', () => {
+  it('services : marge par client et par produit, Power BI (Microsoft 365)', () => {
     const r = results['services-40.yaml']!;
-    expect(r.quickWins.map((w) => w.title).join()).toMatch(/client et par projet/);
+    expect(r.quickWins.map((w) => w.title).join()).toMatch(/client et par produit/);
     expect(allTexts(r).join()).toMatch(/Power BI/);
     expect(r.offers[0]?.id).toBe('tableau_bord');
   });

@@ -5,7 +5,7 @@
 #     Si aucun n'est coché, l'action n'est PAS proposée : jamais de recommandation sur un outil absent.
 #   - {id} d'une variable ci-dessous → première règle vraie.
 # Tri des quick wins : impact × écart de l'axe (100 − score) + bonus si `boostIf` + petit bonus si effort faible.
-# Les tests vérifient sur tous les parcours qu'aucun outil non coché n'est cité, ni Power BI sans Microsoft 365.
+# Style : titre = l'action, détail = le bénéfice, en une phrase.
 
 variables:
   - id: tableau
@@ -16,17 +16,12 @@ variables:
     rules:
       - { when: { q: microsoft, is: oui }, value: OneDrive ou SharePoint }
       - { when: { q: microsoft, is: google }, value: Google Drive }
-      - { value: un stockage en ligne hébergé en Europe }
-  - id: axe_marge
-    rules:
-      - { when: { q: secteur, is: services }, value: client et par projet }
-      - { when: { q: secteur, is: production }, value: chantier et par commande }
-      - { value: produit et par client }
+      - { value: un stockage en ligne européen }
 
 quickWins:
   - id: qw_relier_ventes_compta
-    title: Relier {ventes} à {compta} pour supprimer la double saisie
-    detail: Les factures et le chiffre d'affaires passent seuls de {ventes} vers {compta}. Plus de recopie, et plus d'écart entre les deux.
+    title: Relier {ventes} à {compta}
+    detail: Le chiffre d'affaires passe seul d'un outil à l'autre. Fin de la double saisie.
     when: { q: recopie, in: [parfois, souvent] }
     requiresTools:
       ventes: [odoo, teamleader, metier, lightspeed]
@@ -38,8 +33,8 @@ quickWins:
 
   - id: qw_boutique_compta
     title: Envoyer automatiquement les ventes {boutique} vers {compta}
-    detail: Commandes, remboursements et frais de paiement arrivent seuls en comptabilité, chaque jour. Fini l'export du mois et les ventes oubliées.
-    when: { q: ventes_en_ligne, in: [main, nesaispas, fiduciaire] }
+    detail: Commandes, remboursements et frais arrivent seuls en comptabilité, chaque jour.
+    when: { q: recopie, in: [parfois, souvent] }
     requiresTools:
       boutique: [shopify, woocommerce, lightspeed]
       compta: [exact, winbooks, bob, yuki, billit, sage, odoo]
@@ -49,9 +44,8 @@ quickWins:
     boostIf: { q: priorite, is: doubles }
 
   - id: qw_boutique_fiduciaire
-    title: Transmettre les ventes {boutique} à votre fiduciaire sans export manuel
-    detail: Un envoi automatique et complet chaque mois, au format que votre fiduciaire attend. Moins d'allers-retours, une TVA plus sereine.
-    when: { q: ventes_en_ligne, in: [main, nesaispas] }
+    title: Transmettre les ventes {boutique} à votre fiduciaire, sans export
+    detail: Un envoi complet chaque mois, au bon format. Moins d'allers-retours.
     excludeIf: { q: outils, hasAny: [exact, winbooks, bob, yuki, billit, sage, odoo] }
     requiresTools:
       boutique: [shopify, woocommerce, lightspeed]
@@ -61,16 +55,18 @@ quickWins:
     impact: moyen
 
   - id: qw_pieces_fiduciaire
-    title: Envoyer vos factures directement dans le logiciel de votre fiduciaire
-    detail: Une adresse de dépôt ou une application suffit, et vos factures d'achat électroniques peuvent y arriver seules. Vous gagnez du temps chaque mois, votre fiduciaire aussi.
-    when: { q: fiduciaire, in: [email, papier] }
+    title: Déposer vos factures directement chez votre fiduciaire
+    detail: Une adresse de dépôt suffit. Vous gagnez du temps chaque mois, elle aussi.
+    when: { q: temps_tableaux, in: [journee, jours, semaine] }
+    requiresTools:
+      fiduciaire: [fiduciaire]
     dimension: automatisation
     effort: faible
     impact: moyen
 
   - id: qw_tableau_bord
-    title: Un tableau de bord {tableau} avec vos 5 chiffres clés, à jour chaque matin
-    detail: Ventes, marge, trésorerie, commandes en cours, retards de paiement, alimentés depuis {logiciels}. Vous regardez au lieu de calculer.
+    title: Vos 5 chiffres clés dans {tableau}, à jour chaque matin
+    detail: Alimentés depuis {logiciels}. Vous regardez au lieu de calculer.
     when:
       any:
         - { q: ventes_mois, in: [heures, jours] }
@@ -83,13 +79,12 @@ quickWins:
     boostIf: { q: priorite, is: vue }
 
   - id: qw_odoo_tableaux
-    title: Exploiter les tableaux de bord intégrés à Odoo
-    detail: Odoo contient déjà des vues d'analyse sur vos ventes et vos marges. Bien configurées, elles évitent d'acheter un autre outil.
+    title: Exploiter les tableaux de bord déjà inclus dans Odoo
+    detail: Bien configurés, ils évitent d'acheter un autre outil.
     when:
       any:
         - { q: ventes_mois, in: [heures, jours] }
         - { q: frequence, in: [bilan, rarement] }
-        - { q: rentabilite, in: [a_peu_pres, pas_vraiment] }
     requiresTools:
       odoo: [odoo]
     dimension: pilotage
@@ -97,22 +92,11 @@ quickWins:
     impact: moyen
 
   - id: qw_marge
-    title: Calculer votre marge réelle par {axe_marge}
-    detail: Les données sont déjà dans {logiciels}. Il suffit de les croiser pour voir enfin où vous gagnez, et où vous perdez, de l'argent.
-    when: { q: rentabilite, in: [a_peu_pres, pas_vraiment] }
+    title: Calculer votre marge réelle par client et par produit
+    detail: Les données sont déjà dans {logiciels}. Il suffit de les croiser.
+    when: { q: priorite, is: marge }
     requiresTools:
-      logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, lightspeed, metier]
-    dimension: pilotage
-    effort: moyen
-    impact: eleve
-    boostIf: { q: priorite, is: marge }
-
-  - id: qw_marge_boutique
-    title: Suivre la marge réelle par produit sur {boutique}
-    detail: Prix d'achat, frais de paiement, livraison et retours compris. C'est souvent là que se cachent les produits qui ne rapportent rien.
-    when: { q: priorite, in: [marge, vue] }
-    requiresTools:
-      boutique: [shopify, woocommerce, lightspeed]
+      logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
     dimension: pilotage
     effort: moyen
     impact: eleve
@@ -120,18 +104,15 @@ quickWins:
 
   - id: qw_une_version
     title: Une seule version des chiffres pour toute l'équipe
-    detail: Définir ensemble vos chiffres clés et leur mode de calcul, puis une seule source pour tout le monde. Les réunions portent enfin sur les décisions.
-    when:
-      any:
-        - { q: justesse, is: discussion }
-        - { q: memes_chiffres, in: [pas_toujours, chacun] }
+    detail: Des règles de calcul écrites une fois, une seule source. Les réunions portent sur les décisions.
+    when: { q: justesse, in: [pas_toujours, discussion] }
     dimension: fiabilite
     effort: faible
     impact: eleve
 
   - id: qw_controles
     title: Des contrôles automatiques sur vos chiffres
-    detail: Être prévenu quand une facture manque, qu'un total ne colle pas ou qu'un chiffre sort de l'ordinaire. Les erreurs sont repérées avant la réunion.
+    detail: Une facture manque, un total ne colle pas ? Vous le savez avant la réunion.
     when: { q: justesse, in: [pas_toujours, discussion] }
     dimension: fiabilite
     effort: moyen
@@ -139,7 +120,7 @@ quickWins:
 
   - id: qw_documenter_excel
     title: Documenter et sécuriser votre fichier Excel clé
-    detail: Une demi-journée avec la personne qui le tient, pour écrire d'où viennent les chiffres, quelles formules comptent et qui peut le modifier. L'entreprise ne dépend plus d'une seule tête.
+    detail: Une demi-journée suffit pour que l'entreprise ne dépende plus d'une seule tête.
     when: { q: personne_excel, in: [complique, perdus] }
     requiresTools:
       excel: [excel]
@@ -149,9 +130,9 @@ quickWins:
     boostIf: { q: priorite, is: dependance }
 
   - id: qw_automatiser_rapport
-    title: Relier votre rapport Excel le plus long directement à {logiciels}
-    detail: On part du rapport qui coûte le plus d'heures, et il se remplit seul depuis {logiciels}. Le copier-coller disparaît, les erreurs aussi.
-    when: { q: heures_excel, in: [h2_5, h5_10, plus_10] }
+    title: Relier votre rapport Excel le plus long à {logiciels}
+    detail: Il se remplit seul. Le copier-coller disparaît, les erreurs aussi.
+    when: { q: temps_tableaux, in: [journee, jours, semaine] }
     requiresTools:
       excel: [excel]
       logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
@@ -162,23 +143,15 @@ quickWins:
 
   - id: qw_sauvegarde
     title: Une sauvegarde automatique de tous vos fichiers
-    detail: Vos fichiers importants se copient seuls sur {stockage}, avec un historique des versions. Un vol ou une panne ne coûte plus que le prix du matériel.
+    detail: Sur {stockage}, avec l'historique. Un vol ne coûte plus que le matériel.
     when: { q: ordinateur, in: [quelques_uns, oui] }
     dimension: securite
     effort: faible
     impact: eleve
 
-  - id: qw_acces
-    title: Revoir qui a accès aux salaires et aux marges
-    detail: Une liste claire des fichiers sensibles et des personnes autorisées, puis des droits ajustés. Une heure de travail pour un vrai risque en moins.
-    when: { q: acces, in: [pas_sur, tous] }
-    dimension: securite
-    effort: faible
-    impact: moyen
-
   - id: qw_autonomie
-    title: Donner à chacun l'accès aux chiffres de son équipe
-    detail: Chaque responsable consulte et filtre lui-même ses chiffres dans {tableau}, sans attendre qu'on les lui prépare.
+    title: Donner à chacun l'accès à ses chiffres
+    detail: Chaque responsable consulte ses chiffres dans {tableau}, sans attendre qu'on les prépare.
     when:
       any:
         - { q: autonomie, in: [demander, introuvable] }
@@ -191,7 +164,7 @@ quickWins:
   # ---- Actions de secours, toujours possibles, choisies seulement s'il manque des quick wins ----
   - id: qw_decisions
     title: Lister vos 5 décisions du mois et les chiffres qu'il vous faut
-    detail: Un atelier de deux heures pour partir de vos décisions, pas de vos fichiers. C'est la base de tout tableau de bord utile.
+    detail: Deux heures pour partir de vos décisions, pas de vos fichiers.
     dimension: pilotage
     effort: faible
     impact: moyen
@@ -199,15 +172,15 @@ quickWins:
 
   - id: qw_inventaire
     title: Faire l'inventaire de vos fichiers et de qui les tient
-    detail: Une page qui dit où sont vos chiffres, qui les met à jour et à quel rythme. On ne peut améliorer que ce que l'on voit.
+    detail: Une page suffit. On ne peut améliorer que ce que l'on voit.
     dimension: sources
     effort: faible
     impact: moyen
     fallback: true
 
   - id: qw_rituel
-    title: Un rendez-vous hebdomadaire de 15 minutes avec vos chiffres
-    detail: Toujours le même jour, toujours les mêmes chiffres. La régularité compte plus que la sophistication.
+    title: Un rendez-vous de 15 minutes par semaine avec vos chiffres
+    detail: Toujours le même jour, toujours les mêmes chiffres.
     dimension: pilotage
     effort: faible
     impact: moyen
@@ -216,12 +189,12 @@ quickWins:
 roadmap:
   - id: j30
     label: 30 jours
-    title: Les premiers résultats
+    title: Premiers résultats
     max: 4
     actions:
       - id: rm_chiffres_cles
-        title: Choisir vos chiffres clés et écrire leur mode de calcul
-        detail: Une page validée par la direction, qui sert de référence à tout le monde.
+        title: Écrire vos chiffres clés et leur mode de calcul
+        detail: Une page de référence validée par la direction.
         unlessQuickWin: qw_une_version
 
   - id: j60
@@ -231,14 +204,14 @@ roadmap:
     actions:
       - id: rm_base_centrale_excel
         title: Réunir {logiciels} et vos fichiers Excel dans une base centrale
-        detail: Une base unique, mise à jour automatiquement chaque nuit. Excel reste utilisable, mais il n'est plus la source.
+        detail: Mise à jour chaque nuit. Excel reste utilisable, mais n'est plus la source.
         requiresTools:
           logiciels:
             [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
           excel: [excel]
       - id: rm_base_centrale
         title: Réunir {logiciels} dans une base centrale
-        detail: Une base unique, mise à jour automatiquement chaque nuit, qui croise ce que vos outils savent chacun de leur côté.
+        detail: Mise à jour chaque nuit, une seule version des chiffres.
         when: { q: outils, countAtLeast: 2, exclude: [excel, fiduciaire, nesaispas] }
         excludeIf: { q: outils, has: excel }
         requiresTools:
@@ -246,41 +219,40 @@ roadmap:
             [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
       - id: rm_tableau_bord
         title: Un tableau de bord {tableau} alimenté automatiquement
-        detail: Vos chiffres clés, à jour sans intervention, consultables sur ordinateur comme sur téléphone.
+        detail: Sur ordinateur comme sur téléphone.
         unlessQuickWin: qw_tableau_bord
       - id: rm_controles_qualite
         title: Des contrôles automatiques sur vos chiffres clés
-        detail: Chaque nuit, une vérification repère les factures manquantes et les totaux qui ne collent pas.
+        detail: Chaque nuit, une vérification repère ce qui ne colle pas.
         unlessQuickWin: qw_controles
       - id: rm_historique
         title: Garder l'historique de vos chiffres, mois après mois
-        detail: Vos logiciels écrasent souvent le passé. Un historique conservé permet de comparer chaque mois à l'année précédente.
+        detail: Pour comparer chaque mois à l'année précédente.
 
   - id: j90
     label: 90 jours
-    title: Automatiser et rendre l'équipe autonome
+    title: Automatiser et rendre autonome
     max: 3
     # Les étapes conditionnelles d'abord : elles répondent à un point précis du diagnostic.
     actions:
       - id: rm_securite
-        title: Formaliser sauvegardes, droits d'accès et documentation
-        detail: Un document court et à jour, pour que tout continue même si une personne clé s'absente.
+        title: Formaliser sauvegardes, accès et documentation
+        detail: Pour que tout continue si une personne clé s'absente.
         when:
           any:
             - { fact: sauvegarde_partielle }
-            - { fact: acces_flous }
             - { fact: dependance_personne }
       - id: rm_fiduciaire_auto
         title: Automatiser les échanges avec votre fiduciaire
-        detail: Pièces, ventes et clôtures mensuelles partent seules, au bon format.
+        detail: Pièces, ventes et clôtures partent seules, au bon format.
         requiresTools:
           fiduciaire: [fiduciaire]
       - id: rm_rapports_auto
         title: Automatiser les rapports récurrents
-        detail: Rapport mensuel, suivi des marges, relances clients. Ils se préparent seuls et arrivent dans votre boîte mail.
+        detail: Ils se préparent seuls et arrivent dans votre boîte mail.
       - id: rm_alertes
-        title: Recevoir une alerte quand un chiffre sort de l'ordinaire
-        detail: Trésorerie sous un seuil, marge en baisse, retard de paiement. Vous êtes prévenu au lieu de le découvrir.
+        title: Être alerté quand un chiffre sort de l'ordinaire
+        detail: Trésorerie, marge, retards de paiement.
       - id: rm_former
-        title: Former l'équipe à lire et filtrer ses chiffres seule
-        detail: Deux courtes sessions suffisent pour que chacun trouve ses réponses sans demander.
+        title: Former l'équipe à lire ses chiffres seule
+        detail: Deux courtes sessions suffisent.

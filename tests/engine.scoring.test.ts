@@ -21,31 +21,23 @@ describe('scoring', () => {
 
   it('donne 100 avec les meilleures réponses et 0 avec les pires', () => {
     const best: Answers = {
-      secteur: 'services',
-      taille: 't20_49',
       outils: ['odoo', 'exact'],
       recopie: 'non',
-      rentabilite: 'precis',
       ventes_mois: 'minutes',
       frequence: 'semaine',
       justesse: 'confiance',
-      memes_chiffres: 'oui',
-      heures_excel: 'moins_2',
+      temps_tableaux: 'heures',
       autonomie: 'clics',
       ordinateur: 'sauvegarde',
-      acces: 'prevues',
       microsoft: 'oui',
       priorite: 'vue',
     };
     const worst: Answers = {
-      secteur: 'commerce',
-      taille: 't1_4',
       outils: ['nesaispas'],
-      rentabilite: 'pas_vraiment',
       ventes_mois: 'jours',
       frequence: 'rarement',
       justesse: 'discussion',
-      heures_excel: 'plus_10',
+      temps_tableaux: 'semaine',
       autonomie: 'introuvable',
       ordinateur: 'oui',
       microsoft: 'eviter',
@@ -56,7 +48,7 @@ describe('scoring', () => {
   });
 
   it('pour une case à cocher multiple, retient le meilleur outil (pas la somme)', () => {
-    const base: Answers = { secteur: 'commerce', taille: 't1_4' };
+    const base: Answers = {};
     const excelOnly = score(content, { ...base, outils: ['excel'] }).dimensions.find((d) => d.id === 'sources');
     const withOdoo = score(content, { ...base, outils: ['excel', 'odoo'] }).dimensions.find((d) => d.id === 'sources');
     expect(excelOnly?.score).toBe(33);
@@ -64,7 +56,7 @@ describe('scoring', () => {
   });
 
   it('ne compte pas une dimension sans question vue', () => {
-    const s = score(content, { secteur: 'commerce' });
+    const s = score(content, {});
     expect(s.dimensions.every((d) => d.score === null)).toBe(true);
     expect(s.global).toBe(0);
   });
@@ -86,15 +78,15 @@ describe('scoring', () => {
 });
 
 describe('coût caché', () => {
-  it('heures × semaines × coût horaire, arrondi à la centaine', () => {
-    const cost = hiddenCost(content, { heures_excel: 'h5_10' });
-    expect(cost).toEqual({ hoursPerWeek: 7.5, hoursPerYear: 345, hourlyRate: 45, yearlyCost: 15500 });
+  it('heures par mois × mois × coût horaire, arrondi à la centaine', () => {
+    const cost = hiddenCost(content, { temps_tableaux: 'jours' });
+    expect(cost).toEqual({ hoursPerMonth: 20, hoursPerYear: 220, hourlyRate: 45, yearlyCost: 9900 });
   });
 
   it('accepte un coût horaire personnalisé et ignore une valeur invalide', () => {
-    expect(hiddenCost(content, { heures_excel: 'plus_10' }, 60)?.yearlyCost).toBe(33100);
-    expect(hiddenCost(content, { heures_excel: 'plus_10' }, -5)?.hourlyRate).toBe(45);
-    expect(hiddenCost(content, { heures_excel: 'plus_10' }, Number.NaN)?.hourlyRate).toBe(45);
+    expect(hiddenCost(content, { temps_tableaux: 'semaine' }, 60)?.yearlyCost).toBe(26400);
+    expect(hiddenCost(content, { temps_tableaux: 'semaine' }, -5)?.hourlyRate).toBe(45);
+    expect(hiddenCost(content, { temps_tableaux: 'semaine' }, Number.NaN)?.hourlyRate).toBe(45);
   });
 
   it('est indéfini sans réponse', () => {
@@ -116,7 +108,7 @@ describe('les 3 profils de test obtiennent un résultat crédible et différent'
     expect(weakest?.id).toBe('fiabilite');
   });
 
-  it('e-commerce 6 personnes sur Shopify + Yuki : Piloté, plafonné par l’export manuel', () => {
+  it('e-commerce 6 personnes sur Shopify + Yuki : Piloté, plafonné par la double saisie', () => {
     expect(results['ecommerce-6.yaml']?.level.id).toBe('pilote');
     expect(results['ecommerce-6.yaml']?.cappedFrom).toBeDefined();
   });
@@ -128,7 +120,7 @@ describe('les 3 profils de test obtiennent un résultat crédible et différent'
     expect(shapes.size).toBe(profiles.length);
   });
 
-  it('chaque profil voit entre 12 et 15 questions et le coût caché est chiffré', () => {
+  it('le coût caché est chiffré pour chaque profil', () => {
     for (const p of profiles) {
       expect(hiddenCost(content, p.answers)?.yearlyCost, p.file).toBeGreaterThan(0);
     }

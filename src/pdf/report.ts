@@ -288,8 +288,8 @@ function actionsPage(content: Content, result: DiagnosticResult, h: Helpers): Pd
           },
           {
             text: h.tx('costDetail', {
-              hoursWeek: formatNumber(cost.hoursPerWeek, 1),
-              weeks: String(content.settings.hiddenCost.weeksPerYear),
+              hoursMonth: formatNumber(cost.hoursPerMonth, 1),
+              months: String(content.settings.hiddenCost.monthsPerYear),
               rate: formatNumber(cost.hourlyRate),
               hours: formatNumber(cost.hoursPerYear),
             }),
