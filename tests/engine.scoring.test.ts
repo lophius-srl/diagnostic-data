@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Answers } from '../src/engine/conditions';
 import { hiddenCost } from '../src/engine/hidden-cost';
-import { levelFor, score } from '../src/engine/scoring';
+import { insightFor, levelFor, score } from '../src/engine/scoring';
 import { content, profile, profiles } from './helpers';
 
 describe('scoring', () => {
@@ -124,5 +124,16 @@ describe('les 3 profils de test obtiennent un résultat crédible et différent'
     for (const p of profiles) {
       expect(hiddenCost(content, p.answers)?.yearlyCost, p.file).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('lecture axe par axe', () => {
+  it('choisit la phrase selon le score (bas < 40, moyen < 70, haut)', () => {
+    const d = content.dimensions[0]!;
+    expect(insightFor(d, 39)).toBe(d.insights.low);
+    expect(insightFor(d, 40)).toBe(d.insights.mid);
+    expect(insightFor(d, 69)).toBe(d.insights.mid);
+    expect(insightFor(d, 70)).toBe(d.insights.high);
+    expect(insightFor(d, null)).toBe('');
   });
 });

@@ -5,6 +5,7 @@ import type { RenderedAction } from '../../engine/recommend';
 import { LeadForm } from '../lead/LeadForm';
 import { PdfButton } from '../lead/PdfButton';
 import { ShareBox } from '../lead/ShareBox';
+import { insightFor } from '../../engine/scoring';
 import { useCountUp } from '../motion';
 import { ArchitectureSection } from './ArchitectureSection';
 import { HiddenCostCard } from './HiddenCostCard';
@@ -35,8 +36,6 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
   const shownScore = useCountUp(score.global, true);
   const locked = content.settings.features.leadGate && !unlocked;
   const shared = onUnlock === undefined;
-  const strength = dimension(result.strengths[0]);
-  const weakness = dimension(result.weaknesses[0]);
 
   return (
     <article class="results">
@@ -78,7 +77,7 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
             </li>
           ))}
         </ol>
-        <p class="lead">{score.level.summary}</p>
+        <p class="lead">{result.summary}</p>
         {score.cappedFrom && (
           <p class="muted small">
             {t('results_capped', { level: score.cappedFrom.label })} {score.cappedFrom.blockedReason}
@@ -91,21 +90,31 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
         <section class="card" aria-labelledby="dims-title">
           <h2 id="dims-title">{t('results_dimensions')}</h2>
           <Radar scores={score.dimensions} />
-          <p class="dim-chips">
-            {strength && (
-              <span class="chip chip-strong">
-                {t('results_strength')} : {strength.label}
-              </span>
-            )}
-            {weakness && (
-              <span class="chip">
-                {t('results_weakness')} : {weakness.label}
-              </span>
-            )}
-          </p>
         </section>
         {result.hiddenCost && <HiddenCostCard cost={result.hiddenCost} onRateChange={onRateChange} />}
       </div>
+
+      {/* ---------- Lecture axe par axe ---------- */}
+      <section aria-labelledby="reading-title">
+        <h2 id="reading-title">{t('results_reading')}</h2>
+        <ul class="reading">
+          {content.dimensions.map((d) => {
+            const value = score.dimensions.find((x) => x.id === d.id)?.score ?? null;
+            return (
+              <li key={d.id}>
+                <p class="reading-head">
+                  <strong>{d.label}</strong>
+                  <span class="reading-score">{value === null ? t('results_not_evaluated') : `${value}/100`}</span>
+                </p>
+                <span class="reading-bar" aria-hidden="true">
+                  <span style={{ width: `${value ?? 0}%` }} />
+                </span>
+                <p class="muted small">{insightFor(d, value)}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
 
       <ArchitectureSection answers={answers} locked={locked} />
 
@@ -187,6 +196,7 @@ function FullReport({ result }: { result: DiagnosticResult }) {
             <section key={o.id} class="card offer">
               <h3>{o.title}</h3>
               <p class="offer-why">{o.why}</p>
+              <p class="small">{o.summary}</p>
               <p class="muted small">
                 {o.duration} · {o.price}
               </p>

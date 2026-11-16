@@ -60,6 +60,7 @@ function Diagram({ diagram }: { diagram: ArchDiagram }) {
     <figure class={visible ? 'card arch is-visible' : 'card arch'} ref={ref}>
       <figcaption>
         <h3>{diagram.title}</h3>
+        <p class="muted small">{diagram.subtitle}</p>
       </figcaption>
       {/* SVG généré par notre propre moteur, textes échappés (escapeXml). */}
       <div class="arch-svg" dangerouslySetInnerHTML={{ __html: svg }} />

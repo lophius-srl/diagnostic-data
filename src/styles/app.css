@@ -199,10 +199,6 @@ p {
   font-size: 0.8rem;
   font-weight: 500;
 }
-.chip-strong {
-  background: var(--blue);
-  color: #fff;
-}
 .notice {
   background: var(--blue-soft);
   border-radius: var(--radius-btn);
@@ -219,8 +215,7 @@ p {
   animation: fade-in calc(var(--duration) * 1.5) ease-out;
 }
 .home-title,
-.hero-title,
-.about-title {
+.hero-title {
   margin: 0 0 var(--space-2);
   font-weight: 400;
   line-height: 1.1;
@@ -229,8 +224,7 @@ p {
   font-size: clamp(2.4rem, 9vw, 4rem);
 }
 .home-title strong,
-.hero-title strong,
-.about-title strong {
+.hero-title strong {
   display: block;
   font-weight: 400;
   color: var(--blue);
@@ -266,35 +260,6 @@ p {
   .benefits {
     grid-template-columns: 1fr;
   }
-}
-.about {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-4);
-}
-.about > div {
-  flex: 1 1 18rem;
-  max-width: 28rem;
-}
-.about-title {
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-}
-@media (max-width: 640px) {
-  .about {
-    text-align: center;
-  }
-}
-.about-photo {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  padding: 6px;
-  background: var(--surface);
-  box-shadow: var(--shadow-card);
-  filter: grayscale(1);
 }
 .testimonials {
   display: grid;
@@ -560,12 +525,41 @@ p {
 .radar-value.is-muted {
   fill: var(--text-muted);
 }
-.dim-chips {
+.reading {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-2) var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+}
+.reading p {
+  margin: 0;
+}
+.reading-head {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem;
-  margin: var(--space-1) 0 0;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-1);
+  color: var(--blue-night);
+}
+.reading-score {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+.reading-bar {
+  display: block;
+  height: 6px;
+  margin: 0.35rem 0;
+  border-radius: 3px;
+  background: var(--blue-soft);
+  overflow: hidden;
+}
+.reading-bar span {
+  display: block;
+  height: 100%;
+  background: var(--blue);
 }
 .cost-card {
   display: flex;

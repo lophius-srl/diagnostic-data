@@ -322,16 +322,6 @@ export const HomeSchema = z
       })
       .strict(),
     benefits: z.array(TitleText).min(1).max(4),
-    about: z
-      .object({
-        titleLight: z.string(),
-        name: z.string(),
-        photo: z.string(),
-        photoAlt: z.string(),
-        bio: z.array(z.string()).min(1).max(3),
-        link: z.string(),
-      })
-      .strict(),
     testimonials: z
       .object({
         title: z.string(),

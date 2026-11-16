@@ -25,6 +25,7 @@ export function HiddenCostCard({ cost, onRateChange }: Props) {
           rate: formatNumber(cost.hourlyRate),
         })}
       </p>
+      <p class="small">{t('results_hidden_cost_meaning')}</p>
       <label class="rate-field">
         {t('results_hourly_rate')}
         <input

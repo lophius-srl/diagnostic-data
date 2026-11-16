@@ -21,12 +21,12 @@ results_capped: 'Votre score vous placerait au niveau « {level} ».'
 results_dimensions: Vos 7 axes
 results_radar_label: 'Radar des 7 axes : {values}'
 results_not_evaluated: non évalué
-results_strength: Point fort
-results_weakness: À travailler
+results_reading: Votre lecture, axe par axe
 results_hidden_cost: Votre coût caché
 results_hidden_cost_unit: par an
 results_hidden_cost_detail: "{hours} h par an passées à préparer des chiffres, à {rate} € de l'heure."
 results_hourly_rate: Votre coût horaire (€)
+results_hidden_cost_meaning: Du temps qui pourrait servir à vendre, à suivre vos clients ou à décider.
 results_architecture: Vos chiffres, aujourd'hui et demain
 results_quick_wins: 3 actions pour commencer
 results_effort: Effort

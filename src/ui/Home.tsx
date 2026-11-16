@@ -6,9 +6,9 @@ interface Props {
   onResume: () => void;
 }
 
-/** Accueil court et centré, sur le modèle de lophius.be : promesse, bouton, trois bénéfices, qui je suis. */
+/** Accueil court et centré, sur le modèle de lophius.be : promesse, bouton, trois bénéfices. */
 export function Home({ canResume, onStart, onResume }: Props) {
-  const { hero, benefits, about, testimonials } = content.home;
+  const { hero, benefits, testimonials } = content.home;
   const showTestimonials = content.settings.features.testimonials && testimonials.items.length > 0;
 
   return (
@@ -59,27 +59,6 @@ export function Home({ canResume, onStart, onResume }: Props) {
           </div>
         </section>
       )}
-
-      <section class="about" aria-labelledby="about-title">
-        <img
-          class="about-photo"
-          src={`${import.meta.env.BASE_URL}${about.photo}`}
-          alt={about.photoAlt}
-          width="160"
-          height="160"
-          loading="lazy"
-        />
-        <div>
-          <h2 id="about-title" class="about-title">
-            {about.titleLight}
-            <strong>{about.name}</strong>
-          </h2>
-          {about.bio.map((line) => (
-            <p key={line}>{line}</p>
-          ))}
-          <a href={content.settings.links.site}>{about.link}</a>
-        </div>
-      </section>
     </div>
   );
 }

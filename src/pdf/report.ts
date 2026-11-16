@@ -7,6 +7,7 @@ import { buildArchitecture, describeDiagram } from '../engine/architecture';
 import type { Answers } from '../engine/conditions';
 import { buildDiagnostic, type DiagnosticResult } from '../engine/diagnostic';
 import { fillTemplate, recoContext } from '../engine/recommend';
+import { insightFor } from '../engine/scoring';
 
 /**
  * Définition du rapport PDF (pdfmake), construite sans DOM : testable en Node, rendue dans le navigateur.
@@ -213,7 +214,7 @@ function synthesisPage(
 function dimensionsPage(content: Content, result: DiagnosticResult, h: Helpers): PdfContent[] {
   const rows: PdfContent[] = content.dimensions.map((d) => {
     const score = result.score.dimensions.find((x) => x.id === d.id)?.score ?? null;
-    const insight = score === null ? '' : score < 40 ? d.insights.low : score < 70 ? d.insights.mid : d.insights.high;
+    const insight = insightFor(d, score);
     return {
       unbreakable: true,
       stack: [

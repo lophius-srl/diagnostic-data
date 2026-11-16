@@ -12,16 +12,6 @@ benefits:
   - { title: Votre coût caché, text: chiffré en euros par an }
   - { title: Votre plan d'action, text: avec vos propres logiciels }
 
-about:
-  titleLight: Le diagnostic de
-  name: Antoine Stas
-  photo: brand/portrait.jpg
-  photoAlt: Portrait d'Antoine Stas
-  bio:
-    - "13 ans dans l'écosystème tech liégeois. Double expertise : développement logiciel et data."
-    - TotalEnergies, Ores, Parlement européen, Gaming1.
-  link: En savoir plus sur Lophius
-
 # Témoignages : masqués tant que settings.features.testimonials = false OU que la liste est vide.
 # N'y mettre QUE de vrais témoignages, avec l'accord écrit de la personne.
 testimonials:

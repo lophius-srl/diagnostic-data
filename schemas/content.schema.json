@@ -1246,43 +1246,6 @@
               "minItems": 1,
               "maxItems": 4
             },
-            "about": {
-              "type": "object",
-              "properties": {
-                "titleLight": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "photo": {
-                  "type": "string"
-                },
-                "photoAlt": {
-                  "type": "string"
-                },
-                "bio": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1,
-                  "maxItems": 3
-                },
-                "link": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "titleLight",
-                "name",
-                "photo",
-                "photoAlt",
-                "bio",
-                "link"
-              ],
-              "additionalProperties": false
-            },
             "testimonials": {
               "type": "object",
               "properties": {
@@ -1323,7 +1286,6 @@
           "required": [
             "hero",
             "benefits",
-            "about",
             "testimonials"
           ],
           "additionalProperties": false
