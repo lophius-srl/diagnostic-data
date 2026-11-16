@@ -6,7 +6,7 @@ import { EMPTY_CONTACT, validateLead, type LeadContact, type LeadErrors, type Le
 interface Props {
   answers: Answers;
   hourlyRate: number | undefined;
-  onSuccess: (firstName: string) => void;
+  onSuccess: (firstName: string, company: string) => void;
 }
 
 type Status = 'idle' | 'sending' | 'network' | 'rate';
@@ -66,7 +66,7 @@ export function LeadForm({ answers, hourlyRate, onSuccess }: Props) {
       });
       if (response.status === 429) return setStatus('rate');
       const body = (await response.json().catch(() => ({}))) as { ok?: boolean; errors?: LeadErrors };
-      if (response.ok && body.ok) return onSuccess(contact.firstName);
+      if (response.ok && body.ok) return onSuccess(contact.firstName.trim(), contact.company.trim());
       if (body.errors) {
         setStatus('idle');
         return showErrors(body.errors);

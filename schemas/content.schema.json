@@ -166,6 +166,29 @@
               "phrase": {
                 "type": "string"
               },
+              "technicalExplanation": {
+                "type": "string"
+              },
+              "insights": {
+                "type": "object",
+                "properties": {
+                  "low": {
+                    "type": "string"
+                  },
+                  "mid": {
+                    "type": "string"
+                  },
+                  "high": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "low",
+                  "mid",
+                  "high"
+                ],
+                "additionalProperties": false
+              },
               "strengthCandidate": {
                 "type": "boolean",
                 "default": true
@@ -181,6 +204,8 @@
               "technicalLabel",
               "description",
               "phrase",
+              "technicalExplanation",
+              "insights",
               "weight"
             ],
             "additionalProperties": false
@@ -1092,6 +1117,76 @@
           ],
           "additionalProperties": false
         },
+        "report": {
+          "type": "object",
+          "properties": {
+            "fileName": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "preparedFor": {
+              "type": "string"
+            },
+            "preparedForAnonymous": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "sections": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "texts": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "glossary": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "term": {
+                    "type": "string"
+                  },
+                  "definition": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "term",
+                  "definition"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "disclaimer": {
+              "type": "string"
+            },
+            "footer": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "fileName",
+            "title",
+            "preparedFor",
+            "preparedForAnonymous",
+            "author",
+            "sections",
+            "texts",
+            "glossary",
+            "disclaimer",
+            "footer"
+          ],
+          "additionalProperties": false
+        },
         "ui": {
           "type": "object",
           "additionalProperties": {
@@ -1111,6 +1206,7 @@
         "offers",
         "architecture",
         "privacy",
+        "report",
         "ui"
       ],
       "additionalProperties": false

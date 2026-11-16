@@ -1,44 +1,81 @@
-# Les 7 axes du radar. `label` parle le langage du gérant ; `technicalLabel` est réservé au rapport PDF.
+# Les 7 axes du radar. `label` parle le langage du gérant ; `technicalLabel` et `technicalExplanation`
+# sont réservés au rapport PDF (vocabulaire technique toujours expliqué).
+# `insights` : lecture du score dans le rapport (low < 40, mid < 70, high ≥ 70).
 - id: sources
   label: Sources
   technicalLabel: Systèmes sources
   description: Les logiciels où naissent vos chiffres, et leur capacité à les partager.
   phrase: 'vos logiciels'
   strengthCandidate: false # avoir un bon logiciel ne suffit pas à en faire un point fort
+  technicalExplanation: 'Les « systèmes sources » sont les logiciels où vos données sont créées : comptabilité, facturation, CRM, boutique en ligne. Leur capacité à exporter leurs données ou à les exposer via une API détermine ce qui peut être automatisé.'
+  insights:
+    low: "Vos chiffres naissent surtout dans des fichiers ou dans des outils difficiles à interroger. C'est la première chose à stabiliser."
+    mid: "Vos logiciels contiennent l'essentiel, mais certains partagent difficilement leurs données."
+    high: 'Vos logiciels sont modernes et savent partager leurs données : une excellente base pour la suite.'
   weight: 1
 - id: fiabilite
   label: Fiabilité
   technicalLabel: Qualité des données
   description: La confiance que vous pouvez accorder à vos chiffres.
   phrase: 'la fiabilité de vos chiffres'
+  technicalExplanation: 'La « qualité des données » mesure si un chiffre est complet, à jour et calculé partout de la même façon. Elle repose sur des définitions partagées et sur des contrôles automatiques.'
+  insights:
+    low: "Les chiffres font débat : plusieurs versions circulent, et la confiance s'use."
+    mid: "Les chiffres sont globalement justes, avec des écarts ponctuels qu'il faut encore vérifier à la main."
+    high: "Vos chiffres font foi. C'est rare, et c'est précieux."
   weight: 1
 - id: centralisation
   label: Centralisation
   technicalLabel: Intégration et référentiel unique
   description: Vos chiffres sont-ils réunis à un seul endroit, sans recopie ?
   phrase: 'la centralisation de vos chiffres'
+  technicalExplanation: "L'« intégration » consiste à réunir les données de plusieurs logiciels dans un « référentiel unique », pour qu'il n'existe qu'une seule version de chaque chiffre."
+  insights:
+    low: 'Chaque outil vit sa vie : réunir les chiffres demande du temps et du copier-coller.'
+    mid: 'Une partie des chiffres est réunie, le reste passe encore par Excel.'
+    high: 'Vos chiffres sont réunis à un seul endroit, ou presque.'
   weight: 1
 - id: pilotage
   label: Pilotage
   technicalLabel: Reporting et tableaux de bord
   description: Votre capacité à suivre l'activité et à décider à temps.
   phrase: "le pilotage de l'activité"
+  technicalExplanation: "Le « reporting » regroupe les tableaux de bord et les rapports qui suivent les indicateurs clés de l'entreprise (les KPI : chiffre d'affaires, marge, trésorerie…)."
+  insights:
+    low: "Les chiffres arrivent trop tard pour décider : on pilote surtout à l'intuition, ou au bilan."
+    mid: "Vous suivez l'activité régulièrement, mais certaines questions clés restent sans réponse rapide."
+    high: "Vous suivez l'activité de près et vous savez où vous gagnez de l'argent."
   weight: 1
 - id: automatisation
   label: Automatisation
   technicalLabel: Automatisation des flux (ETL)
   description: La part du travail répétitif faite par les machines plutôt que par vos équipes.
   phrase: "l'automatisation"
+  technicalExplanation: 'Un flux « ETL » (extraire, transformer, charger) copie et prépare les données automatiquement, par exemple chaque nuit, à la place du copier-coller.'
+  insights:
+    low: "Beaucoup d'heures partent dans des tâches répétitives que des machines feraient mieux."
+    mid: 'Une partie du travail est automatisée ; le reporting reste largement manuel.'
+    high: "L'essentiel se met à jour seul : vos équipes analysent au lieu de recopier."
   weight: 1
 - id: securite
   label: Sécurité
   technicalLabel: Sécurité, sauvegarde et continuité
   description: Vos chiffres sont-ils protégés, sauvegardés, et pas dans une seule tête ?
   phrase: 'la sécurité de vos fichiers'
+  technicalExplanation: "Il s'agit des sauvegardes, des droits d'accès et de la continuité d'activité : pouvoir continuer à travailler après une panne, un vol ou une absence."
+  insights:
+    low: 'Des fichiers importants pourraient être perdus, ou consultés par des personnes non prévues.'
+    mid: "Les bases sont là, mais la sauvegarde ou les droits d'accès méritent d'être formalisés."
+    high: 'Vos fichiers sont sauvegardés et protégés.'
   weight: 1
 - id: autonomie
   label: Autonomie
   technicalLabel: Self-service et culture data
   description: Chacun trouve-t-il seul la réponse à ses questions ?
   phrase: "l'autonomie de l'équipe"
+  technicalExplanation: "Le « self-service » permet à chacun de consulter et de filtrer ses chiffres seul, sans dépendre d'une personne qui prépare les fichiers."
+  insights:
+    low: "Les réponses dépendent d'une ou deux personnes : un vrai risque en cas d'absence."
+    mid: "Certains trouvent seuls leurs réponses, d'autres doivent encore demander."
+    high: 'Chacun trouve seul les chiffres dont il a besoin.'
   weight: 1

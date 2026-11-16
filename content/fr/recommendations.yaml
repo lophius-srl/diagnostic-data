@@ -25,7 +25,7 @@ variables:
 
 quickWins:
   - id: qw_relier_ventes_compta
-    title: Relier {ventes} et {compta} pour supprimer la double saisie
+    title: Relier {ventes} à {compta} pour supprimer la double saisie
     detail: Les factures et le chiffre d'affaires passent seuls de {ventes} vers {compta}. Plus de recopie, et plus d'écart entre les deux.
     when: { q: recopie, in: [parfois, souvent] }
     requiresTools:

@@ -34,6 +34,7 @@ L'app tourne sur http://localhost:5173.
 | Build | `make build` puis `make preview` |
 | App + fonction des leads + base locale | `make dev-full` (http://localhost:8788) |
 | Export des leads en CSV | `make leads-export` |
+| Rapports PDF des 3 profils de test (relecture) | `make report-samples` → `exports/` |
 
 ## Modifier le diagnostic sans toucher au code
 
@@ -48,6 +49,10 @@ Tout le contenu est dans `content/fr/` :
 | `tools.yaml` | catalogue des logiciels (logos dans `public/brand/tools/`) |
 | `settings.yaml` | coût horaire par défaut, liens, options (témoignages, chèques-entreprises, statistiques) |
 | `benchmarks.yaml` | repères indicatifs (désactivés tant qu'aucune source n'est renseignée) |
+| `architecture.yaml` | schémas « Aujourd'hui » / « Cible recommandée » |
+| `recommendations.yaml`, `offers.yaml` | quick wins, feuille de route, forfaits |
+| `report.yaml` | textes du rapport PDF et glossaire |
+| `privacy.yaml` | politique de confidentialité (modèle à compléter) |
 | `ui.yaml` | textes d'interface |
 
 Après une modification, `make content` valide tout et explique les erreurs en clair.

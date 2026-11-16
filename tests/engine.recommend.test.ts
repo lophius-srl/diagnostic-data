@@ -144,6 +144,7 @@ describe('outils de texte', () => {
     expect(joinNames(['A'])).toBe('A');
     expect(joinNames(['A', 'B'])).toBe('A et B');
     expect(joinNames(['A', 'B', 'C'])).toBe('A, B et C');
+    expect(joinNames(['A', 'B', 'C', 'D', 'E'])).toBe('A, B, C et 2 autres');
   });
 
   it('fillTemplate laisse un trou inconnu visible (détecté par les tests)', () => {

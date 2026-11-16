@@ -1,7 +1,7 @@
 # Point d'entrée unique pour toutes les commandes du projet (la CI lance `make install lint test build`).
 # Sous Windows sans droits admin : `scoop install nodejs-lts make`, ou lancer directement les `npm run …` ci-dessous.
 
-.PHONY: install dev dev-full lint format test build preview content leads-export db-migrate
+.PHONY: install dev dev-full lint format test build preview content leads-export db-migrate report-samples
 
 install:
 	npm ci
@@ -41,3 +41,7 @@ db-migrate:
 # Exporte les leads en CSV dans exports/ (ajouter LOCAL=1 pour la base locale).
 leads-export:
 	npm run leads:export -- $(if $(LOCAL),--local,)
+
+# Génère le rapport PDF des 3 profils de test dans exports/ (relecture du contenu).
+report-samples:
+	npm run report:samples

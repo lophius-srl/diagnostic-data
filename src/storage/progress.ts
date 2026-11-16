@@ -15,7 +15,7 @@ export interface SavedProgress {
   /** Coût horaire personnalisé sur la page de résultats. */
   hourlyRate?: number;
   /** Rapport complet débloqué (coordonnées envoyées), avec le prénom pour le remerciement. */
-  unlocked?: { firstName: string };
+  unlocked?: { firstName: string; company?: string };
 }
 
 export const STORAGE_KEY = 'lophius-diagnostic';

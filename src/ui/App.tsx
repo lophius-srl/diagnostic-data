@@ -39,7 +39,7 @@ export function App() {
     pendingFeedback: null,
   });
   const [hourlyRate, setHourlyRate] = useState<number | undefined>(saved?.hourlyRate);
-  const [unlocked, setUnlocked] = useState<{ firstName: string } | undefined>(saved?.unlocked);
+  const [unlocked, setUnlocked] = useState<{ firstName: string; company?: string } | undefined>(saved?.unlocked);
 
   useEffect(() => {
     const onHash = () => {
@@ -73,8 +73,8 @@ export function App() {
     go('diagnostic');
   };
 
-  const unlock = (firstName: string) => {
-    setUnlocked({ firstName });
+  const unlock = (firstName: string, company: string) => {
+    setUnlocked({ firstName, company });
     requestAnimationFrame(() => document.getElementById('merci')?.focus());
   };
 

@@ -3,6 +3,7 @@ import type { Answers } from '../../engine/conditions';
 import { buildDiagnostic } from '../../engine/diagnostic';
 import type { RenderedAction } from '../../engine/recommend';
 import { LeadForm } from '../lead/LeadForm';
+import { PdfButton } from '../lead/PdfButton';
 import { ShareBox } from '../lead/ShareBox';
 import { useCountUp } from '../motion';
 import { ArchitectureSection } from './ArchitectureSection';
@@ -15,9 +16,9 @@ interface Props {
   onRateChange: (rate: number) => void;
   onRestart: () => void;
   /** Rapport complet débloqué (coordonnées envoyées, ou lien partagé après déblocage). */
-  unlocked: { firstName: string } | undefined;
+  unlocked: { firstName: string; company?: string } | undefined;
   /** Absent en mode « lien partagé » : pas de formulaire, on invite à faire son propre diagnostic. */
-  onUnlock?: (firstName: string) => void;
+  onUnlock?: (firstName: string, company: string) => void;
   /** Texte d'avertissement en haut de page (mode partagé). */
   banner?: string[];
 }
@@ -132,6 +133,19 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
       )}
 
       {!locked && <FullReport result={result} />}
+
+      {!locked && (
+        <section class="card pdf-card" aria-labelledby="pdf-title">
+          <h2 id="pdf-title">{t('pdf_title')}</h2>
+          <p class="muted">{t('pdf_text')}</p>
+          <PdfButton
+            answers={answers}
+            {...(unlocked?.company && { company: unlocked.company })}
+            hourlyRate={hourlyRate}
+            bookingUrl={bookingLink()}
+          />
+        </section>
+      )}
 
       <ShareBox answers={answers} unlocked={!locked} />
 

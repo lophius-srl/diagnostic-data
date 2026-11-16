@@ -6,5 +6,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   base: process.env.VITE_BASE_PATH ?? '/',
   plugins: [preact()],
-  build: { target: 'es2020', sourcemap: false },
+  // Le générateur PDF (~600 Ko compressés) est un fichier à part, chargé uniquement au clic : avertissement relevé en conséquence.
+  build: { target: 'es2020', sourcemap: false, chunkSizeWarningLimit: 1500 },
 });

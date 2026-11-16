@@ -91,3 +91,9 @@ shared_banner: Ce diagnostic vous a été transmis. Il reflète les réponses de
 shared_old_version: Les questions ont évolué depuis la création de ce lien. Le résultat peut légèrement différer.
 shared_invalid: Ce lien de partage est incomplet ou abîmé.
 shared_own_cta: Faire mon propre diagnostic
+# ---------- Rapport PDF ----------
+pdf_download: Télécharger le rapport PDF
+pdf_working: Préparation du rapport…
+pdf_error: Le rapport n'a pas pu être généré. Réessayez, ou contactez-nous.
+pdf_title: Votre rapport à transmettre
+pdf_text: Une synthèse en une page, le détail de vos 7 axes, vos schémas, votre feuille de route et les prochaines étapes. À faire circuler en interne.

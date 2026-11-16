@@ -91,6 +91,10 @@ export const DimensionSchema = z
     description: z.string(),
     /** Forme utilisée dans une phrase (« la fiabilité de vos chiffres »). */
     phrase: z.string(),
+    /** Explication du terme technique, pour le rapport PDF. */
+    technicalExplanation: z.string(),
+    /** Lecture du score dans le rapport : bas (< 40), moyen (< 70), haut. */
+    insights: z.object({ low: z.string(), mid: z.string(), high: z.string() }).strict(),
     /** Peut être cité comme point fort dans la synthèse (faux pour un axe trop facile à « réussir »). */
     strengthCandidate: z.boolean().default(true),
     weight: z.number().positive(),
@@ -288,6 +292,21 @@ export const PrivacySchema = z
   })
   .strict();
 
+export const ReportSchema = z
+  .object({
+    fileName: z.string(),
+    title: z.string(),
+    preparedFor: z.string(),
+    preparedForAnonymous: z.string(),
+    author: z.string(),
+    sections: z.record(z.string(), z.string()),
+    texts: z.record(z.string(), z.string()),
+    glossary: z.array(z.object({ term: z.string(), definition: z.string() }).strict()),
+    disclaimer: z.string(),
+    footer: z.string(),
+  })
+  .strict();
+
 export const SettingsSchema = z
   .object({
     locale: z.string(),
@@ -345,6 +364,7 @@ export const ContentSchema = z
     offers: OffersSchema,
     architecture: ArchitectureSchema,
     privacy: PrivacySchema,
+    report: ReportSchema,
     ui: z.record(z.string(), z.string()),
   })
   .strict();
@@ -373,5 +393,6 @@ export const CONTENT_FILES = {
   offers: 'offers.yaml',
   architecture: 'architecture.yaml',
   privacy: 'privacy.yaml',
+  report: 'report.yaml',
   ui: 'ui.yaml',
 } as const satisfies Record<keyof Content, string>;
