@@ -86,7 +86,59 @@ export function validateContent(content: Content): string[] {
     for (const o of hcQuestion.options)
       if (!(o.id in hc.hoursPerWeek)) errors.push(`coût caché : heures manquantes pour « ${o.id} »`);
 
+  validateRecommendations(content, errors, (cond, where) => checkCondition(cond, where, content.questions.length - 1));
   return errors;
+}
+
+/** Trous {xxx} d'un texte. */
+export function placeholders(text: string): string[] {
+  return [...text.matchAll(/\{(\w+)\}/g)].map((m) => m[1] as string);
+}
+
+function validateRecommendations(
+  content: Content,
+  errors: string[],
+  checkCondition: (cond: Condition, where: string) => void,
+): void {
+  const { variables, quickWins, roadmap } = content.recommendations;
+  const variableIds = new Set(variables.map((v) => v.id));
+  const toolIds = new Set(content.tools.map((t) => t.id));
+  const dimensionIds = new Set(content.dimensions.map((d) => d.id));
+  const quickWinIds = new Set(quickWins.map((q) => q.id));
+
+  variables.forEach((v) => v.rules.forEach((r, i) => r.when && checkCondition(r.when, `variable ${v.id}[${i}]`)));
+
+  const checkTexts = (where: string, texts: string[], toolSlots: Record<string, string[]>) => {
+    for (const text of texts) {
+      for (const slot of placeholders(text)) {
+        if (!variableIds.has(slot) && !(slot in toolSlots)) errors.push(`${where} : trou {${slot}} non défini`);
+      }
+    }
+    for (const [slot, ids] of Object.entries(toolSlots)) {
+      for (const id of ids) if (!toolIds.has(id)) errors.push(`${where} : outil inconnu « ${id} » dans {${slot}}`);
+    }
+  };
+
+  const allActions = [...quickWins, ...roadmap.flatMap((p) => p.actions)];
+  for (const dup of duplicates(allActions.map((a) => a.id))) errors.push(`action en double : ${dup}`);
+
+  for (const a of allActions) {
+    const where = `action ${a.id}`;
+    for (const c of [a.when, a.excludeIf, 'boostIf' in a ? a.boostIf : undefined]) if (c) checkCondition(c, where);
+    checkTexts(where, [a.title, a.detail], a.requiresTools);
+    if ('dimension' in a && !dimensionIds.has(a.dimension))
+      errors.push(`${where} : dimension inconnue « ${a.dimension} »`);
+    if ('unlessQuickWin' in a && a.unlessQuickWin && !quickWinIds.has(a.unlessQuickWin))
+      errors.push(`${where} : quick win inconnu « ${a.unlessQuickWin} »`);
+  }
+  if (quickWins.filter((q) => q.fallback && !q.when && Object.keys(q.requiresTools).length === 0).length < 3)
+    errors.push('quick wins : au moins 3 actions de secours sans condition sont nécessaires');
+
+  for (const o of content.offers.offers) {
+    const where = `forfait ${o.id}`;
+    for (const c of [o.recommendIf, o.preferredIf]) if (c) checkCondition(c, where);
+    checkTexts(where, [o.title, o.summary, o.why, ...o.deliverables], {});
+  }
 }
 
 function duplicates(ids: readonly string[]): string[] {

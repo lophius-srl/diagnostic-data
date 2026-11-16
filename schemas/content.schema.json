@@ -135,6 +135,13 @@
               "description": {
                 "type": "string"
               },
+              "phrase": {
+                "type": "string"
+              },
+              "strengthCandidate": {
+                "type": "boolean",
+                "default": true
+              },
               "weight": {
                 "type": "number",
                 "exclusiveMinimum": 0
@@ -145,6 +152,7 @@
               "label",
               "technicalLabel",
               "description",
+              "phrase",
               "weight"
             ],
             "additionalProperties": false
@@ -490,6 +498,293 @@
             "additionalProperties": false
           }
         },
+        "recommendations": {
+          "type": "object",
+          "properties": {
+            "variables": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "rules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "when": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "rules"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "quickWins": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "detail": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "when": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "excludeIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "requiresTools": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                      },
+                      "minItems": 1
+                    },
+                    "propertyNames": {
+                      "pattern": "^[a-z][a-z0-9_]*$"
+                    },
+                    "default": {}
+                  },
+                  "dimension": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "effort": {
+                    "type": "string",
+                    "enum": [
+                      "faible",
+                      "moyen",
+                      "eleve"
+                    ]
+                  },
+                  "impact": {
+                    "$ref": "#/definitions/content/properties/recommendations/properties/quickWins/items/properties/effort"
+                  },
+                  "boostIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "fallback": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "detail",
+                  "dimension",
+                  "effort",
+                  "impact"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 3
+            },
+            "roadmap": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "max": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 6
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "when": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "excludeIf": {
+                          "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                        },
+                        "requiresTools": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                            },
+                            "minItems": 1
+                          },
+                          "propertyNames": {
+                            "pattern": "^[a-z][a-z0-9_]*$"
+                          },
+                          "default": {}
+                        },
+                        "unlessQuickWin": {
+                          "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "detail"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "title",
+                  "max",
+                  "actions"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "variables",
+            "quickWins",
+            "roadmap"
+          ],
+          "additionalProperties": false
+        },
+        "offers": {
+          "type": "object",
+          "properties": {
+            "maxRecommended": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            },
+            "offers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "duration": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "deliverables": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1
+                  },
+                  "why": {
+                    "type": "string"
+                  },
+                  "recommendIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "recommendBelowScore": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "preferredIf": {
+                    "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                  },
+                  "priority": {
+                    "type": "integer",
+                    "default": 0
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "duration",
+                  "price",
+                  "summary",
+                  "deliverables",
+                  "why"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "cheques": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "title",
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "maxRecommended",
+            "offers",
+            "cheques"
+          ],
+          "additionalProperties": false
+        },
         "ui": {
           "type": "object",
           "additionalProperties": {
@@ -505,6 +800,8 @@
         "questions",
         "feedbacks",
         "benchmarks",
+        "recommendations",
+        "offers",
         "ui"
       ],
       "additionalProperties": false

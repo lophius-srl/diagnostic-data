@@ -1,0 +1,67 @@
+# Forfaits proposés en fin de diagnostic, présentés comme la suite logique (pas comme une publicité).
+# PLACEHOLDERS : durées et prix à compléter par Antoine (prix HTVA).
+# Recommandation : un forfait est retenu si `recommendIf` est vrai ou si le score est sous `recommendBelowScore`.
+# Ordre : d'abord celui qui correspond à la priorité déclarée (`preferredIf`), puis `priority` décroissante.
+
+maxRecommended: 2
+
+offers:
+  - id: audit_express
+    title: Audit data express
+    duration: '[[durée, ex. 3 jours]]'
+    price: '[[prix]] € HTVA'
+    summary: Un état des lieux précis de vos outils, de vos fichiers et de vos flux, avec un plan d'action chiffré.
+    deliverables:
+      - Carte de vos outils et de vos flux de chiffres
+      - Analyse détaillée des 7 axes
+      - Plan d'action priorisé, chiffré en jours et en euros
+    why: Avant d'investir, un regard extérieur pour savoir exactement par où commencer.
+    recommendBelowScore: 40
+    recommendIf:
+      any:
+        - { q: outils, has: nesaispas }
+        - { fact: versions_multiples }
+    priority: 1
+
+  - id: tableau_bord
+    title: Tableau de bord de pilotage en 10 jours
+    duration: 10 jours
+    price: '[[prix]] € HTVA'
+    summary: Vos chiffres clés dans un tableau de bord {tableau}, alimenté par vos vrais outils et livré en 10 jours ouvrables.
+    deliverables:
+      - Atelier de définition de vos chiffres clés
+      - Tableau de bord {tableau} sur ordinateur et téléphone
+      - Mise à jour automatique et formation de l'équipe
+    why: Vous voulez voir où en est l'entreprise d'un coup d'œil, sans rien recalculer.
+    recommendIf:
+      any:
+        - { q: priorite, in: [vue, marge] }
+        - { q: frequence, in: [bilan, rarement] }
+        - { q: ventes_mois, in: [heures, jours] }
+        - { fact: marge_inconnue }
+    preferredIf: { q: priorite, in: [vue, marge] }
+    priority: 2
+
+  - id: centralisation
+    title: Centralisation des données & automatisation du reporting
+    duration: '[[durée]]'
+    price: 'À partir de [[X]] € HTVA'
+    summary: Vos outils reliés à une base centrale, vos rapports qui se préparent seuls, et la fin du copier-coller.
+    deliverables:
+      - Base centrale alimentée automatiquement depuis vos outils
+      - Rapports récurrents automatisés
+      - Documentation et transmission à l'équipe
+    why: Des chiffres passent encore à la main d'un outil à l'autre. C'est le chantier qui libère le plus de temps.
+    recommendIf:
+      any:
+        - { fact: double_saisie }
+        - { fact: export_manuel }
+        - { fact: reporting_manuel }
+        - { q: priorite, is: doubles }
+    preferredIf: { q: priorite, in: [doubles, dependance] }
+    priority: 3
+
+# Bloc affiché sous les forfaits UNIQUEMENT si settings.features.chequesEntreprises = true.
+cheques:
+  title: Chèques-entreprises
+  text: Une partie de cette prestation peut, sous conditions, être financée par les chèques-entreprises de la Région wallonne. À vérifier selon les chèques ouverts au moment de votre demande.

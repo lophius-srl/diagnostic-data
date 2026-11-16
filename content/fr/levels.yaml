@@ -6,7 +6,7 @@
 - id: structure
   label: Structuré
   min: 20
-  summary: Les bons outils sont là. Ils ne se parlent pas encore, et Excel fait le lien à la main.
+  summary: Les bons outils sont là. Ils ne se parlent pas encore, et les chiffres passent de l'un à l'autre à la main.
 - id: pilote
   label: Piloté
   min: 40

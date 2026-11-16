@@ -3,34 +3,42 @@
   label: Sources
   technicalLabel: Systèmes sources
   description: Les logiciels où naissent vos chiffres, et leur capacité à les partager.
+  phrase: 'vos logiciels'
+  strengthCandidate: false # avoir un bon logiciel ne suffit pas à en faire un point fort
   weight: 1
 - id: fiabilite
   label: Fiabilité
   technicalLabel: Qualité des données
   description: La confiance que vous pouvez accorder à vos chiffres.
+  phrase: 'la fiabilité de vos chiffres'
   weight: 1
 - id: centralisation
   label: Centralisation
   technicalLabel: Intégration et référentiel unique
   description: Vos chiffres sont-ils réunis à un seul endroit, sans recopie ?
+  phrase: 'la centralisation de vos chiffres'
   weight: 1
 - id: pilotage
   label: Pilotage
   technicalLabel: Reporting et tableaux de bord
   description: Votre capacité à suivre l'activité et à décider à temps.
+  phrase: "le pilotage de l'activité"
   weight: 1
 - id: automatisation
   label: Automatisation
   technicalLabel: Automatisation des flux (ETL)
   description: La part du travail répétitif faite par les machines plutôt que par vos équipes.
+  phrase: "l'automatisation"
   weight: 1
 - id: securite
   label: Sécurité
   technicalLabel: Sécurité, sauvegarde et continuité
   description: Vos chiffres sont-ils protégés, sauvegardés, et pas dans une seule tête ?
+  phrase: 'la sécurité de vos fichiers'
   weight: 1
 - id: autonomie
   label: Autonomie
   technicalLabel: Self-service et culture data
   description: Chacun trouve-t-il seul la réponse à ses questions ?
+  phrase: "l'autonomie de l'équipe"
   weight: 1

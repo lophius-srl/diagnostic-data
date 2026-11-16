@@ -15,12 +15,37 @@ multi_hint: Plusieurs réponses possibles
 feedback_label: Le regard de l'expert
 continue_button: Continuer
 storage_unavailable: Votre navigateur ne permet pas de sauvegarder la progression. Gardez cet onglet ouvert jusqu'à la fin.
-results_title: Votre diagnostic
+results_eyebrow: Votre diagnostic data
+results_title_light: Votre entreprise est au niveau
 results_score: Score global
-results_level: Votre niveau
+results_score_unit: sur 100
+results_levels_scale: Les 5 niveaux
+results_capped: 'Votre score vous placerait au niveau « {level} ».'
 results_dimensions: Vos 7 axes
-results_hidden_cost: Ce que vous coûte le reporting manuel
-results_hidden_cost_detail: "{hours} h par an × {rate} € de l'heure"
-results_hourly_rate: Coût horaire (€)
+results_dimensions_intro: Plus la forme est grande, plus vos chiffres travaillent pour vous.
+results_radar_label: 'Radar des 7 axes : {values}'
 results_not_evaluated: non évalué
-results_preview_note: Aperçu de l'étape 1. La page de résultats complète arrive à l'étape 2.
+results_strengths: Ce qui fonctionne déjà
+results_weaknesses: Vos points d'attention
+results_hidden_cost: Ce que vous coûte le reporting manuel
+results_hidden_cost_unit: par an
+results_hidden_cost_detail: "{hoursWeek} h par semaine × {weeks} semaines × {rate} € de l'heure, soit {hours} h par an."
+results_hidden_cost_note: Une estimation à partir de vos réponses. Adaptez le coût horaire à votre réalité, charges comprises.
+results_hourly_rate: Coût horaire (€)
+results_quick_wins: Vos 3 quick wins
+results_quick_wins_intro: Les actions qui rapportent le plus, le plus vite, avec vos outils actuels.
+results_effort: Effort
+results_impact: Impact
+level_faible: faible
+level_moyen: moyen
+level_eleve: élevé
+results_roadmap: Votre feuille de route
+results_roadmap_intro: Trois étapes réalistes, dans l'ordre où elles rapportent.
+results_offers: La suite logique
+results_offers_intro: Si vous souhaitez être accompagné, voici ce qui correspond à votre situation.
+results_offer_duration: Durée
+results_offer_price: Prix
+results_offer_cta: En parler
+results_restart: Refaire le diagnostic
+summary_strength: 'Votre point fort : {dimension}.'
+summary_weakness: "C'est sur {dimension} que vous gagnerez le plus, et le plus vite."

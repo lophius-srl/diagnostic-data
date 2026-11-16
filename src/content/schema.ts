@@ -89,6 +89,10 @@ export const DimensionSchema = z
     /** Libellé technique, réservé au rapport PDF (toujours expliqué). */
     technicalLabel: z.string(),
     description: z.string(),
+    /** Forme utilisée dans une phrase (« la fiabilité de vos chiffres »). */
+    phrase: z.string(),
+    /** Peut être cité comme point fort dans la synthèse (faux pour un axe trop facile à « réussir »). */
+    strengthCandidate: z.boolean().default(true),
     weight: z.number().positive(),
   })
   .strict();
@@ -139,6 +143,103 @@ export const BenchmarkSchema = z
     message: 'un repère ne peut être activé sans source',
   });
 
+const Level3 = z.enum(['faible', 'moyen', 'eleve']);
+
+/**
+ * Variable de texte : première règle dont la condition est vraie (ex. outil de tableau de bord
+ * selon la réponse Microsoft). Utilisable dans les textes sous la forme {id}.
+ */
+export const VariableSchema = z
+  .object({
+    id: Id,
+    rules: z.array(z.object({ when: ConditionSchema.optional(), value: z.string() }).strict()).min(1),
+  })
+  .strict()
+  .refine((v) => v.rules.at(-1)?.when === undefined, {
+    message: 'la dernière règle doit être sans condition (défaut)',
+  });
+
+/**
+ * Action recommandée (quick win ou étape de feuille de route).
+ * `requiresTools` : chaque trou {clé} est rempli avec les outils cochés parmi la liste ;
+ * si aucun n'est coché, l'action n'est pas proposée (jamais de recommandation sur un outil absent).
+ */
+export const ActionSchema = z
+  .object({
+    id: Id,
+    title: z.string().min(1),
+    detail: z.string().min(1),
+    when: ConditionSchema.optional(),
+    excludeIf: ConditionSchema.optional(),
+    requiresTools: z.record(Id, z.array(Id).min(1)).default({}),
+    dimension: Id,
+    effort: Level3,
+    impact: Level3,
+    boostIf: ConditionSchema.optional(),
+    /** Action de secours (toujours possible), choisie seulement s'il manque des quick wins. */
+    fallback: z.boolean().default(false),
+  })
+  .strict();
+
+export const RoadmapActionSchema = z
+  .object({
+    id: Id,
+    title: z.string().min(1),
+    detail: z.string().min(1),
+    when: ConditionSchema.optional(),
+    excludeIf: ConditionSchema.optional(),
+    requiresTools: z.record(Id, z.array(Id).min(1)).default({}),
+    /** Étape omise si ce quick win est déjà proposé (pas de doublon). */
+    unlessQuickWin: Id.optional(),
+  })
+  .strict();
+
+export const RoadmapPhaseSchema = z
+  .object({
+    id: Id,
+    label: z.string(),
+    title: z.string(),
+    /** Nombre maximal d'étapes affichées dans la phase (quick wins compris pour la première). */
+    max: z.number().int().min(1).max(6),
+    actions: z.array(RoadmapActionSchema),
+  })
+  .strict();
+
+export const RecommendationsSchema = z
+  .object({
+    variables: z.array(VariableSchema),
+    quickWins: z.array(ActionSchema).min(3),
+    roadmap: z.array(RoadmapPhaseSchema).length(3),
+  })
+  .strict();
+
+export const OfferSchema = z
+  .object({
+    id: Id,
+    title: z.string(),
+    duration: z.string(),
+    price: z.string(),
+    summary: z.string(),
+    deliverables: z.array(z.string()).min(1),
+    /** Raison affichée quand le forfait est recommandé (peut utiliser les variables). */
+    why: z.string(),
+    recommendIf: ConditionSchema.optional(),
+    /** Recommandé aussi si le score global est sous ce seuil. */
+    recommendBelowScore: z.number().min(0).max(100).optional(),
+    /** Passe en tête quand cette condition est vraie (ex. priorité déclarée par le gérant). */
+    preferredIf: ConditionSchema.optional(),
+    priority: z.number().int().default(0),
+  })
+  .strict();
+
+export const OffersSchema = z
+  .object({
+    maxRecommended: z.number().int().min(1).max(3),
+    offers: z.array(OfferSchema).min(1),
+    cheques: z.object({ title: z.string(), text: z.string() }).strict(),
+  })
+  .strict();
+
 export const SettingsSchema = z
   .object({
     locale: z.string(),
@@ -181,6 +282,8 @@ export const ContentSchema = z
     questions: z.array(QuestionSchema).min(1),
     feedbacks: z.array(FeedbackSchema),
     benchmarks: z.array(BenchmarkSchema),
+    recommendations: RecommendationsSchema,
+    offers: OffersSchema,
     ui: z.record(z.string(), z.string()),
   })
   .strict();
@@ -192,6 +295,9 @@ export type Dimension = Content['dimensions'][number];
 export type Level = Content['levels'][number];
 export type Feedback = Content['feedbacks'][number];
 export type Tool = Content['tools'][number];
+export type Action = Content['recommendations']['quickWins'][number];
+export type RoadmapAction = Content['recommendations']['roadmap'][number]['actions'][number];
+export type Offer = Content['offers']['offers'][number];
 
 /** Fichiers YAML attendus dans content/<langue>/ et la clé qu'ils alimentent. */
 export const CONTENT_FILES = {
@@ -202,5 +308,7 @@ export const CONTENT_FILES = {
   questions: 'questions.yaml',
   feedbacks: 'feedbacks.yaml',
   benchmarks: 'benchmarks.yaml',
+  recommendations: 'recommendations.yaml',
+  offers: 'offers.yaml',
   ui: 'ui.yaml',
 } as const satisfies Record<keyof Content, string>;

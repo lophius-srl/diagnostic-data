@@ -10,5 +10,6 @@ export function t(key: string, vars: Record<string, string | number> = {}): stri
   return template.replace(/\{(\w+)\}/g, (_, name: string) => String(vars[name] ?? `{${name}}`));
 }
 
-const numberFormat = new Intl.NumberFormat('fr-BE', { maximumFractionDigits: 0 });
-export const formatNumber = (n: number): string => numberFormat.format(n);
+/** Nombre au format belge (« 15 500 », « 3,5 »). */
+export const formatNumber = (n: number, maxDecimals = 0): string =>
+  new Intl.NumberFormat('fr-BE', { maximumFractionDigits: maxDecimals }).format(n);
