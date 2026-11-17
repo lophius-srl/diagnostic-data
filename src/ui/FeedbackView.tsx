@@ -4,7 +4,10 @@ import type { Feedback } from '../content/schema';
 
 export function FeedbackView({ feedback, onContinue }: { feedback: Feedback; onContinue: () => void }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => buttonRef.current?.focus(), [feedback.id]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    buttonRef.current?.focus({ preventScroll: true });
+  }, [feedback.id]);
   return (
     <section class="feedback card" aria-live="polite">
       <p class="feedback-label">{t('feedback_label')}</p>

@@ -45,7 +45,7 @@ describe('contenu du rapport PDF', () => {
 
   it('reprend le niveau, le score, le coût caché, les quick wins et les outils de la PME', () => {
     expect(text).toContain('Structuré');
-    expect(text).toContain('31');
+    expect(text).toContain('30');
     expect(text).toContain('9\u00a0900 €');
     expect(text).toContain('Relier votre rapport Excel le plus long à WinBooks');
     expect(text).toContain('Préparé pour Négoce Dupont SRL, le 16 novembre 2026');

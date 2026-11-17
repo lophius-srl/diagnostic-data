@@ -74,6 +74,8 @@ export const QuestionSchema = z
     id: Id,
     text: z.string().min(1),
     textVariants: z.array(z.object({ when: ConditionSchema, text: z.string().min(1) }).strict()).default([]),
+    /** Thème affiché au-dessus de la question (ex. « Pilotage »). */
+    section: z.string().optional(),
     /** Aide courte sous la question (facultative). */
     hint: z.string().optional(),
     type: z.enum(['single', 'multi', 'tools']),

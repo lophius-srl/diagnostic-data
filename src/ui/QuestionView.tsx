@@ -20,7 +20,9 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
 
   useEffect(() => {
     setDraft(selected(answers, question.id));
-    titleRef.current?.focus();
+    // Chaque question repart du haut de la page, sous la barre de navigation.
+    window.scrollTo(0, 0);
+    titleRef.current?.focus({ preventScroll: true });
     // On ne réinitialise le brouillon qu'au changement de question.
   }, [question.id]);
 
@@ -46,10 +48,11 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
         <div class="progress-bar" style={{ width: `${percent}%` }} />
       </div>
       <p class="muted counter">{t('question_counter', { current, total })}</p>
+      {question.section && <p class="eyebrow">{question.section}</p>}
       <h1 id="question-title" class="question-title" tabIndex={-1} ref={titleRef}>
         {questionText(question, answers)}
       </h1>
-      {question.hint && <p class="muted">{question.hint}</p>}
+      {question.hint && <p class="muted question-hint">{question.hint}</p>}
 
       {question.type === 'single' ? (
         <div class="options" role="group" aria-labelledby="question-title">
@@ -74,7 +77,7 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
             return (
               <label key={o.id} class={checked ? 'option option-check is-checked' : 'option option-check'}>
                 <input type="checkbox" checked={checked} onChange={() => toggle(o.id, o.exclusive)} />
-                {tool?.logo ? (
+                {tool?.logo && (
                   <img
                     class="tool-logo"
                     src={`${import.meta.env.BASE_URL}${tool.logo}`}
@@ -82,12 +85,8 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
                     width="28"
                     height="28"
                   />
-                ) : (
-                  <span class="tool-badge" aria-hidden="true">
-                    {initials(o.label)}
-                  </span>
                 )}
-                <span>{o.label}</span>
+                <span class="option-label">{o.label}</span>
               </label>
             );
           })}
@@ -108,13 +107,4 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
       </div>
     </section>
   );
-}
-
-function initials(label: string): string {
-  return label
-    .split(/[\s/]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() ?? '')
-    .join('');
 }

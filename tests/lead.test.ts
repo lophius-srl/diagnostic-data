@@ -155,15 +155,15 @@ describe('réception d’un lead (/api/lead)', () => {
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true, id: 'lead-1' });
     const row = store.rows[0]!;
-    expect(row.scoreGlobal).toBe(31);
+    expect(row.scoreGlobal).toBe(30);
     expect(row.level).toBe('structure');
     expect(row.hiddenCost).toBe(9900);
     expect(row.contact.bce).toBe('0123.456.749');
     expect(row.consentVersion).toBe('2026-11-v1');
     expect(row.emailStatus).toBe('sent');
-    expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (31/100)');
+    expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (30/100)');
     expect(sent[0]?.replyTo.email).toBe('marie@exemple.be');
-    expect(sent[0]?.text).toMatch(/Vous recopiez des infos d'un logiciel à l'autre \? → Oui, souvent/);
+    expect(sent[0]?.text).toMatch(/Ressaisissez-vous des informations d'un logiciel à l'autre \? → Oui, régulièrement/);
   });
 
   it('conserve le lead même si l’e-mail échoue', async () => {
@@ -236,8 +236,8 @@ describe('notification et adaptateurs', () => {
   it('les réponses en clair suivent le parcours visible', () => {
     const qa = readableAnswers(content, profile('ecommerce-6.yaml').answers);
     expect(qa[0]).toEqual({
-      question: 'Où sont vos chiffres ? Cochez tout ce que vous utilisez.',
-      answer: 'Yuki, Shopify, Chez notre fiduciaire',
+      question: 'Quels logiciels utilisez-vous pour gérer votre activité ?',
+      answer: 'Yuki, Shopify, Comptabilité tenue par la fiduciaire',
     });
   });
 

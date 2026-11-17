@@ -69,9 +69,13 @@ describe('questionnaire', () => {
 
   it('recalcule le parcours si une réponse antérieure change', () => {
     let s = play(profiles.find((p) => p.file === 'negoce-12.yaml')!.answers);
-    const before = visibleQuestions(content, s.answers).length;
+    const before = visibleQuestions(content, s.answers).map((q) => q.id);
     s = { ...s, cursor: 2 };
     s = reduce(s, { type: 'answer', questionId: 'outils', value: ['winbooks'] });
-    expect(visibleQuestions(content, s.answers).length).toBeLessThan(before);
+    const after = visibleQuestions(content, s.answers).map((q) => q.id);
+    expect(before).toContain('personne_excel');
+    expect(after).toContain('autonomie');
+    expect(after).not.toContain('personne_excel');
+    expect(after).toHaveLength(before.length);
   });
 });

@@ -9,5 +9,10 @@ answers:
   temps_tableaux: journee
   autonomie: demander
   ordinateur: sauvegarde
+  exports: simple
+  definitions: ecrit
+  tresorerie: approx
+  partage: en_ligne
+  acces: concernes
   microsoft: eviter
   priorite: vue

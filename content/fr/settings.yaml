@@ -1,7 +1,7 @@
 # Réglages généraux du diagnostic. Tout est modifiable sans toucher au code.
 locale: fr-BE
-contentVersion: '2026-11-v1' # à incrémenter quand les questions changent (invalide les sauvegardes locales incompatibles)
-estimatedMinutes: 3 # durée affichée honnêtement sur la page d'accueil
+contentVersion: '2026-11-v2' # à incrémenter quand les questions changent (invalide les sauvegardes locales incompatibles)
+estimatedMinutes: 4 # durée affichée honnêtement sur la page d'accueil
 feedbackMinGap: 3 # au plus un retour d'expert toutes les 3 questions
 
 hiddenCost:

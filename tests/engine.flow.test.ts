@@ -47,35 +47,50 @@ describe('conditions', () => {
 });
 
 describe('parcours adaptatif', () => {
-  it('commence par les outils puis saute les questions sans objet', () => {
+  it('commence par les outils, puis suit l’ordre de la config', () => {
     expect(nextQuestion(content, {})?.id).toBe('outils');
-    expect(nextQuestion(content, { outils: ['excel', 'winbooks'] })?.id).toBe('recopie');
-    expect(nextQuestion(content, { outils: ['odoo'] })?.id).toBe('ventes_mois');
+    expect(nextQuestion(content, { outils: ['excel', 'winbooks'] })?.id).toBe('exports');
+    expect(nextQuestion(content, { outils: ['odoo'] })?.id).toBe('exports');
   });
 
   it('est terminé quand toutes les questions visibles ont une réponse', () => {
     for (const p of profiles) expect(nextQuestion(content, p.answers), p.file).toBeUndefined();
   });
 
-  it('compte 8 à 12 questions au total dans la config', () => {
-    expect(content.questions.length).toBeGreaterThanOrEqual(8);
-    expect(content.questions.length).toBeLessThanOrEqual(12);
+  it('compte 15 à 16 questions dans la config (dont une paire exclusive)', () => {
+    expect(content.questions.length).toBeGreaterThanOrEqual(15);
+    expect(content.questions.length).toBeLessThanOrEqual(16);
   });
 
   /**
    * Parcours exhaustif : on fait varier toutes les réponses des questions dont dépend une condition
    * (pour les cases à cocher : toutes les combinaisons des cases citées dans une condition),
-   * les autres réponses étant fixées. Chaque PME doit voir entre 8 et 10 questions.
+   * les autres réponses étant fixées. Chaque PME voit exactement 15 questions, toujours le même nombre :
+   * le compteur « Question n sur N » ne change jamais en cours de route.
    */
-  it('chaque parcours possible compte 8 à 10 questions', () => {
+  it('chaque parcours possible compte exactement 15 questions', () => {
     const counts = new Set<number>();
     for (const answers of allBranchingPaths()) {
       const n = visibleQuestions(content, answers).length;
       counts.add(n);
-      expect(n, JSON.stringify(answers)).toBeGreaterThanOrEqual(8);
-      expect(n, JSON.stringify(answers)).toBeLessThanOrEqual(10);
+      expect(n, JSON.stringify(answers)).toBeGreaterThanOrEqual(15);
+      expect(n, JSON.stringify(answers)).toBeLessThanOrEqual(15);
     }
-    expect(counts.size).toBeGreaterThan(1);
+    expect(counts.size).toBe(1);
+  });
+
+  it('mesure chaque axe du radar par au moins deux questions, sur tous les parcours', () => {
+    for (const answers of allBranchingPaths()) {
+      const visible = visibleQuestions(content, answers);
+      for (const d of content.dimensions) {
+        const measuring = visible.filter((q) => q.options.some((o) => (o.scores[d.id] ?? 0) > 0));
+        expect(measuring.length, `${d.id} : ${JSON.stringify(answers.outils)}`).toBeGreaterThanOrEqual(2);
+      }
+    }
+  });
+
+  it('affiche un thème au-dessus de chaque question', () => {
+    for (const q of content.questions) expect(q.section, q.id).toBeTruthy();
   });
 
   it('pose exactement une des deux questions « personne Excel » / « autonomie »', () => {
@@ -96,7 +111,7 @@ describe('parcours adaptatif', () => {
     const answers: Answers = { ...profile('negoce-12.yaml').answers, outils: ['winbooks'] };
     const effective = effectiveAnswers(content, answers);
     expect(effective.personne_excel).toBeUndefined();
-    expect(effective.recopie).toBeUndefined();
+    expect(effective.recopie).toBe('souvent');
   });
 
   it('calcule la progression sur les questions visibles', () => {
