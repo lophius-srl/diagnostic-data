@@ -38,13 +38,14 @@ Dans Cloudflare : projet Pages → *Settings* → *Bindings* → *Add* → *D1 d
 3. *SMTP & API* → *API keys* → crée une clé.
 4. Dans Cloudflare : projet Pages → *Settings* → *Variables and secrets* (environnement *Production*) :
 
-| Nom | Type | Valeur |
+| Nom | Où | Valeur |
 |---|---|---|
-| `BREVO_API_KEY` | **Secret** | la clé Brevo |
-| `LEAD_NOTIFY_EMAIL` | Texte | l'adresse où tu reçois les leads |
-| `LEAD_SENDER_EMAIL` | Texte | l'expéditeur vérifié dans Brevo |
-| `LEAD_SENDER_NAME` | Texte | `Diagnostic Lophius` |
-| `ALLOWED_ORIGIN` | Texte | `https://diagnostic.lophius.be` |
+| `BREVO_API_KEY` | tableau de bord Cloudflare, type **Secret** (Production et Preview) | la clé Brevo |
+| `LEAD_NOTIFY_EMAIL`, `LEAD_SENDER_EMAIL`, `LEAD_SENDER_NAME` | **`wrangler.toml`**, section `[vars]` | adresses et nom (déjà renseignés) |
+| `ALLOWED_ORIGIN` | **`wrangler.toml`**, section `[vars]` | `https://diagnostic.lophius.be`, une fois le sous-domaine branché |
+
+Important : comme le projet contient un `wrangler.toml`, Cloudflare ignore les variables **non secrètes** saisies
+dans le tableau de bord. Seuls les secrets s'y gèrent.
 
 Sans ces variables, les leads sont quand même enregistrés dans D1 (statut `disabled`).
 Si Brevo échoue, le lead est conservé avec le statut `failed`.

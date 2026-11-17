@@ -841,51 +841,87 @@ p {
   background: var(--blue-soft);
 }
 
-/* ---------- Déblocage, merci, partage ---------- */
-.gate,
+/* ---------- Déblocage (formulaire identique au « Get In Touch » de lophius.be), merci, partage ---------- */
+.gate {
+  padding-top: var(--space-3);
+}
+.section-title {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--blue);
+}
+.section-subtitle {
+  margin: 0 0 2.5rem !important;
+  text-align: center;
+  color: #6a7282;
+}
 .thanks {
   border-top: 4px solid var(--blue);
   outline: none;
 }
 .lead-form {
   display: grid;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
+  gap: 1.5rem;
+  max-width: 32rem;
+  margin: 0 auto;
 }
 .form-grid {
   display: grid;
-  gap: var(--space-2);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
 }
-.field label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-size: 0.85rem;
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.field > label {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
   font-weight: 700;
+  text-transform: uppercase;
   color: var(--blue);
+}
+.field .required {
+  color: #ffa2a2;
 }
 .field input[type='text'],
 .field input[type='email'],
 .field input[type='tel'],
 .share-manual input {
   width: 100%;
-  min-height: 50px;
-  padding: 0 1rem;
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-card);
+  padding: 1rem;
+  border: 1px solid #f3f4f6;
+  border-radius: 1rem;
   background: #f9fafb;
   font: inherit;
-  box-shadow: var(--shadow-card);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.field input::placeholder {
+  color: #99a1af;
 }
 .field input:focus {
   background: var(--surface);
   border-color: var(--blue-light);
+  box-shadow: 0 0 0 2px rgba(70, 105, 185, 0.2);
 }
 .field input[aria-invalid='true'] {
   border-color: var(--alert);
 }
 .field p {
-  margin: 0.3rem 0 0;
+  margin: 0 0 0 0.5rem;
 }
 .field-error {
   color: var(--alert);
@@ -900,20 +936,48 @@ p {
   border-radius: 8px;
   font-weight: 500;
 }
+.field > label.consent-label {
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-transform: none;
+  color: var(--text-muted);
+}
 .consent-label {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
-  font-size: 0.9rem;
-  font-weight: 400 !important;
-  color: var(--text) !important;
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
 }
 .consent-label input {
   flex: none;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.15rem;
+  height: 1.15rem;
   margin-top: 0.15rem;
   accent-color: var(--blue);
+}
+.form-submit {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+/* Bouton « Send Message » du site : texte 20 px, coins 12 px, dégradé qui tourne au survol. */
+.btn.btn-cta {
+  min-height: 0;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #fff;
+  background: linear-gradient(120deg, #4669b9 61%, #324b84 100%);
+}
+.btn.btn-cta:hover {
+  background: linear-gradient(200deg, #4669b9 61%, #324b84 100%);
+}
+.btn.btn-cta:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 .hp {
   position: absolute;
