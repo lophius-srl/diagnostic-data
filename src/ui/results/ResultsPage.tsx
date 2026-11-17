@@ -130,9 +130,11 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
 
       {/* ---------- Déblocage ---------- */}
       {locked && !shared && (
-        <section class="card gate" id="rapport" aria-labelledby="gate-title">
-          <h2 id="gate-title">{t('gate_title')}</h2>
-          <p class="muted">{t('gate_intro')}</p>
+        <section class="gate" id="rapport" aria-labelledby="gate-title">
+          <h2 id="gate-title" class="section-title">
+            {t('gate_title')}
+          </h2>
+          <p class="section-subtitle">{t('gate_intro')}</p>
           <LeadForm answers={answers} hourlyRate={hourlyRate} onSuccess={onUnlock} />
         </section>
       )}

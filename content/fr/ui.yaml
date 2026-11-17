@@ -55,8 +55,12 @@ lead_email: E-mail professionnel
 lead_company: Entreprise
 lead_bce: N° d'entreprise (BCE)
 lead_phone: Téléphone
-lead_optional: facultatif
-lead_bce_hint: 'Ex. 0123.456.749'
+lead_first_name_placeholder: Votre prénom
+lead_last_name_placeholder: Votre nom
+lead_email_placeholder: vous@entreprise.be
+lead_company_placeholder: Votre SRL
+lead_bce_placeholder: 0123.456.749
+lead_phone_placeholder: '+32 4 …'
 lead_consent: J'accepte que Lophius SRL utilise ces informations et mes réponses pour m'envoyer ce rapport et me recontacter à ce sujet. Rien d'autre, aucune revente.
 lead_privacy_link: Confidentialité
 lead_submit: Recevoir mon rapport

@@ -11,12 +11,13 @@ interface Props {
 
 type Status = 'idle' | 'sending' | 'network' | 'rate';
 
-const FIELDS: { name: keyof LeadContact; type: string; autocomplete: string; optional?: boolean; hint?: string }[] = [
+/** Même présentation que le formulaire de contact de lophius.be : astérisque sur les champs obligatoires, exemple dans le champ. */
+const FIELDS: { name: keyof LeadContact; type: string; autocomplete: string; optional?: boolean }[] = [
   { name: 'firstName', type: 'text', autocomplete: 'given-name' },
   { name: 'lastName', type: 'text', autocomplete: 'family-name' },
   { name: 'email', type: 'email', autocomplete: 'email' },
   { name: 'company', type: 'text', autocomplete: 'organization' },
-  { name: 'bce', type: 'text', autocomplete: 'off', optional: true, hint: 'lead_bce_hint' },
+  { name: 'bce', type: 'text', autocomplete: 'off', optional: true },
   { name: 'phone', type: 'tel', autocomplete: 'tel', optional: true },
 ];
 
@@ -95,12 +96,17 @@ export function LeadForm({ answers, hourlyRate, onSuccess }: Props) {
       <div class="form-grid">
         {FIELDS.map((f) => {
           const error = errors[f.name];
-          const describedBy = [error && errorId(f.name), f.hint && `lead-${f.name}-hint`].filter(Boolean).join(' ');
+          const describedBy = error ? errorId(f.name) : '';
           return (
             <div class="field" key={f.name}>
               <label for={`lead-${f.name}`}>
                 {t(LABEL_KEY[f.name])}
-                {f.optional && <span class="muted"> ({t('lead_optional')})</span>}
+                {!f.optional && (
+                  <span class="required" aria-hidden="true">
+                    {' '}
+                    *
+                  </span>
+                )}
               </label>
               <input
                 id={`lead-${f.name}`}
@@ -112,14 +118,10 @@ export function LeadForm({ answers, hourlyRate, onSuccess }: Props) {
                 aria-required={!f.optional}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy || undefined}
+                placeholder={t(`${LABEL_KEY[f.name]}_placeholder`)}
                 value={contact[f.name]}
                 onInput={(e) => setContact({ ...contact, [f.name]: (e.currentTarget as HTMLInputElement).value })}
               />
-              {f.hint && (
-                <p id={`lead-${f.name}-hint`} class="muted small">
-                  {t(f.hint)}
-                </p>
-              )}
               {error && (
                 <p id={errorId(f.name)} class="field-error">
                   {t(error)}
@@ -160,9 +162,11 @@ export function LeadForm({ answers, hourlyRate, onSuccess }: Props) {
         )}
       </div>
 
-      <button type="submit" class="btn btn-primary" disabled={status === 'sending'}>
-        {status === 'sending' ? t('lead_sending') : t('lead_submit')}
-      </button>
+      <div class="form-submit">
+        <button type="submit" class="btn btn-cta" disabled={status === 'sending'}>
+          {status === 'sending' ? t('lead_sending') : t('lead_submit')}
+        </button>
+      </div>
     </form>
   );
 }
