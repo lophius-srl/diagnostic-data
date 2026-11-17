@@ -1,4 +1,4 @@
-# Questions du diagnostic, dans l'ordre du parcours : 18 vues par chaque PME, quelles que soient ses réponses
+# Questions du diagnostic, dans l'ordre du parcours : 15 vues par chaque PME, quelles que soient ses réponses
 # (personne_excel et autonomie s'excluent : l'une ou l'autre selon qu'Excel est coché).
 #
 # Règles de rédaction (vérifiées par tests/content.rules.test.ts) :
@@ -26,6 +26,13 @@
     - { id: yuki, tool: yuki, label: Yuki, scores: { sources: 3 } }
     - { id: billit, tool: billit, label: Billit, scores: { sources: 2 } }
     - { id: sage, tool: sage, label: Sage, scores: { sources: 2 } }
+    - { id: octopus, tool: octopus, label: Octopus, scores: { sources: 3 } }
+    - { id: horus, tool: horus, label: Horus, scores: { sources: 3 } }
+    - { id: popsy, tool: popsy, label: Popsy, scores: { sources: 2 } }
+    - { id: falco, tool: falco, label: Falco, scores: { sources: 3 } }
+    - { id: accountable, tool: accountable, label: Accountable, scores: { sources: 3 } }
+    - { id: dexxter, tool: dexxter, label: Dexxter, scores: { sources: 3 } }
+    - { id: clearfacts, tool: clearfacts, label: Clearfacts, scores: { sources: 3 } }
     - { id: shopify, tool: shopify, label: Shopify, scores: { sources: 3 } }
     - { id: woocommerce, tool: woocommerce, label: WooCommerce, scores: { sources: 2 } }
     - { id: lightspeed, tool: lightspeed, label: Lightspeed, scores: { sources: 3 } }
@@ -56,16 +63,6 @@
       label: 'Oui, régulièrement'
       scores: { centralisation: 0, automatisation: 0, fiabilite: 1 }
       facts: [double_saisie]
-
-- id: client_vue
-  section: Circulation de l'information
-  text: Voyez-vous l'historique complet d'un client à un seul endroit ?
-  hint: Devis, factures, paiements et échanges.
-  type: single
-  options:
-    - { id: oui, label: 'Oui, dans un seul outil', scores: { centralisation: 3 } }
-    - { id: plusieurs, label: En consultant plusieurs outils, scores: { centralisation: 1 } }
-    - { id: non, label: Difficilement, scores: { centralisation: 0 } }
 
 - id: ventes_mois
   section: Circulation de l'information
@@ -115,15 +112,6 @@
     - { id: bilan, label: Surtout au bilan annuel, scores: { pilotage: 1 }, facts: [pilotage_annuel] }
     - { id: rarement, label: Rarement, scores: { pilotage: 0 }, facts: [pilotage_annuel] }
 
-- id: objectifs
-  section: Pilotage
-  text: Comparez-vous vos résultats à un budget ou à des objectifs chiffrés ?
-  type: single
-  options:
-    - { id: mensuel, label: 'Oui, chaque mois', scores: { pilotage: 3 } }
-    - { id: parfois, label: De temps en temps, scores: { pilotage: 1 } }
-    - { id: non, label: 'Non, pas encore', scores: { pilotage: 0 } }
-
 - id: tresorerie
   section: Pilotage
   text: Connaissez-vous votre trésorerie prévue pour les trois prochains mois ?
@@ -144,15 +132,6 @@
     - { id: journee, label: Environ une journée, scores: { automatisation: 2 } }
     - { id: jours, label: Plusieurs jours, scores: { automatisation: 1 }, facts: [reporting_manuel] }
     - { id: semaine, label: Une semaine ou plus, scores: { automatisation: 0 }, facts: [reporting_manuel] }
-
-- id: mise_a_jour
-  section: Automatisation
-  text: Vos tableaux de suivi se mettent-ils à jour automatiquement ?
-  type: single
-  options:
-    - { id: auto, label: 'Oui, automatiquement', scores: { automatisation: 3 } }
-    - { id: partiel, label: En partie, scores: { automatisation: 1 } }
-    - { id: manuel, label: 'Non, tout est mis à jour à la main', scores: { automatisation: 0 } }
 
 # ---------- Équipe et autonomie ----------
 - id: partage

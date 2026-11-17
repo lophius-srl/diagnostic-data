@@ -25,7 +25,7 @@ quickWins:
     when: { q: recopie, in: [parfois, souvent] }
     requiresTools:
       ventes: [odoo, teamleader, metier, lightspeed]
-      compta: [exact, winbooks, bob, yuki, billit, sage]
+      compta: [exact, winbooks, bob, yuki, billit, sage, octopus, horus, popsy, falco, accountable, dexxter, clearfacts]
     dimension: centralisation
     effort: moyen
     impact: eleve
@@ -37,7 +37,8 @@ quickWins:
     when: { q: recopie, in: [parfois, souvent] }
     requiresTools:
       boutique: [shopify, woocommerce, lightspeed]
-      compta: [exact, winbooks, bob, yuki, billit, sage, odoo]
+      compta:
+        [exact, winbooks, bob, yuki, billit, sage, octopus, horus, popsy, falco, accountable, dexxter, clearfacts, odoo]
     dimension: automatisation
     effort: faible
     impact: eleve
@@ -46,7 +47,27 @@ quickWins:
   - id: qw_boutique_fiduciaire
     title: Transmettre les ventes {boutique} à votre fiduciaire, sans export
     detail: Un envoi complet chaque mois, au bon format. Moins d'allers-retours.
-    excludeIf: { q: outils, hasAny: [exact, winbooks, bob, yuki, billit, sage, odoo] }
+    excludeIf:
+      {
+        q: outils,
+        hasAny:
+          [
+            exact,
+            winbooks,
+            bob,
+            yuki,
+            billit,
+            sage,
+            octopus,
+            horus,
+            popsy,
+            falco,
+            accountable,
+            dexxter,
+            clearfacts,
+            odoo,
+          ],
+      }
     requiresTools:
       boutique: [shopify, woocommerce, lightspeed]
       fiduciaire: [fiduciaire]
@@ -71,9 +92,29 @@ quickWins:
       any:
         - { q: ventes_mois, in: [heures, jours] }
         - { q: frequence, in: [mois, bilan, rarement] }
-        - { q: mise_a_jour, in: [partiel, manuel] }
     requiresTools:
-      logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
+      logiciels:
+        [
+          odoo,
+          teamleader,
+          exact,
+          winbooks,
+          bob,
+          yuki,
+          billit,
+          sage,
+          octopus,
+          horus,
+          popsy,
+          falco,
+          accountable,
+          dexxter,
+          clearfacts,
+          shopify,
+          woocommerce,
+          lightspeed,
+          metier,
+        ]
     dimension: pilotage
     effort: moyen
     impact: eleve
@@ -97,7 +138,28 @@ quickWins:
     detail: Les données sont déjà dans {logiciels}. Il suffit de les croiser.
     when: { q: priorite, is: marge }
     requiresTools:
-      logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
+      logiciels:
+        [
+          odoo,
+          teamleader,
+          exact,
+          winbooks,
+          bob,
+          yuki,
+          billit,
+          sage,
+          octopus,
+          horus,
+          popsy,
+          falco,
+          accountable,
+          dexxter,
+          clearfacts,
+          shopify,
+          woocommerce,
+          lightspeed,
+          metier,
+        ]
     dimension: pilotage
     effort: moyen
     impact: eleve
@@ -136,13 +198,31 @@ quickWins:
   - id: qw_automatiser_rapport
     title: Relier votre rapport Excel le plus long à {logiciels}
     detail: Il se remplit seul. Le copier-coller disparaît, les erreurs aussi.
-    when:
-      any:
-        - { q: temps_tableaux, in: [journee, jours, semaine] }
-        - { q: mise_a_jour, is: manuel }
+    when: { q: temps_tableaux, in: [journee, jours, semaine] }
     requiresTools:
       excel: [excel]
-      logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
+      logiciels:
+        [
+          odoo,
+          teamleader,
+          exact,
+          winbooks,
+          bob,
+          yuki,
+          billit,
+          sage,
+          octopus,
+          horus,
+          popsy,
+          falco,
+          accountable,
+          dexxter,
+          clearfacts,
+          shopify,
+          woocommerce,
+          lightspeed,
+          metier,
+        ]
     dimension: automatisation
     effort: moyen
     impact: eleve
@@ -177,14 +257,6 @@ quickWins:
     effort: moyen
     impact: eleve
     boostIf: { q: priorite, in: [vue, marge] }
-
-  - id: qw_budget
-    title: Comparer chaque mois vos résultats à un budget simple
-    detail: Une page, quelques lignes. Les écarts sautent aux yeux.
-    when: { q: objectifs, in: [parfois, non] }
-    dimension: pilotage
-    effort: faible
-    impact: moyen
 
   - id: qw_acces
     title: Revoir qui peut ouvrir vos fichiers financiers et clients
@@ -240,7 +312,27 @@ roadmap:
         detail: Mise à jour chaque nuit. Excel reste utilisable, mais n'est plus la source.
         requiresTools:
           logiciels:
-            [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
+            [
+              odoo,
+              teamleader,
+              exact,
+              winbooks,
+              bob,
+              yuki,
+              billit,
+              sage,
+              octopus,
+              horus,
+              popsy,
+              falco,
+              accountable,
+              dexxter,
+              clearfacts,
+              shopify,
+              woocommerce,
+              lightspeed,
+              metier,
+            ]
           excel: [excel]
       - id: rm_base_centrale
         title: Réunir {logiciels} dans une base centrale
@@ -249,7 +341,27 @@ roadmap:
         excludeIf: { q: outils, has: excel }
         requiresTools:
           logiciels:
-            [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
+            [
+              odoo,
+              teamleader,
+              exact,
+              winbooks,
+              bob,
+              yuki,
+              billit,
+              sage,
+              octopus,
+              horus,
+              popsy,
+              falco,
+              accountable,
+              dexxter,
+              clearfacts,
+              shopify,
+              woocommerce,
+              lightspeed,
+              metier,
+            ]
       - id: rm_tableau_bord
         title: Un tableau de bord {tableau} alimenté automatiquement
         detail: Sur ordinateur comme sur téléphone.

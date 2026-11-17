@@ -57,24 +57,24 @@ describe('parcours adaptatif', () => {
     for (const p of profiles) expect(nextQuestion(content, p.answers), p.file).toBeUndefined();
   });
 
-  it('compte 15 à 19 questions dans la config (dont une paire exclusive)', () => {
+  it('compte 15 à 16 questions dans la config (dont une paire exclusive)', () => {
     expect(content.questions.length).toBeGreaterThanOrEqual(15);
-    expect(content.questions.length).toBeLessThanOrEqual(19);
+    expect(content.questions.length).toBeLessThanOrEqual(16);
   });
 
   /**
    * Parcours exhaustif : on fait varier toutes les réponses des questions dont dépend une condition
    * (pour les cases à cocher : toutes les combinaisons des cases citées dans une condition),
-   * les autres réponses étant fixées. Chaque PME voit entre 15 et 18 questions, toujours le même nombre :
+   * les autres réponses étant fixées. Chaque PME voit exactement 15 questions, toujours le même nombre :
    * le compteur « Question n sur N » ne change jamais en cours de route.
    */
-  it('chaque parcours possible compte le même nombre de questions, entre 15 et 18', () => {
+  it('chaque parcours possible compte exactement 15 questions', () => {
     const counts = new Set<number>();
     for (const answers of allBranchingPaths()) {
       const n = visibleQuestions(content, answers).length;
       counts.add(n);
       expect(n, JSON.stringify(answers)).toBeGreaterThanOrEqual(15);
-      expect(n, JSON.stringify(answers)).toBeLessThanOrEqual(18);
+      expect(n, JSON.stringify(answers)).toBeLessThanOrEqual(15);
     }
     expect(counts.size).toBe(1);
   });

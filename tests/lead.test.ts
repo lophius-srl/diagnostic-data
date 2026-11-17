@@ -155,13 +155,13 @@ describe('réception d’un lead (/api/lead)', () => {
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ ok: true, id: 'lead-1' });
     const row = store.rows[0]!;
-    expect(row.scoreGlobal).toBe(28);
+    expect(row.scoreGlobal).toBe(30);
     expect(row.level).toBe('structure');
     expect(row.hiddenCost).toBe(9900);
     expect(row.contact.bce).toBe('0123.456.749');
     expect(row.consentVersion).toBe('2026-11-v1');
     expect(row.emailStatus).toBe('sent');
-    expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (28/100)');
+    expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (30/100)');
     expect(sent[0]?.replyTo.email).toBe('marie@exemple.be');
     expect(sent[0]?.text).toMatch(/Ressaisissez-vous des informations d'un logiciel à l'autre \? → Oui, régulièrement/);
   });

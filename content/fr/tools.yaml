@@ -8,6 +8,13 @@
 - { id: yuki, name: Yuki, category: compta }
 - { id: billit, name: Billit, category: compta }
 - { id: sage, name: Sage, category: compta }
+- { id: octopus, name: Octopus, category: compta }
+- { id: horus, name: Horus, category: compta }
+- { id: popsy, name: Popsy, category: compta }
+- { id: falco, name: Falco, category: compta }
+- { id: accountable, name: Accountable, category: compta }
+- { id: dexxter, name: Dexxter, category: compta }
+- { id: clearfacts, name: Clearfacts, category: compta }
 - { id: shopify, name: Shopify, category: ecommerce }
 - { id: woocommerce, name: WooCommerce, category: ecommerce }
 - { id: lightspeed, name: Lightspeed, category: caisse }
