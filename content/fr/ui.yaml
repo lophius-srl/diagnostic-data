@@ -14,6 +14,12 @@ next_button: Suivant
 multi_hint: Plusieurs réponses possibles
 feedback_label: Le regard de l'expert
 continue_button: Continuer
+suggestion_label: Déduit de vos logiciels
+suggestion_hint: Confirmez d'un clic, ou choisissez une autre réponse.
+suggestion_badge: Réponse probable
+live_profile_title: Votre profil se dessine
+live_profile_hint: Mis à jour à chaque réponse.
+live_profile_waiting: Votre radar apparaît après quelques réponses.
 storage_unavailable: Progression non sauvegardée par votre navigateur. Gardez cet onglet ouvert.
 # ---------- Résultats ----------
 results_eyebrow: Votre diagnostic data

@@ -3,6 +3,7 @@ import { content, t } from '../content';
 import type { Question } from '../content/schema';
 import { selected, type Answers } from '../engine/conditions';
 import { questionText } from '../engine/flow';
+import { suggestionFor } from '../engine/tools';
 
 interface Props {
   question: Question;
@@ -32,6 +33,7 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
     setDraft(withoutExclusive.includes(id) ? withoutExclusive.filter((d) => d !== id) : [...withoutExclusive, id]);
   };
 
+  const suggestion = question.type === 'single' ? suggestionFor(content, question, answers) : undefined;
   const percent = Math.round((100 * (current - 1)) / Math.max(total, 1));
   const toolsById = new Map(content.tools.map((tool) => [tool.id, tool]));
 
@@ -50,23 +52,39 @@ export function QuestionView({ question, answers, current, total, onAnswer, onBa
       <p class="muted counter">{t('question_counter', { current, total })}</p>
       {question.section && <p class="eyebrow">{question.section}</p>}
       <h1 id="question-title" class="question-title" tabIndex={-1} ref={titleRef}>
-        {questionText(question, answers)}
+        {questionText(question, answers, content)}
       </h1>
       {question.hint && <p class="muted question-hint">{question.hint}</p>}
 
+      {suggestion && (
+        <aside class="suggestion" aria-labelledby="suggestion-label">
+          <p class="suggestion-label" id="suggestion-label">
+            <span aria-hidden="true">✦ </span>
+            {t('suggestion_label')}
+          </p>
+          <p class="suggestion-reason">{suggestion.reason}</p>
+          <p class="muted small">{t('suggestion_hint')}</p>
+        </aside>
+      )}
+
       {question.type === 'single' ? (
         <div class="options" role="group" aria-labelledby="question-title">
-          {question.options.map((o) => (
-            <button
-              key={o.id}
-              type="button"
-              class="option"
-              aria-pressed={previous.includes(o.id)}
-              onClick={() => onAnswer(o.id)}
-            >
-              {o.label}
-            </button>
-          ))}
+          {question.options.map((o) => {
+            const suggested = suggestion?.option === o.id;
+            return (
+              <button
+                key={o.id}
+                type="button"
+                class={suggested ? 'option is-suggested' : 'option'}
+                aria-pressed={previous.includes(o.id)}
+                aria-describedby={suggested ? 'suggestion-label' : undefined}
+                onClick={() => onAnswer(o.id)}
+              >
+                <span class="option-label">{o.label}</span>
+                {suggested && <span class="suggestion-badge">{t('suggestion_badge')}</span>}
+              </button>
+            );
+          })}
         </div>
       ) : (
         <fieldset class="options options-multi">

@@ -1,22 +1,26 @@
 # Catalogue des outils de l'écosystème belge. `logo` : fichier dans public/brand/tools/ (facultatif).
+# `capabilities` : fonctions connues, servant à déduire des réponses (questions.yaml → suggest).
+#   - ca_temps_reel : tableau de bord ou rapport des ventes à jour en continu ;
+#   - export_excel : export des listes (factures, ventes) vers Excel ou CSV.
+# N'ajouter une fonction que si elle est standard dans l'outil, sans module payant à part.
 - { id: excel, name: Excel / Google Sheets, shortName: Excel / Sheets, category: tableur }
-- { id: odoo, name: Odoo, category: gestion }
-- { id: teamleader, name: Teamleader, category: crm }
-- { id: exact, name: Exact Online, category: compta }
-- { id: winbooks, name: WinBooks, category: compta }
-- { id: bob, name: BOB, category: compta }
-- { id: yuki, name: Yuki, category: compta }
-- { id: billit, name: Billit, category: compta }
-- { id: sage, name: Sage, category: compta }
-- { id: octopus, name: Octopus, category: compta }
-- { id: horus, name: Horus, category: compta }
+- { id: odoo, name: Odoo, category: gestion, capabilities: [ca_temps_reel, export_excel] }
+- { id: teamleader, name: Teamleader, category: crm, capabilities: [ca_temps_reel, export_excel] }
+- { id: exact, name: Exact Online, category: compta, capabilities: [ca_temps_reel, export_excel] }
+- { id: winbooks, name: WinBooks, category: compta, capabilities: [export_excel] }
+- { id: bob, name: BOB, category: compta, capabilities: [export_excel] }
+- { id: yuki, name: Yuki, category: compta, capabilities: [ca_temps_reel, export_excel] }
+- { id: billit, name: Billit, category: compta, capabilities: [ca_temps_reel, export_excel] }
+- { id: sage, name: Sage, category: compta, capabilities: [export_excel] }
+- { id: octopus, name: Octopus, category: compta, capabilities: [export_excel] }
+- { id: horus, name: Horus, category: compta, capabilities: [export_excel] }
 - { id: popsy, name: Popsy, category: compta }
-- { id: falco, name: Falco, category: compta }
-- { id: accountable, name: Accountable, category: compta }
-- { id: dexxter, name: Dexxter, category: compta }
+- { id: falco, name: Falco, category: compta, capabilities: [ca_temps_reel, export_excel] }
+- { id: accountable, name: Accountable, category: compta, capabilities: [ca_temps_reel, export_excel] }
+- { id: dexxter, name: Dexxter, category: compta, capabilities: [ca_temps_reel, export_excel] }
 - { id: clearfacts, name: Clearfacts, category: compta }
-- { id: shopify, name: Shopify, category: ecommerce }
-- { id: woocommerce, name: WooCommerce, category: ecommerce }
-- { id: lightspeed, name: Lightspeed, category: caisse }
+- { id: shopify, name: Shopify, category: ecommerce, capabilities: [ca_temps_reel, export_excel] }
+- { id: woocommerce, name: WooCommerce, category: ecommerce, capabilities: [ca_temps_reel, export_excel] }
+- { id: lightspeed, name: Lightspeed, category: caisse, capabilities: [ca_temps_reel, export_excel] }
 - { id: metier, name: Logiciel métier, category: metier }
 - { id: fiduciaire, name: Fiduciaire, category: externe }

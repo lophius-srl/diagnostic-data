@@ -163,7 +163,9 @@ describe('réception d’un lead (/api/lead)', () => {
     expect(row.emailStatus).toBe('sent');
     expect(sent[0]?.subject).toBe('Nouveau lead diagnostic : Négoce Dupont SRL — Structuré (30/100)');
     expect(sent[0]?.replyTo.email).toBe('marie@exemple.be');
-    expect(sent[0]?.text).toMatch(/Ressaisissez-vous des informations d'un logiciel à l'autre \? → Oui, régulièrement/);
+    expect(sent[0]?.text).toMatch(
+      /Ressaisissez-vous des informations entre Excel \/ Sheets et WinBooks \? → Oui, régulièrement/,
+    );
   });
 
   it('conserve le lead même si l’e-mail échoue', async () => {

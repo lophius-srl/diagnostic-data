@@ -21,6 +21,17 @@ export function validateContent(content: Content): string[] {
     for (const dup of duplicates(ids)) errors.push(`${label} en double : ${dup}`);
   }
 
+  const capabilities = new Set(content.tools.flatMap((t) => t.capabilities));
+  const toolQuestionIndex = content.questions.findIndex((q) => q.type === 'tools');
+  /** Seul trou permis dans une question ou un retour : {outils}, une fois les outils connus. */
+  const checkToolText = (text: string, where: string, index: number): void => {
+    for (const slot of placeholders(text)) {
+      if (slot !== 'outils') errors.push(`${where} : trou {${slot}} non défini`);
+      else if (toolQuestionIndex < 0 || toolQuestionIndex >= index)
+        errors.push(`${where} : {outils} utilisé avant la question des outils`);
+    }
+  };
+
   const checkCondition = (cond: Condition, where: string, maxIndex: number): void => {
     if ('all' in cond) return cond.all.forEach((c) => checkCondition(c, where, maxIndex));
     if ('any' in cond) return cond.any.forEach((c) => checkCondition(c, where, maxIndex));
@@ -50,6 +61,15 @@ export function validateContent(content: Content): string[] {
     for (const dup of duplicates(q.options.map((o) => o.id))) errors.push(`${q.id} : réponse en double ${dup}`);
     if (q.showIf) checkCondition(q.showIf, `${q.id}.showIf`, i - 1);
     q.textVariants.forEach((v, j) => checkCondition(v.when, `${q.id}.textVariants[${j}]`, i - 1));
+    q.suggest.forEach((rule, j) => {
+      const where = `${q.id}.suggest[${j}]`;
+      if (rule.when) checkCondition(rule.when, where, i - 1);
+      if (!q.options.some((o) => o.id === rule.option)) errors.push(`${where} : réponse inconnue « ${rule.option} »`);
+      if (rule.capability && !capabilities.has(rule.capability))
+        errors.push(`${where} : aucun outil n'a la fonction « ${rule.capability} »`);
+    });
+    for (const text of [q.text, ...q.textVariants.map((v) => v.text), ...q.suggest.map((r) => r.reason)])
+      checkToolText(text, `${q.id}`, i);
     for (const o of q.options) {
       for (const dim of Object.keys(o.scores))
         if (!dimensionIds.has(dim)) errors.push(`${q.id}.${o.id} : dimension inconnue « ${dim} »`);
@@ -62,7 +82,10 @@ export function validateContent(content: Content): string[] {
   for (const f of content.feedbacks) {
     const index = questionIndex.get(f.after);
     if (index === undefined) errors.push(`retour ${f.id} : question inconnue « ${f.after} »`);
-    else checkCondition(f.when, `retour ${f.id}`, index);
+    else {
+      checkCondition(f.when, `retour ${f.id}`, index);
+      checkToolText(f.text, `retour ${f.id}`, index + 1);
+    }
   }
 
   for (const dim of content.dimensions) {
