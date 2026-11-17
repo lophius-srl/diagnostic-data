@@ -7,6 +7,7 @@ import { clearProgress, emptyProgress, loadProgress, saveProgress } from '../sto
 import { FeedbackView } from './FeedbackView';
 import { Footer } from './Footer';
 import { Home } from './Home';
+import { LiveProfile } from './LiveProfile';
 import { Nav } from './Nav';
 import { PrivacyPage } from './PrivacyPage';
 import { QuestionView } from './QuestionView';
@@ -88,7 +89,7 @@ export function App() {
   return (
     <>
       <Nav />
-      <main id="main" class="container" tabIndex={-1}>
+      <main id="main" class={route.name === 'diagnostic' ? 'container container-wide' : 'container'} tabIndex={-1}>
         {!storage.persistent && route.name === 'diagnostic' && (
           <p class="notice" role="status">
             {t('storage_unavailable')}
@@ -101,18 +102,29 @@ export function App() {
             onResume={() => go(complete ? 'resultats' : 'diagnostic')}
           />
         )}
-        {route.name === 'diagnostic' && feedback && (
-          <FeedbackView feedback={feedback} onContinue={() => dispatch({ type: 'continue' })} />
-        )}
-        {route.name === 'diagnostic' && !feedback && question && (
-          <QuestionView
-            question={question}
-            answers={state.answers}
-            current={state.cursor + 1}
-            total={total}
-            onAnswer={(value) => dispatch({ type: 'answer', questionId: question.id, value })}
-            onBack={() => dispatch({ type: 'back' })}
-          />
+        {route.name === 'diagnostic' && (feedback || question) && (
+          <div class="diagnostic-layout">
+            <div class="diagnostic-main">
+              {feedback && (
+                <FeedbackView
+                  feedback={feedback}
+                  answers={state.answers}
+                  onContinue={() => dispatch({ type: 'continue' })}
+                />
+              )}
+              {!feedback && question && (
+                <QuestionView
+                  question={question}
+                  answers={state.answers}
+                  current={state.cursor + 1}
+                  total={total}
+                  onAnswer={(value) => dispatch({ type: 'answer', questionId: question.id, value })}
+                  onBack={() => dispatch({ type: 'back' })}
+                />
+              )}
+            </div>
+            <LiveProfile answers={state.answers} />
+          </div>
         )}
         {route.name === 'resultats' && complete && (
           <ResultsPage

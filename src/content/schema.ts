@@ -80,6 +80,22 @@ export const QuestionSchema = z
     hint: z.string().optional(),
     type: z.enum(['single', 'multi', 'tools']),
     showIf: ConditionSchema.optional(),
+    /**
+     * Réponse déduite des outils cochés, présélectionnée avec son explication (première règle vraie).
+     * `capability` : au moins un outil coché l'a ; {outils} = ces outils. Sinon {outils} = tous les outils cochés.
+     */
+    suggest: z
+      .array(
+        z
+          .object({
+            when: ConditionSchema.optional(),
+            capability: Id.optional(),
+            option: Id,
+            reason: z.string().min(1),
+          })
+          .strict(),
+      )
+      .default([]),
     options: z.array(OptionSchema).min(2),
   })
   .strict();
@@ -126,6 +142,8 @@ export const ToolSchema = z
     logo: z.string().optional(),
     /** Nom court pour les schémas (sinon `name`). */
     shortName: z.string().max(18).optional(),
+    /** Fonctions connues de l'outil (ex. ca_temps_reel), utilisées pour déduire des réponses. */
+    capabilities: z.array(Id).default([]),
   })
   .strict();
 

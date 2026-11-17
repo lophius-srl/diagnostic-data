@@ -1,5 +1,6 @@
 import type { Content, Feedback, Question } from '../content/schema';
 import { evaluate, factsOf, type Answers } from './conditions';
+import { chosenTools, withToolNames } from './tools';
 
 /**
  * Questions visibles, dans l'ordre, compte tenu des réponses déjà données.
@@ -25,9 +26,18 @@ export function effectiveAnswers(content: Content, answers: Answers): Answers {
   return result;
 }
 
-/** Texte à afficher pour une question (variante éventuelle selon les réponses précédentes). */
-export function questionText(question: Question, answers: Answers): string {
-  return question.textVariants.find((v) => evaluate(v.when, answers))?.text ?? question.text;
+/**
+ * Texte à afficher pour une question (variante éventuelle selon les réponses précédentes).
+ * Avec `content`, {outils} est remplacé par les outils cochés (« Odoo et WinBooks »).
+ */
+export function questionText(question: Question, answers: Answers, content?: Content): string {
+  const text = question.textVariants.find((v) => evaluate(v.when, answers))?.text ?? question.text;
+  return content ? withToolNames(text, chosenTools(content, answers)) : text;
+}
+
+/** Texte d'un retour d'expert, {outils} remplacé par les outils cochés. */
+export function feedbackText(content: Content, feedback: Feedback, answers: Answers): string {
+  return withToolNames(feedback.text, chosenTools(content, answers));
 }
 
 export interface Progress {

@@ -44,6 +44,10 @@
   section: Vos outils
   text: Extraire la liste de vos factures de l'année vers Excel, c'est…
   type: single
+  suggest:
+    - capability: export_excel
+      option: simple
+      reason: "Avec {outils}, l'export vers Excel se fait en quelques clics."
   options:
     - { id: simple, label: 'Simple, en quelques clics', scores: { sources: 3 } }
     - { id: laborieux, label: 'Possible, mais laborieux', scores: { sources: 1 } }
@@ -53,8 +57,18 @@
 - id: recopie
   section: Circulation de l'information
   text: Ressaisissez-vous des informations d'un logiciel à l'autre ?
+  textVariants:
+    - when: { q: outils, countAtLeast: 2, exclude: [nesaispas, fiduciaire] }
+      text: Ressaisissez-vous des informations entre {outils} ?
   hint: 'Par exemple : une commande encodée dans la caisse, puis en comptabilité.'
   type: single
+  suggest:
+    - when:
+        all:
+          - { q: outils, countAtLeast: 1, exclude: [nesaispas, fiduciaire] }
+          - { not: { q: outils, countAtLeast: 2, exclude: [nesaispas, fiduciaire] } }
+      option: un_seul
+      reason: 'Vous avez coché un seul logiciel : {outils}.'
   options:
     - { id: non, label: 'Non, jamais', scores: { centralisation: 3, automatisation: 3, fiabilite: 3 } }
     - { id: un_seul, label: Nous n'utilisons qu'un logiciel, scores: { centralisation: 2, automatisation: 2 } }
@@ -68,6 +82,10 @@
   section: Circulation de l'information
   text: Combien de temps pour connaître votre chiffre d'affaires du mois dernier ?
   type: single
+  suggest:
+    - capability: ca_temps_reel
+      option: minutes
+      reason: Avec {outils}, votre chiffre d'affaires est visible en temps réel.
   options:
     - { id: minutes, label: Quelques minutes, scores: { centralisation: 3, pilotage: 3 } }
     - { id: heures, label: Quelques heures, scores: { centralisation: 1, pilotage: 1 } }

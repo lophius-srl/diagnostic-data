@@ -4,7 +4,7 @@
 - id: outils_nombreux
   after: outils
   when: { q: outils, countAtLeast: 4, exclude: [fiduciaire, nesaispas] }
-  text: Quatre outils ou plus, c'est bien équipé. Reste à savoir s'ils se parlent.
+  text: '{outils} : vous êtes bien équipé. Reste à savoir si ces outils se parlent.'
   priority: 1
 
 - id: recopie_souvent

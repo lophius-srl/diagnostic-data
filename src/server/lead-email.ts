@@ -19,7 +19,7 @@ export function readableAnswers(content: Content, answers: Answers): { question:
   return visibleQuestions(content, answers)
     .filter((q) => answers[q.id] !== undefined)
     .map((q) => ({
-      question: questionText(q, answers),
+      question: questionText(q, answers, content),
       answer: q.options
         .filter((o) => selected(answers, q.id).includes(o.id))
         .map((o) => o.label)

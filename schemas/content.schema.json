@@ -391,6 +391,13 @@
               "shortName": {
                 "type": "string",
                 "maxLength": 18
+              },
+              "capabilities": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                },
+                "default": []
               }
             },
             "required": [
@@ -450,6 +457,33 @@
               },
               "showIf": {
                 "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+              },
+              "suggest": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "when": {
+                      "$ref": "#/definitions/content/properties/levels/items/properties/blockedBy"
+                    },
+                    "capability": {
+                      "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                    },
+                    "option": {
+                      "$ref": "#/definitions/content/properties/settings/properties/hiddenCost/properties/question"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "option",
+                    "reason"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
               },
               "options": {
                 "type": "array",

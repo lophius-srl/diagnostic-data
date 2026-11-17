@@ -477,6 +477,72 @@ p {
     font-size: 0.92rem;
   }
 }
+/* Réponse déduite des logiciels cochés */
+.suggestion {
+  margin: 0 0 var(--space-3);
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-card);
+  background: linear-gradient(120deg, var(--blue-soft) 0%, #fff 100%);
+  border: 1px solid var(--blue-light);
+  animation: fade-in var(--duration) ease-out;
+}
+.suggestion-label {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.suggestion-reason {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+  color: var(--blue-night);
+}
+.option.is-suggested {
+  border-color: var(--blue);
+  border-style: dashed;
+}
+.suggestion-badge {
+  margin-left: auto;
+  flex: none;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Questionnaire + radar en direct (grand écran uniquement) */
+.live-profile {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .container-wide {
+    max-width: 62rem;
+  }
+  .diagnostic-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 36rem) 19rem;
+    justify-content: center;
+    align-items: start;
+    gap: var(--space-5);
+  }
+  .diagnostic-main .question,
+  .diagnostic-main .feedback {
+    margin: 0;
+  }
+  .live-profile {
+    display: block;
+    position: sticky;
+    top: 9.5rem;
+  }
+  .live-profile h2 {
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+  }
+}
 .feedback {
   max-width: 36rem;
   margin: var(--space-4) auto 0;

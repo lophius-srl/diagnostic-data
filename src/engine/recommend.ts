@@ -1,6 +1,9 @@
 import type { Action, Condition, Content, Offer, RoadmapAction } from '../content/schema';
 import { evaluate, factsOf, selected, type Answers } from './conditions';
 import { effectiveAnswers } from './flow';
+import { fillTemplate, joinNames } from './text';
+
+export { fillTemplate, joinNames };
 import type { ScoreResult } from './scoring';
 
 export interface RenderedAction {
@@ -53,17 +56,6 @@ export function recoContext(content: Content, rawAnswers: Answers): RecoContext 
     if (rule) variables[v.id] = rule.value;
   }
   return { content, answers, facts, variables };
-}
-
-/** « A », « A et B », « A, B et C », au-delà de 3 : « A, B, C et 2 autres » (titres lisibles). */
-export function joinNames(names: readonly string[], max = 3): string {
-  if (names.length <= 1) return names[0] ?? '';
-  if (names.length > max) return `${names.slice(0, max).join(', ')} et ${names.length - max} autres`;
-  return `${names.slice(0, -1).join(', ')} et ${names[names.length - 1]}`;
-}
-
-export function fillTemplate(text: string, values: Record<string, string>): string {
-  return text.replace(/\{(\w+)\}/g, (whole, key: string) => values[key] ?? whole);
 }
 
 const holds = (ctx: RecoContext, cond: Condition | undefined) =>
