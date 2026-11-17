@@ -48,3 +48,21 @@
   when: { q: ordinateur, is: oui }
   text: Le point le plus simple à régler du diagnostic, en une demi-journée.
   priority: 3
+
+- id: tresorerie_inconnue
+  after: tresorerie
+  when: { q: tresorerie, is: non }
+  text: "C'est la prévision la plus utile à une PME. Elle s'automatise très bien."
+  priority: 3
+
+- id: marge_variable
+  after: definitions
+  when: { q: definitions, is: chacun }
+  text: Une règle de calcul écrite une fois met fin à la plupart des débats.
+  priority: 2
+
+- id: acces_flous
+  after: acces
+  when: { q: acces, is: inconnu }
+  text: Point fréquent, et simple à clarifier en une matinée.
+  priority: 2

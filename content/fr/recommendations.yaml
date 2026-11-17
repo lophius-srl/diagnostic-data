@@ -71,6 +71,7 @@ quickWins:
       any:
         - { q: ventes_mois, in: [heures, jours] }
         - { q: frequence, in: [mois, bilan, rarement] }
+        - { q: mise_a_jour, in: [partiel, manuel] }
     requiresTools:
       logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
     dimension: pilotage
@@ -105,7 +106,10 @@ quickWins:
   - id: qw_une_version
     title: Une seule version des chiffres pour toute l'équipe
     detail: Des règles de calcul écrites une fois, une seule source. Les réunions portent sur les décisions.
-    when: { q: justesse, in: [pas_toujours, discussion] }
+    when:
+      any:
+        - { q: justesse, in: [pas_toujours, discussion] }
+        - { q: definitions, in: [oral, chacun] }
     dimension: fiabilite
     effort: faible
     impact: eleve
@@ -132,7 +136,10 @@ quickWins:
   - id: qw_automatiser_rapport
     title: Relier votre rapport Excel le plus long à {logiciels}
     detail: Il se remplit seul. Le copier-coller disparaît, les erreurs aussi.
-    when: { q: temps_tableaux, in: [journee, jours, semaine] }
+    when:
+      any:
+        - { q: temps_tableaux, in: [journee, jours, semaine] }
+        - { q: mise_a_jour, is: manuel }
     requiresTools:
       excel: [excel]
       logiciels: [odoo, teamleader, exact, winbooks, bob, yuki, billit, sage, shopify, woocommerce, lightspeed, metier]
@@ -156,10 +163,36 @@ quickWins:
       any:
         - { q: autonomie, in: [demander, introuvable] }
         - { q: personne_excel, is: perdus }
+        - { q: partage, in: [fichiers, reunion, pas_partages] }
     dimension: autonomie
     effort: moyen
     impact: moyen
     boostIf: { q: priorite, is: dependance }
+
+  - id: qw_tresorerie
+    title: Une prévision de trésorerie à 13 semaines, mise à jour seule
+    detail: Alimentée par vos factures et vos paiements. Vous voyez venir les tensions.
+    when: { q: tresorerie, in: [approx, non] }
+    dimension: pilotage
+    effort: moyen
+    impact: eleve
+    boostIf: { q: priorite, in: [vue, marge] }
+
+  - id: qw_budget
+    title: Comparer chaque mois vos résultats à un budget simple
+    detail: Une page, quelques lignes. Les écarts sautent aux yeux.
+    when: { q: objectifs, in: [parfois, non] }
+    dimension: pilotage
+    effort: faible
+    impact: moyen
+
+  - id: qw_acces
+    title: Revoir qui peut ouvrir vos fichiers financiers et clients
+    detail: Chacun accède à ce dont il a besoin, pas plus. Un départ ne devient plus un risque.
+    when: { q: acces, in: [equipe, inconnu] }
+    dimension: securite
+    effort: faible
+    impact: eleve
 
   # ---- Actions de secours, toujours possibles, choisies seulement s'il manque des quick wins ----
   - id: qw_decisions
@@ -242,6 +275,7 @@ roadmap:
           any:
             - { fact: sauvegarde_partielle }
             - { fact: dependance_personne }
+            - { fact: acces_ouverts }
       - id: rm_fiduciaire_auto
         title: Automatiser les échanges avec votre fiduciaire
         detail: Pièces, ventes et clôtures partent seules, au bon format.

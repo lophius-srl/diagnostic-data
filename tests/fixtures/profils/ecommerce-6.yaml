@@ -9,5 +9,13 @@ answers:
   temps_tableaux: journee
   autonomie: demander
   ordinateur: sauvegarde
+  exports: simple
+  client_vue: plusieurs
+  definitions: ecrit
+  objectifs: parfois
+  tresorerie: approx
+  mise_a_jour: partiel
+  partage: en_ligne
+  acces: concernes
   microsoft: eviter
   priorite: vue
