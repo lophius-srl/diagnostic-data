@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'preact/hooks';
 import { content, t } from '../content';
 
-/** Défilement (px) au-delà duquel le bouton « Contact Me » apparaît. */
-const SHOW_CTA_AFTER_PX = 400;
+/** Même règle que lophius.be : « Contact Me » apparaît après presque une hauteur d'écran de défilement. */
+const ctaThreshold = () => window.innerHeight - 50;
 
 export function Nav() {
   const { links } = content.settings;
@@ -11,7 +11,7 @@ export function Nav() {
   // Comme sur lophius.be : « Contact Me » n'apparaît qu'après avoir fait défiler la page.
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > SHOW_CTA_AFTER_PX);
+    const onScroll = () => setScrolled(window.scrollY > ctaThreshold());
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
