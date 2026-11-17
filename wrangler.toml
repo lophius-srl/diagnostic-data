@@ -11,3 +11,10 @@ binding = "DB"
 database_name = "diagnostic-leads"
 database_id = "c22941d0-97ae-4895-94ce-62c5005db0c1" # base créée le 2026-11-16, région WEUR
 migrations_dir = "migrations"
+
+# Variables non secrètes : avec un wrangler.toml, Cloudflare Pages lit les variables ICI (celles du tableau de bord
+# sont ignorées). Les secrets (BREVO_API_KEY) restent dans le tableau de bord : Settings → Variables and secrets.
+[vars]
+LEAD_NOTIFY_EMAIL = "contact@lophius.be"
+LEAD_SENDER_EMAIL = "contact@lophius.be"
+LEAD_SENDER_NAME = "Diagnostic Lophius"
