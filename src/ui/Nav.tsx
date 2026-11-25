@@ -7,7 +7,8 @@ const ctaThreshold = () => window.innerHeight - 50;
 
 export function Nav() {
   const { links } = content.settings;
-  const site = links.site.replace(/\/+$/, '');
+  // Liens vers lophius.be dans la même langue (?lang=).
+  const site = `${links.site.replace(/\/+$/, '')}/?lang=${locale}`;
   const [menuOpen, setMenuOpen] = useState(false);
   // Comme sur lophius.be : « Contact Me » n'apparaît qu'après avoir fait défiler la page.
   const [scrolled, setScrolled] = useState(false);
@@ -29,9 +30,10 @@ export function Nav() {
       <a class="skip-link" href="#main" onClick={skip}>
         {t('skip_link')}
       </a>
+      <LangSwitch class="lang-switch lang-top" />
       <header class="nav-wrap">
         <nav class="nav" aria-label={t('nav_label')}>
-          <a class="nav-logo" href={links.site}>
+          <a class="nav-logo" href={site}>
             <img
               class="logo-full"
               src={`${import.meta.env.BASE_URL}brand/logo.svg`}
@@ -48,28 +50,15 @@ export function Nav() {
             />
           </a>
           <div class="nav-links">
-            <a class="nav-link" href={`${site}/#about`}>
+            <a class="nav-link" href={`${site}#about`}>
               {t('nav_about')}
             </a>
-            <a class="nav-link" href={`${site}/#work`}>
+            <a class="nav-link" href={`${site}#work`}>
               {t('nav_work')}
             </a>
-            <div class="lang-switch" role="group" aria-label={t('lang_switch_label')}>
-              {LOCALES.map((l) => (
-                <button
-                  key={l}
-                  type="button"
-                  class="lang-option"
-                  lang={l}
-                  aria-pressed={l === locale}
-                  onClick={() => l !== locale && switchLocale(l)}
-                >
-                  {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
+            <LangSwitch class="lang-switch lang-in-nav" />
             {scrolled && (
-              <a class="btn btn-primary btn-small nav-cta" href={`${site}/#contact`}>
+              <a class="btn btn-primary btn-small nav-cta" href={`${site}#contact`}>
                 {t('nav_contact')}
               </a>
             )}
@@ -88,12 +77,35 @@ export function Nav() {
           </div>
           {menuOpen && (
             <div id="nav-menu" class="nav-menu">
-              <a href={`${site}/#about`}>{t('nav_about')}</a>
-              <a href={`${site}/#work`}>{t('nav_work')}</a>
+              <a href={`${site}#about`}>{t('nav_about')}</a>
+              <a href={`${site}#work`}>{t('nav_work')}</a>
             </div>
           )}
         </nav>
       </header>
     </>
+  );
+}
+
+/** Choix de langue discret : lettres grises, la langue active en gras. */
+function LangSwitch({ class: className }: { class: string }) {
+  return (
+    <div class={className} role="group" aria-label={t('lang_switch_label')}>
+      {LOCALES.map((l, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true">·</span>}
+          <button
+            key={l}
+            type="button"
+            class="lang-option"
+            lang={l}
+            aria-pressed={l === locale}
+            onClick={() => l !== locale && switchLocale(l)}
+          >
+            {l.toUpperCase()}
+          </button>
+        </>
+      ))}
+    </div>
   );
 }

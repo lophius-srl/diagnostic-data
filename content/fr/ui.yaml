@@ -2,10 +2,10 @@
 brand: Lophius
 page_title: 'Diagnostic data gratuit | Lophius'
 page_description: "En 4 minutes, découvrez ce que vos données vous coûtent, et ce qu'elles pourraient vous rapporter."
-# Barre de navigation et pied de page : identiques à lophius.be (textes du site, en anglais).
-nav_about: about me
-nav_work: my work
-nav_contact: Contact Me
+# Barre de navigation et pied de page : identiques à lophius.be en français.
+nav_about: à propos
+nav_work: réalisations
+nav_contact: Me contacter
 nav_menu: Menu
 nav_label: Navigation principale
 lang_switch_label: Langue
@@ -105,13 +105,13 @@ pdf_error: Le rapport n'a pas pu être généré. Réessayez.
 # ---------- Pied de page (copie de lophius.be) ----------
 skip_link: Aller au contenu
 footer_name: Antoine Stas
-footer_tagline: Freelance Lead Developer specializing in building high-performance, data-driven digital solutions.
+footer_tagline: Lead developer freelance, spécialisé dans les solutions numériques performantes et pilotées par la donnée.
 footer_linkedin: LinkedIn
 footer_email: E-mail
-footer_links: Quick Links
-footer_home: Home
-footer_about: About me
-footer_work: My work
+footer_links: Liens rapides
+footer_home: Accueil
+footer_about: À propos
+footer_work: Réalisations
 footer_contact: Contact
 footer_privacy: Confidentialité
 footer_legal: '© {year} Antoine Stas'

@@ -143,24 +143,42 @@ p {
 }
 .lang-switch {
   display: inline-flex;
-  padding: 2px;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  background: #fff;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: #9ca3af;
 }
 .lang-option {
-  min-width: 2.25rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0.25rem 0.15rem;
   border: 0;
-  border-radius: 999px;
-  background: transparent;
-  font: 600 0.75rem var(--font);
-  color: var(--text-muted);
+  background: none;
+  font: inherit;
+  color: inherit;
   cursor: pointer;
 }
+.lang-option:hover,
 .lang-option[aria-pressed='true'] {
-  background: var(--blue-soft);
   color: var(--blue-night);
+}
+.lang-option[aria-pressed='true'] {
+  font-weight: 700;
+}
+/* Tout en haut à droite sur grand écran ; dans la barre sur téléphone (la barre y couvre le haut). */
+.lang-top {
+  display: none;
+}
+@media (min-width: 768px) {
+  .lang-top {
+    display: inline-flex;
+    position: absolute;
+    top: 0.5rem;
+    right: 1.5rem;
+    z-index: 6;
+  }
+  .lang-in-nav {
+    display: none;
+  }
 }
 .nav-logo img {
   display: block;

@@ -1,9 +1,10 @@
-import { content, t } from '../content';
+import { content, locale, t } from '../content';
 
 /** Pied de page identique à celui de lophius.be (même structure, mêmes liens), plus le lien de confidentialité. */
 export function Footer() {
   const { links } = content.settings;
-  const site = links.site.replace(/\/+$/, '');
+  // Liens vers lophius.be dans la même langue (?lang=).
+  const site = `${links.site.replace(/\/+$/, '')}/?lang=${locale}`;
   return (
     <footer class="footer">
       <div class="footer-inner">
@@ -31,10 +32,10 @@ export function Footer() {
             <p id="footer-links-title" class="footer-links-title">
               {t('footer_links')}
             </p>
-            <a href={`${site}/#home`}>{t('footer_home')}</a>
-            <a href={`${site}/#about`}>{t('footer_about')}</a>
-            <a href={`${site}/#work`}>{t('footer_work')}</a>
-            <a href={`${site}/#contact`}>{t('footer_contact')}</a>
+            <a href={`${site}#home`}>{t('footer_home')}</a>
+            <a href={`${site}#about`}>{t('footer_about')}</a>
+            <a href={`${site}#work`}>{t('footer_work')}</a>
+            <a href={`${site}#contact`}>{t('footer_contact')}</a>
           </nav>
         </div>
         <p class="footer-legal">
