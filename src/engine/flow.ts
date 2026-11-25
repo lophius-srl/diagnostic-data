@@ -1,5 +1,6 @@
 import type { Content, Feedback, Question } from '../content/schema';
 import { evaluate, factsOf, type Answers } from './conditions';
+import { listWords } from './text';
 import { chosenTools, withToolNames } from './tools';
 
 /**
@@ -32,12 +33,12 @@ export function effectiveAnswers(content: Content, answers: Answers): Answers {
  */
 export function questionText(question: Question, answers: Answers, content?: Content): string {
   const text = question.textVariants.find((v) => evaluate(v.when, answers))?.text ?? question.text;
-  return content ? withToolNames(text, chosenTools(content, answers)) : text;
+  return content ? withToolNames(text, chosenTools(content, answers), listWords(content)) : text;
 }
 
 /** Texte d'un retour d'expert, {outils} remplacé par les outils cochés. */
 export function feedbackText(content: Content, feedback: Feedback, answers: Answers): string {
-  return withToolNames(feedback.text, chosenTools(content, answers));
+  return withToolNames(feedback.text, chosenTools(content, answers), listWords(content));
 }
 
 export interface Progress {

@@ -1,4 +1,4 @@
-import { formatNumber, t } from '../../content';
+import { formatEuro, formatNumber, t } from '../../content';
 import type { HiddenCost } from '../../engine/hidden-cost';
 import { useCountUp, useRevealOnScroll } from '../motion';
 
@@ -15,8 +15,8 @@ export function HiddenCostCard({ cost, onRateChange }: Props) {
     <section class="card cost-card" ref={ref} aria-labelledby="cost-title">
       <h2 id="cost-title">{t('results_hidden_cost')}</h2>
       <p class={visible ? 'cost-value is-visible' : 'cost-value'}>
-        <span aria-hidden="true">{formatNumber(shown)} €</span>
-        <span class="sr-only">{formatNumber(cost.yearlyCost)} €</span>
+        <span aria-hidden="true">{formatEuro(shown)}</span>
+        <span class="sr-only">{formatEuro(cost.yearlyCost)}</span>
         <span class="cost-unit"> {t('results_hidden_cost_unit')}</span>
       </p>
       <p class="muted">

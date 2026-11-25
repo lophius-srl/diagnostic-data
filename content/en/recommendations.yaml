@@ -1,0 +1,397 @@
+# Recommendations (English): same ids, conditions and tool slots as content/fr (checked by tests).
+
+variables:
+  - id: tableau
+    rules:
+      - { when: { q: microsoft, is: oui }, value: Power BI }
+      - { value: Looker Studio }
+  - id: stockage
+    rules:
+      - { when: { q: microsoft, is: oui }, value: OneDrive or SharePoint }
+      - { when: { q: microsoft, is: google }, value: Google Drive }
+      - { value: a European cloud storage }
+
+quickWins:
+  - id: qw_relier_ventes_compta
+    title: Connect {ventes} to {compta}
+    detail: Revenue flows from one tool to the other on its own. No more double entry.
+    when: { q: recopie, in: [parfois, souvent] }
+    requiresTools:
+      ventes: [odoo, teamleader, metier, lightspeed]
+      compta: [exact, winbooks, bob, yuki, billit, sage, octopus, horus, popsy, falco, accountable, dexxter, clearfacts]
+    dimension: centralisation
+    effort: moyen
+    impact: eleve
+    boostIf: { q: priorite, is: doubles }
+
+  - id: qw_boutique_compta
+    title: Send {boutique} sales to {compta} automatically
+    detail: Orders, refunds and fees land in your accounts on their own, every day.
+    when: { q: recopie, in: [parfois, souvent] }
+    requiresTools:
+      boutique: [shopify, woocommerce, lightspeed]
+      compta:
+        [exact, winbooks, bob, yuki, billit, sage, octopus, horus, popsy, falco, accountable, dexxter, clearfacts, odoo]
+    dimension: automatisation
+    effort: faible
+    impact: eleve
+    boostIf: { q: priorite, is: doubles }
+
+  - id: qw_boutique_fiduciaire
+    title: Send {boutique} sales to your accountant, without exports
+    detail: A complete monthly handover, in the right format. Fewer back-and-forths.
+    excludeIf:
+      {
+        q: outils,
+        hasAny:
+          [
+            exact,
+            winbooks,
+            bob,
+            yuki,
+            billit,
+            sage,
+            octopus,
+            horus,
+            popsy,
+            falco,
+            accountable,
+            dexxter,
+            clearfacts,
+            odoo,
+          ],
+      }
+    requiresTools:
+      boutique: [shopify, woocommerce, lightspeed]
+      fiduciaire: [fiduciaire]
+    dimension: automatisation
+    effort: faible
+    impact: moyen
+
+  - id: qw_pieces_fiduciaire
+    title: Drop your invoices straight into your accountant's system
+    detail: One drop-off address is enough. You save time every month, and so does your accountant.
+    when: { q: temps_tableaux, in: [journee, jours, semaine] }
+    requiresTools:
+      fiduciaire: [fiduciaire]
+    dimension: automatisation
+    effort: faible
+    impact: moyen
+
+  - id: qw_tableau_bord
+    title: Your 5 key numbers in {tableau}, fresh every morning
+    detail: Fed from {logiciels}. You look instead of calculating.
+    when:
+      any:
+        - { q: ventes_mois, in: [heures, jours] }
+        - { q: frequence, in: [mois, bilan, rarement] }
+    requiresTools:
+      logiciels:
+        [
+          odoo,
+          teamleader,
+          exact,
+          winbooks,
+          bob,
+          yuki,
+          billit,
+          sage,
+          octopus,
+          horus,
+          popsy,
+          falco,
+          accountable,
+          dexxter,
+          clearfacts,
+          shopify,
+          woocommerce,
+          lightspeed,
+          metier,
+        ]
+    dimension: pilotage
+    effort: moyen
+    impact: eleve
+    boostIf: { q: priorite, is: vue }
+
+  - id: qw_odoo_tableaux
+    title: Use the dashboards already built into Odoo
+    detail: Set up properly, they save you buying another tool.
+    when:
+      any:
+        - { q: ventes_mois, in: [heures, jours] }
+        - { q: frequence, in: [bilan, rarement] }
+    requiresTools:
+      odoo: [odoo]
+    dimension: pilotage
+    effort: faible
+    impact: moyen
+
+  - id: qw_marge
+    title: Calculate your real margin per customer and per product
+    detail: The data is already in {logiciels}. It just needs to be combined.
+    when: { q: priorite, is: marge }
+    requiresTools:
+      logiciels:
+        [
+          odoo,
+          teamleader,
+          exact,
+          winbooks,
+          bob,
+          yuki,
+          billit,
+          sage,
+          octopus,
+          horus,
+          popsy,
+          falco,
+          accountable,
+          dexxter,
+          clearfacts,
+          shopify,
+          woocommerce,
+          lightspeed,
+          metier,
+        ]
+    dimension: pilotage
+    effort: moyen
+    impact: eleve
+    boostIf: { q: priorite, is: marge }
+
+  - id: qw_une_version
+    title: One version of the numbers for the whole team
+    detail: Calculation rules written once, a single source. Meetings are about decisions again.
+    when:
+      any:
+        - { q: justesse, in: [pas_toujours, discussion] }
+        - { q: definitions, in: [oral, chacun] }
+    dimension: fiabilite
+    effort: faible
+    impact: eleve
+
+  - id: qw_controles
+    title: Automatic checks on your numbers
+    detail: A missing invoice, a total that doesn't add up? You know before the meeting.
+    when: { q: justesse, in: [pas_toujours, discussion] }
+    dimension: fiabilite
+    effort: moyen
+    impact: moyen
+
+  - id: qw_documenter_excel
+    title: Document and secure your key Excel file
+    detail: Half a day is enough so the business no longer depends on one person's head.
+    when: { q: personne_excel, in: [complique, perdus] }
+    requiresTools:
+      excel: [excel]
+    dimension: autonomie
+    effort: faible
+    impact: eleve
+    boostIf: { q: priorite, is: dependance }
+
+  - id: qw_automatiser_rapport
+    title: Connect your longest Excel report to {logiciels}
+    detail: It fills itself in. Copy-paste disappears, and so do the errors.
+    when: { q: temps_tableaux, in: [journee, jours, semaine] }
+    requiresTools:
+      excel: [excel]
+      logiciels:
+        [
+          odoo,
+          teamleader,
+          exact,
+          winbooks,
+          bob,
+          yuki,
+          billit,
+          sage,
+          octopus,
+          horus,
+          popsy,
+          falco,
+          accountable,
+          dexxter,
+          clearfacts,
+          shopify,
+          woocommerce,
+          lightspeed,
+          metier,
+        ]
+    dimension: automatisation
+    effort: moyen
+    impact: eleve
+    boostIf: { q: priorite, is: doubles }
+
+  - id: qw_sauvegarde
+    title: Automatic backup of all your files
+    detail: On {stockage}, with version history. A theft only costs you the hardware.
+    when: { q: ordinateur, in: [quelques_uns, oui] }
+    dimension: securite
+    effort: faible
+    impact: eleve
+
+  - id: qw_autonomie
+    title: Give everyone access to their own numbers
+    detail: Each manager checks their numbers in {tableau}, without waiting for someone to prepare them.
+    when:
+      any:
+        - { q: autonomie, in: [demander, introuvable] }
+        - { q: personne_excel, is: perdus }
+        - { q: partage, in: [fichiers, reunion, pas_partages] }
+    dimension: autonomie
+    effort: moyen
+    impact: moyen
+    boostIf: { q: priorite, is: dependance }
+
+  - id: qw_tresorerie
+    title: A 13-week cash forecast that updates itself
+    detail: Fed by your invoices and payments. You see cash crunches coming.
+    when: { q: tresorerie, in: [approx, non] }
+    dimension: pilotage
+    effort: moyen
+    impact: eleve
+    boostIf: { q: priorite, in: [vue, marge] }
+
+  - id: qw_acces
+    title: Review who can open your financial and customer files
+    detail: Everyone gets what they need, nothing more. A departure is no longer a risk.
+    when: { q: acces, in: [equipe, inconnu] }
+    dimension: securite
+    effort: faible
+    impact: eleve
+
+  # ---- Actions de secours, toujours possibles, choisies seulement s'il manque des quick wins ----
+  - id: qw_decisions
+    title: List your 5 monthly decisions and the numbers they need
+    detail: Two hours to start from your decisions, not from your files.
+    dimension: pilotage
+    effort: faible
+    impact: moyen
+    fallback: true
+
+  - id: qw_inventaire
+    title: List your files and who looks after them
+    detail: One page is enough. You can only improve what you can see.
+    dimension: sources
+    effort: faible
+    impact: moyen
+    fallback: true
+
+  - id: qw_rituel
+    title: A 15-minute weekly meeting with your numbers
+    detail: Same day, same numbers, every week.
+    dimension: pilotage
+    effort: faible
+    impact: moyen
+    fallback: true
+
+roadmap:
+  - id: j30
+    label: 30 days
+    title: First results
+    max: 4
+    actions:
+      - id: rm_chiffres_cles
+        title: Write down your key numbers and how they are calculated
+        detail: One reference page, signed off by management.
+        unlessQuickWin: qw_une_version
+
+  - id: j60
+    label: 60 days
+    title: Bring your numbers together
+    max: 3
+    actions:
+      - id: rm_base_centrale_excel
+        title: Bring {logiciels} and your Excel files into a central database
+        detail: Refreshed every night. Excel stays usable, but is no longer the source.
+        requiresTools:
+          logiciels:
+            [
+              odoo,
+              teamleader,
+              exact,
+              winbooks,
+              bob,
+              yuki,
+              billit,
+              sage,
+              octopus,
+              horus,
+              popsy,
+              falco,
+              accountable,
+              dexxter,
+              clearfacts,
+              shopify,
+              woocommerce,
+              lightspeed,
+              metier,
+            ]
+          excel: [excel]
+      - id: rm_base_centrale
+        title: Bring {logiciels} into a central database
+        detail: Refreshed every night, one version of the numbers.
+        when: { q: outils, countAtLeast: 2, exclude: [excel, fiduciaire, nesaispas] }
+        excludeIf: { q: outils, has: excel }
+        requiresTools:
+          logiciels:
+            [
+              odoo,
+              teamleader,
+              exact,
+              winbooks,
+              bob,
+              yuki,
+              billit,
+              sage,
+              octopus,
+              horus,
+              popsy,
+              falco,
+              accountable,
+              dexxter,
+              clearfacts,
+              shopify,
+              woocommerce,
+              lightspeed,
+              metier,
+            ]
+      - id: rm_tableau_bord
+        title: A {tableau} dashboard fed automatically
+        detail: On desktop and on mobile.
+        unlessQuickWin: qw_tableau_bord
+      - id: rm_controles_qualite
+        title: Automatic checks on your key numbers
+        detail: Every night, a check flags whatever doesn't add up.
+        unlessQuickWin: qw_controles
+      - id: rm_historique
+        title: Keep the history of your numbers, month after month
+        detail: To compare every month with last year.
+
+  - id: j90
+    label: 90 days
+    title: Automate and empower
+    max: 3
+    # Les étapes conditionnelles d'abord : elles répondent à un point précis du diagnostic.
+    actions:
+      - id: rm_securite
+        title: Formalise backups, access and documentation
+        detail: So everything keeps running if a key person is away.
+        when:
+          any:
+            - { fact: sauvegarde_partielle }
+            - { fact: dependance_personne }
+            - { fact: acces_ouverts }
+      - id: rm_fiduciaire_auto
+        title: Automate exchanges with your accountant
+        detail: Documents, sales and closings go out on their own, in the right format.
+        requiresTools:
+          fiduciaire: [fiduciaire]
+      - id: rm_rapports_auto
+        title: Automate recurring reports
+        detail: They build themselves and land in your inbox.
+      - id: rm_alertes
+        title: Get alerted when a number looks unusual
+        detail: Cash, margin, late payments.
+      - id: rm_former
+        title: Train the team to read its own numbers
+        detail: Two short sessions are enough.

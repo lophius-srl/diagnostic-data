@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
-import { content, t } from '../content';
+import { content, locale, t } from '../content';
+import { LOCALES, switchLocale } from '../content/locale';
 
 /** Même règle que lophius.be : « Contact Me » apparaît après presque une hauteur d'écran de défilement. */
 const ctaThreshold = () => window.innerHeight - 50;
@@ -29,7 +30,7 @@ export function Nav() {
         {t('skip_link')}
       </a>
       <header class="nav-wrap">
-        <nav class="nav" aria-label="Navigation principale">
+        <nav class="nav" aria-label={t('nav_label')}>
           <a class="nav-logo" href={links.site}>
             <img
               class="logo-full"
@@ -53,6 +54,20 @@ export function Nav() {
             <a class="nav-link" href={`${site}/#work`}>
               {t('nav_work')}
             </a>
+            <div class="lang-switch" role="group" aria-label={t('lang_switch_label')}>
+              {LOCALES.map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  class="lang-option"
+                  lang={l}
+                  aria-pressed={l === locale}
+                  onClick={() => l !== locale && switchLocale(l)}
+                >
+                  {l.toUpperCase()}
+                </button>
+              ))}
+            </div>
             {scrolled && (
               <a class="btn btn-primary btn-small nav-cta" href={`${site}/#contact`}>
                 {t('nav_contact')}

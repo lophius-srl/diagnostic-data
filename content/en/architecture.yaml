@@ -1,0 +1,48 @@
+# Architecture diagrams (English). Same conditions as content/fr/architecture.yaml (checked by tests).
+
+legend:
+  auto: Automatic
+  manual: By hand
+
+today:
+  title: Today
+  subtitle: Your tools and how your numbers flow.
+  unknownTools: Your tools (to be identified)
+  silo:
+    when: { q: recopie, in: [parfois, souvent] }
+    text: Tools that don't talk to each other
+  toolNotes:
+    - { tools: [fiduciaire], text: external partner }
+  excel:
+    label: Excel files
+    detail: where everything comes together
+    notes:
+      - { when: { fact: dependance_personne }, text: run by a single person }
+      - { when: { fact: versions_multiples }, text: several versions of the numbers }
+      - { when: { fact: reporting_manuel }, text: days of copy-paste }
+  people:
+    label: You and management
+    autoWhen: { q: ventes_mois, is: minutes }
+    detailManual: numbers pulled together by hand
+    detailAuto: numbers read tool by tool
+
+target:
+  title: Recommended target
+  subtitle: Your current tools, connected once and for all.
+  unknownTools: Your current tools
+  excelSource:
+    label: Excel files
+    detail: imported, no longer re-typed
+  integration:
+    label: Automatic sync
+    detail: every night
+  base:
+    label: Central database
+    detail: one version of the numbers
+  outputs:
+    - { label: '{tableau} dashboard', detail: desktop and mobile }
+    - { label: Automatic reports, detail: in your inbox }
+    - { label: Your accountant, detail: gets everything in the right format, requiresTools: [fiduciaire] }
+  people:
+    label: You and the team
+    detail: everyone sees their numbers

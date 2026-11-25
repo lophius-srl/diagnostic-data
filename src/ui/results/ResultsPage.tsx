@@ -58,9 +58,7 @@ export function ResultsPage({ answers, hourlyRate, onRateChange, onRestart, unlo
           <strong>{score.level.label}</strong>
         </h1>
         <p class="score-value">
-          <span class="sr-only">
-            {t('results_score')} : {score.global} {t('results_score_unit')}
-          </span>
+          <span class="sr-only">{t('results_score_sr', { score: score.global })}</span>
           <span aria-hidden="true">{shownScore}</span>
           <span class="score-unit" aria-hidden="true">
             /100

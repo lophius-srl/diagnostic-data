@@ -1,0 +1,53 @@
+# PDF report texts. Variables: {company}, {firstName}, {date}, {level}, {score}, {cost}, {hours}, {rate}, {weeks}, {hoursWeek}.
+fileName: 'Data-check-up-{company}.pdf'
+title: Data check-up
+preparedFor: 'Prepared for {company}, {date}'
+preparedForAnonymous: 'Issued {date}'
+author: 'Antoine Stas · Lophius SRL'
+
+sections:
+  synthesis: Summary
+  dimensions: Your 7 areas in detail
+  architecture: How your numbers flow
+  cost: The hidden cost of manual reporting
+  quickWins: Your 3 quick wins
+  roadmap: Your roadmap
+  glossary: The jargon, in plain words
+  nextSteps: Next steps
+
+texts:
+  levelLine: 'Your business is at level'
+  scoreUnit: '/100'
+  costLabel: Estimated hidden cost
+  costUnit: per year
+  costDetail: '{hoursMonth} h per month × {months} months × €{rate} per hour, i.e. {hours} h per year.'
+  costNote: Estimate based on your answers, to refine with your real hourly cost, overheads included.
+  quickWinsLabel: Your first 3 actions
+  nextStepShort: 'Next step: 30 minutes to talk it through, no strings attached.'
+  dimensionsIntro: 'Each area is scored out of 100 from your answers. The term in brackets is the one specialists use.'
+  architectureIntro: 'On the left, what your answers describe today. On the right, the recommended setup, with your current tools.'
+  legendAuto: 'Solid line: automatic'
+  legendManual: 'Dotted line: by hand'
+  effort: Effort
+  impact: Impact
+  nextStepsIntro: 'This check-up is a starting point. If you would like support, here is what fits your situation.'
+  booking: 'Book 30 minutes to talk'
+  contact: 'Contact'
+  duration: Duration
+  price: Price
+  capped: 'Your score alone would place you at level "{level}".'
+
+glossary:
+  - term: Central database (data warehouse)
+    definition: A database that brings together the numbers from all your software, with their history. It is the business's "single source of truth".
+  - term: Automatic sync (ETL)
+    definition: 'The program that fetches data from your software, cleans it up and stores it in the central database, for instance every night.'
+  - term: Dashboard (BI tool)
+    definition: 'The screen showing your key numbers, up to date (business intelligence). In your case, we recommend {tableau}.'
+  - term: API
+    definition: 'The "plug" through which one software agrees to share its data with another, without copy-paste.'
+  - term: Key indicator (KPI)
+    definition: 'A number tracked regularly because it helps decide: margin, cash, payment delays, average basket…'
+
+disclaimer: 'This check-up is indicative: it relies on your answers and on expert rules, without access to your data. It does not replace a full audit.'
+footer: 'Lophius SRL · www.lophius.be'

@@ -1,0 +1,18 @@
+# Home page: short and centred, in the style of lophius.be. No statistics, no client logos.
+hero:
+  eyebrow: Free data check-up for small businesses
+  titleLight: What your data
+  titleStrong: is costing you
+  lead: And what it could be earning you.
+  meta: '15 questions · {minutes} minutes · instant results'
+  reassurance: No sign-up. Your answers stay in your browser.
+
+benefits:
+  - { title: Your score, text: across 7 key areas }
+  - { title: Your hidden cost, text: in euros per year }
+  - { title: Your action plan, text: built on your own software }
+
+# Testimonials: hidden while settings.features.testimonials = false OR the list is empty. Real ones only.
+testimonials:
+  title: They took the check-up
+  items: []

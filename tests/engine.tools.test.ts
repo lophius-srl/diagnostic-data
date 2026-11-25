@@ -60,5 +60,8 @@ describe('textes personnalisés avec les logiciels', () => {
   it('accorde « autre » au singulier', () => {
     expect(joinNames(['A', 'B', 'C', 'D'])).toBe('A, B, C et 1 autre');
     expect(joinNames(['A', 'B', 'C', 'D', 'E'])).toBe('A, B, C et 2 autres');
+    const english = { and: 'and', other: 'other', others: 'others' };
+    expect(joinNames(['Odoo', 'WinBooks'], english)).toBe('Odoo and WinBooks');
+    expect(joinNames(['A', 'B', 'C', 'D'], english)).toBe('A, B, C and 1 other');
   });
 });

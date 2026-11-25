@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { content } from './helpers';
+import { content, countWords } from './helpers';
 
 /**
  * Règles de rédaction imposées par le brief. Ce test échoue si une question devient trop longue,
@@ -18,10 +18,6 @@ const FORBIDDEN = [
   /\bsources? de données\b/i,
   /\bgouvernance\b/i,
 ];
-
-export function countWords(text: string): number {
-  return (text.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) ?? []).length;
-}
 
 const forbiddenIn = (text: string) => FORBIDDEN.filter((re) => re.test(text)).map(String);
 

@@ -141,6 +141,27 @@ p {
     width: 56rem;
   }
 }
+.lang-switch {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  background: #fff;
+}
+.lang-option {
+  min-width: 2.25rem;
+  padding: 0.2rem 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font: 600 0.75rem var(--font);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.lang-option[aria-pressed='true'] {
+  background: var(--blue-soft);
+  color: var(--blue-night);
+}
 .nav-logo img {
   display: block;
   height: 40px;

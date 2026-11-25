@@ -5,7 +5,10 @@ import type { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { describe, expect, it } from 'vitest';
 import { buildReport, reportFileName } from '../src/pdf/report';
 import { renderReportNode } from '../src/pdf/render-node';
+import { loadContent } from '../src/content/load-node';
 import { content, profile, profiles, simulatedAnswers } from './helpers';
+
+const english = loadContent('en');
 
 const logoSvg = readFileSync(join(process.cwd(), 'public', 'brand', 'logo.svg'), 'utf8');
 const options = {
@@ -46,7 +49,7 @@ describe('contenu du rapport PDF', () => {
   it('reprend le niveau, le score, le coût caché, les quick wins et les outils de la PME', () => {
     expect(text).toContain('Structuré');
     expect(text).toContain('30');
-    expect(text).toContain('9\u00a0900 €');
+    expect(text).toContain('9\u00a0900\u00a0€');
     expect(text).toContain('Relier votre rapport Excel le plus long à WinBooks');
     expect(text).toContain('Préparé pour Négoce Dupont SRL, le 16 novembre 2026');
   });
@@ -107,8 +110,14 @@ describe('police embarquée', () => {
     const fontDir = join(process.cwd(), 'node_modules', '@fontsource', 'montserrat', 'files');
     const fonts = [400, 700].map((w) => fontkit.openSync(join(fontDir, `montserrat-latin-${w}-normal.woff`)));
     const missing = new Set<string>();
-    for (const answers of [...profiles.map((p) => p.answers), ...simulatedAnswers(200, 9)]) {
-      const def = buildReport(content, answers, options);
+    // 200 parcours simulés en français, 50 en anglais : les textes anglais sont plus courts et sans accents.
+    const profileAnswers = profiles.map((p) => p.answers);
+    const cases = [
+      ...[...profileAnswers, ...simulatedAnswers(200, 9)].map((a) => [content, a] as const),
+      ...[...profileAnswers, ...simulatedAnswers(50, 9)].map((a) => [english, a] as const),
+    ];
+    for (const [lang, answers] of cases) {
+      const def = buildReport(lang, answers, options);
       // Textes dessinés des SVG (sans <title>/<desc>, qui ne sont pas imprimés).
       const svgs = JSON.stringify(def.content).replace(/<(title|desc)[^>]*>.*?<\/\1>/g, '');
       const svgText = (svgs.match(/>([^<>]+)</g) ?? []).join('');
@@ -123,11 +132,11 @@ describe('police embarquée', () => {
 });
 
 describe('rendu réel du PDF', () => {
-  it('produit un PDF valide de 5 pages pour les 3 profils', async () => {
-    for (const p of profiles) {
-      const pdf = await renderReportNode(content, p.answers, { company: 'PME', date: options.date });
+  it('produit un PDF valide de 5 pages pour les 3 profils, en français et en anglais', async () => {
+    for (const [lang, p] of [content, english].flatMap((c) => profiles.map((pr) => [c, pr] as const))) {
+      const pdf = await renderReportNode(lang, p.answers, { company: 'PME', date: options.date });
       expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
-      expect(pageCount(pdf), p.file).toBe(5);
+      expect(pageCount(pdf), `${lang.settings.locale} ${p.file}`).toBe(5);
     }
   });
 

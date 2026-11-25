@@ -1,0 +1,67 @@
+# Expert feedback shown right after an answer: one punchy sentence, never guilt-tripping, no statistics.
+
+- id: outils_nombreux
+  after: outils
+  when: { q: outils, countAtLeast: 4, exclude: [fiduciaire, nesaispas] }
+  text: "{outils}: you're well equipped. The question is whether these tools talk to each other."
+  priority: 1
+
+- id: recopie_souvent
+  after: recopie
+  when: { q: recopie, is: souvent }
+  text: 'Classic: your business grew faster than its tools. Good news, it is also the fastest thing to fix.'
+  priority: 3
+
+- id: ventes_rapides
+  after: ventes_mois
+  when: { q: ventes_mois, is: minutes }
+  text: 'Great sign: that is the foundation of steering a business.'
+  priority: 1
+
+- id: ventes_lentes
+  after: ventes_mois
+  when: { q: ventes_mois, is: jours }
+  text: That delay can almost always come down to a few minutes.
+  priority: 2
+
+- id: chiffres_discutes
+  after: justesse
+  when: { q: justesse, is: discussion }
+  text: When numbers get debated, there are usually several versions of them.
+  priority: 3
+
+- id: temps_eleve
+  after: temps_tableaux
+  when: { q: temps_tableaux, in: [jours, semaine] }
+  text: That time has a price. We put a figure on it in your results.
+  priority: 2
+
+- id: personne_cle
+  after: personne_excel
+  when: { q: personne_excel, is: perdus }
+  text: Very common, and a real risk. That knowledge can be documented in a few days.
+  priority: 3
+
+- id: sauvegarde_absente
+  after: ordinateur
+  when: { q: ordinateur, is: oui }
+  text: The easiest fix in this whole check-up. Half a day, done.
+  priority: 3
+
+- id: tresorerie_inconnue
+  after: tresorerie
+  when: { q: tresorerie, is: non }
+  text: The single most useful forecast for a small business. And it automates very well.
+  priority: 3
+
+- id: marge_variable
+  after: definitions
+  when: { q: definitions, is: chacun }
+  text: A calculation rule written down once ends most of the arguments.
+  priority: 2
+
+- id: acces_flous
+  after: acces
+  when: { q: acces, is: inconnu }
+  text: Very common, and easy to clear up in a morning.
+  priority: 2

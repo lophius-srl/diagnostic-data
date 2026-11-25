@@ -1,0 +1,9 @@
+# Indicative benchmarks from field experience. NONE is shown while `enabled: false` (a `source` is required).
+- id: reporting_mensuel
+  text: In the businesses we support, preparing monthly reporting often takes one to two days.
+  source: null
+  enabled: false
+- id: fichiers_excel
+  text: A central Excel file that has grown over several years almost always contains broken formulas.
+  source: null
+  enabled: false

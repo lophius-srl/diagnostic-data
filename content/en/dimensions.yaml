@@ -1,0 +1,80 @@
+# The 7 radar axes. `label` speaks the owner's language; `technicalLabel` and `technicalExplanation`
+# are for the PDF report (technical words always explained). `insights`: low < 40, mid < 70, high ≥ 70.
+- id: sources
+  label: Sources
+  technicalLabel: Source systems
+  description: The software where your numbers are born, and how well it shares them.
+  phrase: 'your software'
+  strengthCandidate: false
+  technicalExplanation: '"Source systems" are the applications where your data is created: accounting, invoicing, CRM, online shop. Whether they can export data or expose it through an API decides what can be automated.'
+  insights:
+    low: Your numbers mostly live in files or in tools that are hard to query. That is the first thing to stabilise.
+    mid: Your software holds the essentials, but some of it shares data poorly.
+    high: 'Your software is modern and shares its data well: an excellent base for what comes next.'
+  weight: 1
+- id: fiabilite
+  label: Reliability
+  technicalLabel: Data quality
+  description: How much you can trust your numbers.
+  phrase: 'the reliability of your numbers'
+  technicalExplanation: '"Data quality" measures whether a number is complete, up to date and calculated the same way everywhere. It relies on shared definitions and automatic checks.'
+  insights:
+    low: 'Numbers get debated: several versions circulate, and trust wears thin.'
+    mid: The numbers are broadly right, with occasional gaps that still need checking by hand.
+    high: Your numbers are the reference. That is rare, and valuable.
+  weight: 1
+- id: centralisation
+  label: Centralisation
+  technicalLabel: Integration and single source of truth
+  description: Are your numbers in one place, without copying?
+  phrase: 'how centralised your numbers are'
+  technicalExplanation: '"Integration" means bringing data from several applications into a "single source of truth", so there is only one version of each number.'
+  insights:
+    low: 'Each tool lives its own life: pulling the numbers together takes time and copy-paste.'
+    mid: Some numbers are brought together, the rest still goes through Excel.
+    high: Your numbers are in one place, or close to it.
+  weight: 1
+- id: pilotage
+  label: Steering
+  technicalLabel: Reporting and dashboards
+  description: Your ability to follow the business and decide in time.
+  phrase: 'how you steer the business'
+  technicalExplanation: '"Reporting" covers the dashboards and reports that track the key indicators of the business (KPIs: revenue, margin, cash…).'
+  insights:
+    low: 'Numbers arrive too late to decide: steering happens mostly by gut feeling, or at year end.'
+    mid: You follow the business regularly, but some key questions still lack a quick answer.
+    high: You follow the business closely and you know where you make money.
+  weight: 1
+- id: automatisation
+  label: Automation
+  technicalLabel: Data flow automation (ETL)
+  description: The share of repetitive work done by machines rather than by your team.
+  phrase: 'automation'
+  technicalExplanation: 'An "ETL" flow (extract, transform, load) copies and prepares data automatically, for instance every night, instead of copy-paste.'
+  insights:
+    low: Many hours go into repetitive tasks that machines would do better.
+    mid: Some work is automated; reporting is still largely manual.
+    high: 'Most things update on their own: your team analyses instead of copying.'
+  weight: 1
+- id: securite
+  label: Security
+  technicalLabel: Security, backup and continuity
+  description: Are your numbers protected, backed up, and not stuck in one head?
+  phrase: 'the security of your files'
+  technicalExplanation: 'This covers backups, access rights and business continuity: being able to keep working after a breakdown, a theft or an absence.'
+  insights:
+    low: Important files could be lost, or seen by people who should not see them.
+    mid: The basics are there, but backups or access rights deserve to be formalised.
+    high: Your files are backed up and protected.
+  weight: 1
+- id: autonomie
+  label: Autonomy
+  technicalLabel: Self-service and data culture
+  description: Can everyone find the answers to their questions on their own?
+  phrase: 'how autonomous your team is'
+  technicalExplanation: '"Self-service" lets everyone look up and filter their own numbers, without depending on the person who prepares the files.'
+  insights:
+    low: 'Answers depend on one or two people: a real risk when they are away.'
+    mid: Some find their answers alone, others still have to ask.
+    high: Everyone finds the numbers they need on their own.
+  weight: 1

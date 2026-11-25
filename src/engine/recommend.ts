@@ -1,7 +1,7 @@
 import type { Action, Condition, Content, Offer, RoadmapAction } from '../content/schema';
 import { evaluate, factsOf, selected, type Answers } from './conditions';
 import { effectiveAnswers } from './flow';
-import { fillTemplate, joinNames } from './text';
+import { fillTemplate, joinNames, listWords } from './text';
 
 export { fillTemplate, joinNames };
 import type { ScoreResult } from './scoring';
@@ -75,7 +75,10 @@ function toolSlots(ctx: RecoContext, requiresTools: Record<string, string[]>) {
   for (const [slot, allowed] of Object.entries(requiresTools)) {
     const present = allowed.filter((id) => chosenTools.has(id));
     if (present.length === 0) return undefined;
-    names[slot] = joinNames(present.map((id) => ctx.content.tools.find((t) => t.id === id)?.name ?? id));
+    names[slot] = joinNames(
+      present.map((id) => ctx.content.tools.find((t) => t.id === id)?.name ?? id),
+      listWords(ctx.content),
+    );
     ids.push(...present);
   }
   return { names, ids: [...new Set(ids)] };

@@ -1,0 +1,208 @@
+# Diagnostic questions (English). Same ids, scores, facts and conditions as content/fr (checked by tests).
+# Writing rules (tests/content.rules.test.ts): 15 words max, 4 answers max (except the tool picker), no jargon.
+
+# ---------- Your tools → Sources ----------
+- id: outils
+  section: Your tools
+  text: Which software do you use to run your business?
+  hint: Accounting, invoicing, sales, point of sale… Tick everything that applies.
+  type: tools
+  options:
+    - { id: excel, tool: excel, label: Excel / Google Sheets, scores: { sources: 1 } }
+    - { id: odoo, tool: odoo, label: Odoo, scores: { sources: 3 } }
+    - { id: teamleader, tool: teamleader, label: Teamleader, scores: { sources: 2 } }
+    - { id: exact, tool: exact, label: Exact Online, scores: { sources: 3 } }
+    - { id: winbooks, tool: winbooks, label: WinBooks, scores: { sources: 2 } }
+    - { id: bob, tool: bob, label: BOB, scores: { sources: 2 } }
+    - { id: yuki, tool: yuki, label: Yuki, scores: { sources: 3 } }
+    - { id: billit, tool: billit, label: Billit, scores: { sources: 2 } }
+    - { id: sage, tool: sage, label: Sage, scores: { sources: 2 } }
+    - { id: octopus, tool: octopus, label: Octopus, scores: { sources: 3 } }
+    - { id: horus, tool: horus, label: Horus, scores: { sources: 3 } }
+    - { id: popsy, tool: popsy, label: Popsy, scores: { sources: 2 } }
+    - { id: falco, tool: falco, label: Falco, scores: { sources: 3 } }
+    - { id: accountable, tool: accountable, label: Accountable, scores: { sources: 3 } }
+    - { id: dexxter, tool: dexxter, label: Dexxter, scores: { sources: 3 } }
+    - { id: clearfacts, tool: clearfacts, label: Clearfacts, scores: { sources: 3 } }
+    - { id: shopify, tool: shopify, label: Shopify, scores: { sources: 3 } }
+    - { id: woocommerce, tool: woocommerce, label: WooCommerce, scores: { sources: 2 } }
+    - { id: lightspeed, tool: lightspeed, label: Lightspeed, scores: { sources: 3 } }
+    - { id: metier, tool: metier, label: Industry software, scores: { sources: 2 } }
+    - { id: fiduciaire, tool: fiduciaire, label: Bookkeeping done by our accountant, scores: { sources: 1 } }
+    - { id: nesaispas, label: "I don't know", exclusive: true, scores: { sources: 0 } }
+
+- id: exports
+  section: Your tools
+  text: Exporting this year's invoices to Excel is…
+  type: single
+  suggest:
+    - capability: export_excel
+      option: simple
+      reason: With {outils}, exporting to Excel takes a few clicks.
+  options:
+    - { id: simple, label: 'Easy, a few clicks', scores: { sources: 3 } }
+    - { id: laborieux, label: 'Possible, but painful', scores: { sources: 1 } }
+    - { id: impossible, label: "Impossible, or I don't know", scores: { sources: 0 } }
+
+# ---------- How information flows → Centralisation, Automation ----------
+- id: recopie
+  section: How information flows
+  text: Do you re-type information from one software to another?
+  textVariants:
+    - when: { q: outils, countAtLeast: 2, exclude: [nesaispas, fiduciaire] }
+      text: Do you re-type information between {outils}?
+  hint: 'For example: an order entered at the till, then again in accounting.'
+  type: single
+  suggest:
+    - when:
+        all:
+          - { q: outils, countAtLeast: 1, exclude: [nesaispas, fiduciaire] }
+          - { not: { q: outils, countAtLeast: 2, exclude: [nesaispas, fiduciaire] } }
+      option: un_seul
+      reason: 'You ticked a single software: {outils}.'
+  options:
+    - { id: non, label: 'No, never', scores: { centralisation: 3, automatisation: 3, fiabilite: 3 } }
+    - { id: un_seul, label: We only use one software, scores: { centralisation: 2, automatisation: 2 } }
+    - { id: parfois, label: Sometimes, scores: { centralisation: 1, automatisation: 1, fiabilite: 2 } }
+    - id: souvent
+      label: 'Yes, regularly'
+      scores: { centralisation: 0, automatisation: 0, fiabilite: 1 }
+      facts: [double_saisie]
+
+- id: ventes_mois
+  section: How information flows
+  text: How long does it take to know last month's revenue?
+  type: single
+  suggest:
+    - capability: ca_temps_reel
+      option: minutes
+      reason: With {outils}, your revenue is visible in real time.
+  options:
+    - { id: minutes, label: A few minutes, scores: { centralisation: 3, pilotage: 3 } }
+    - { id: heures, label: A few hours, scores: { centralisation: 1, pilotage: 1 } }
+    - id: jours
+      label: Several days
+      scores: { centralisation: 0, pilotage: 0 }
+      facts: [chiffres_lents]
+
+# ---------- Reliability ----------
+- id: justesse
+  section: Reliable numbers
+  text: Do you trust the numbers in your reports?
+  type: single
+  options:
+    - { id: confiance, label: 'Yes, they are the reference', scores: { fiabilite: 3 } }
+    - { id: pas_toujours, label: 'Yes, after checking them', scores: { fiabilite: 1 } }
+    - { id: discussion, label: They are often questioned, scores: { fiabilite: 0 }, facts: [versions_multiples] }
+
+- id: definitions
+  section: Reliable numbers
+  text: Does everyone calculate your margin the same way?
+  type: single
+  options:
+    - { id: ecrit, label: 'Yes, the rule is written down', scores: { fiabilite: 3 } }
+    - { id: oral, label: "Yes, but nothing's written", scores: { fiabilite: 2 } }
+    - { id: chacun, label: Everyone has their own method, scores: { fiabilite: 0 }, facts: [versions_multiples] }
+    - { id: pas_suivie, label: "We don't track margin", scores: { fiabilite: 1 } }
+
+# ---------- Steering ----------
+- id: frequence
+  section: Steering the business
+  text: How often do you review your key numbers?
+  type: single
+  options:
+    - { id: semaine, label: Every week, scores: { pilotage: 3 } }
+    - { id: mois, label: Every month, scores: { pilotage: 2 } }
+    - { id: bilan, label: Mostly at year end, scores: { pilotage: 1 }, facts: [pilotage_annuel] }
+    - { id: rarement, label: Rarely, scores: { pilotage: 0 }, facts: [pilotage_annuel] }
+
+- id: tresorerie
+  section: Steering the business
+  text: Do you know your expected cash position for the next three months?
+  type: single
+  options:
+    - { id: precise, label: 'Yes, with an up-to-date forecast', scores: { pilotage: 3 } }
+    - { id: approx, label: Roughly, scores: { pilotage: 1 } }
+    - { id: non, label: 'No', scores: { pilotage: 0 }, facts: [tresorerie_aveugle] }
+
+# ---------- Automation (also drives the hidden cost: settings.yaml → hiddenCost) ----------
+- id: temps_tableaux
+  section: Automation
+  text: Each month, how long does preparing spreadsheets and reports take?
+  hint: Everyone involved, yourself included.
+  type: single
+  options:
+    - { id: heures, label: A few hours, scores: { automatisation: 3 } }
+    - { id: journee, label: About a day, scores: { automatisation: 2 } }
+    - { id: jours, label: Several days, scores: { automatisation: 1 }, facts: [reporting_manuel] }
+    - { id: semaine, label: A week or more, scores: { automatisation: 0 }, facts: [reporting_manuel] }
+
+# ---------- Team and autonomy ----------
+- id: partage
+  section: Team and autonomy
+  text: How are your numbers shared with your managers?
+  type: single
+  options:
+    - { id: en_ligne, label: Through an online dashboard, scores: { autonomie: 3 } }
+    - { id: fichiers, label: Files sent by email, scores: { autonomie: 1 } }
+    - { id: reunion, label: 'Verbally, in meetings', scores: { autonomie: 1 } }
+    - { id: pas_partages, label: "They aren't shared", scores: { autonomie: 0 } }
+
+- id: personne_excel
+  section: Team and autonomy
+  text: What if the person who runs your Excel files is away for a month?
+  type: single
+  showIf: { q: outils, has: excel }
+  options:
+    - { id: pas_de_souci, label: Someone else takes over, scores: { autonomie: 3, securite: 3 } }
+    - { id: complique, label: It would be tricky, scores: { autonomie: 1, securite: 1 }, facts: [dependance_personne] }
+    - { id: perdus, label: Everything would stall, scores: { autonomie: 0, securite: 0 }, facts: [dependance_personne] }
+
+- id: autonomie
+  section: Team and autonomy
+  text: Can your managers find the numbers they need on their own?
+  type: single
+  showIf: { not: { q: outils, has: excel } }
+  options:
+    - { id: clics, label: 'Yes, in a few clicks', scores: { autonomie: 3 } }
+    - { id: demander, label: They have to ask, scores: { autonomie: 1 }, facts: [dependance_personne] }
+    - { id: introuvable, label: "Often, they can't find them", scores: { autonomie: 0 } }
+
+# ---------- Security ----------
+- id: ordinateur
+  section: Security
+  text: 'A laptop lost or stolen tomorrow: would you lose important files?'
+  type: single
+  options:
+    - { id: sauvegarde, label: 'No, everything is backed up', scores: { securite: 3 } }
+    - { id: quelques_uns, label: Maybe a few, scores: { securite: 1 }, facts: [sauvegarde_partielle] }
+    - { id: oui, label: 'Yes, probably', scores: { securite: 0 }, facts: [sauvegarde_partielle] }
+
+- id: acces
+  section: Security
+  text: Who can open your financial and customer files?
+  type: single
+  options:
+    - { id: concernes, label: Only the people who need them, scores: { securite: 3 } }
+    - { id: equipe, label: The whole team, scores: { securite: 1 }, facts: [acces_ouverts] }
+    - { id: inconnu, label: "I'm not sure", scores: { securite: 0 }, facts: [acces_ouverts] }
+
+# ---------- Your priorities (steer the recommendations, not scored) ----------
+- id: microsoft
+  section: Your priorities
+  text: Which office suite do you use day to day?
+  type: single
+  options:
+    - { id: oui, label: 'Microsoft 365 (Outlook, Teams)' }
+    - { id: google, label: 'Google Workspace (Gmail, Drive)' }
+    - { id: eviter, label: 'Another one, or none' }
+
+- id: priorite
+  section: Your priorities
+  text: What would be your priority for the next six months?
+  type: single
+  options:
+    - { id: vue, label: See my numbers at a glance }
+    - { id: doubles, label: Stop entering data twice }
+    - { id: marge, label: Know where I really make money }
+    - { id: dependance, label: Depend less on a single person }

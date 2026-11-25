@@ -1,0 +1,28 @@
+# Privacy policy — TEMPLATE TO COMPLETE AND VALIDATE (items between [[ ]] must be filled in).
+title: Privacy policy
+updated: '[[last updated]]'
+sections:
+  - title: Who is responsible for your data?
+    paragraphs:
+      - 'Lophius SRL, [[registered address]], company number [[BCE]], represented by Antoine Stas. Contact: [[contact email]].'
+  - title: What data, and why?
+    paragraphs:
+      - Your answers are used to calculate your result. Unless you leave your details, they stay in your browser and are never sent to us.
+      - If you request the full report, we receive your details (first name, last name, email, company and, if you provide them, company number and phone), your answers and your result. They are used only to send you this report and to get back to you about the check-up.
+      - 'Legal basis: your consent, given by ticking the box. You can withdraw it at any time.'
+  - title: Where is it stored?
+    paragraphs:
+      - 'The site is hosted by Cloudflare. Your details are stored in a Cloudflare D1 database located in Western Europe. Email notifications go through Brevo (Sendinblue SAS, France). [[To check: data processing agreements (DPA) signed with Cloudflare and Brevo.]]'
+  - title: For how long?
+    paragraphs:
+      - '[[Retention period, e.g. 24 months after the last exchange]], then deletion.'
+  - title: Cookies and statistics
+    paragraphs:
+      - No tracking cookies. Your progress is kept in your own browser (local storage) so you can come back later; you can erase it with "Start over".
+      - If visit statistics are enabled, they are anonymous and cookie-free.
+  - title: The share link
+    paragraphs:
+      - 'The share link contains your answers, encoded in the address itself. It is not stored by us. Anyone who receives it can see the result: only send it to people you choose.'
+  - title: Your rights
+    paragraphs:
+      - 'You can ask to access, correct or delete your data, or withdraw your consent, by writing to [[contact email]]. You can also lodge a complaint with the Belgian Data Protection Authority (www.dataprotectionauthority.be).'

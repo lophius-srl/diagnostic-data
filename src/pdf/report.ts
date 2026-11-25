@@ -1,4 +1,5 @@
 import type { Column, Content as PdfContent, TDocumentDefinitions } from 'pdfmake/interfaces';
+import { formatDate, formatEuro, formatNumber } from '../content/format';
 import type { Content } from '../content/schema';
 import { radarSvg } from '../diagram/radar';
 import { layoutDiagram } from '../diagram/layout';
@@ -32,12 +33,6 @@ const A4_WIDTH = 595.28;
 const MARGIN = 48;
 const CONTENT_WIDTH = A4_WIDTH - 2 * MARGIN;
 
-/** Séparateur de milliers : espace insécable classique (l'espace fine U+202F n'existe pas dans la police embarquée). */
-const formatNumber = (n: number, digits = 0) =>
-  new Intl.NumberFormat('fr-BE', { maximumFractionDigits: digits }).format(n).replace(/\u202f/g, '\u00a0');
-const formatDate = (d: Date) =>
-  new Intl.DateTimeFormat('fr-BE', { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
-
 export function reportFileName(content: Content, company: string | undefined): string {
   const slug = (company ?? 'entreprise')
     .normalize('NFD')
@@ -57,7 +52,7 @@ export function buildReport(content: Content, answers: Answers, opts: ReportOpti
   const vars = {
     ...recoContext(content, answers).variables,
     company: opts.company ?? '',
-    date: formatDate(opts.date),
+    date: formatDate(content.settings.locale, opts.date),
   };
   const r = content.report;
   const tx = (key: string, extra: Record<string, string> = {}) =>
@@ -157,7 +152,12 @@ function synthesisPage(
                         { text: h.tx('costLabel'), style: ['muted', 'small'] },
                         {
                           text: [
-                            { text: `${formatNumber(cost.yearlyCost)} €`, fontSize: 24, bold: true, color: C.alert },
+                            {
+                              text: formatEuro(content.settings.locale, cost.yearlyCost),
+                              fontSize: 24,
+                              bold: true,
+                              color: C.alert,
+                            },
                             { text: ` ${h.tx('costUnit')}`, color: C.muted },
                           ],
                         },
@@ -283,16 +283,16 @@ function actionsPage(content: Content, result: DiagnosticResult, h: Helpers): Pd
       ? ([
           {
             text: [
-              { text: `${formatNumber(cost.yearlyCost)} €`, fontSize: 22, bold: true, color: C.alert },
+              { text: formatEuro(content.settings.locale, cost.yearlyCost), fontSize: 22, bold: true, color: C.alert },
               { text: ` ${h.tx('costUnit')}`, color: C.muted },
             ],
           },
           {
             text: h.tx('costDetail', {
-              hoursMonth: formatNumber(cost.hoursPerMonth, 1),
+              hoursMonth: formatNumber(content.settings.locale, cost.hoursPerMonth, 1),
               months: String(content.settings.hiddenCost.monthsPerYear),
-              rate: formatNumber(cost.hourlyRate),
-              hours: formatNumber(cost.hoursPerYear),
+              rate: formatNumber(content.settings.locale, cost.hourlyRate),
+              hours: formatNumber(content.settings.locale, cost.hoursPerYear),
             }),
             margin: [0, 2, 0, 2],
           },

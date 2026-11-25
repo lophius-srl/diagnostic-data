@@ -1,0 +1,35 @@
+# 5 levels, from basic to advanced. `min` = minimum global score (0 to 100).
+- id: artisanal
+  label: Handmade
+  min: 0
+  summary: Your numbers exist, but pulling them together takes time.
+- id: structure
+  label: Structured
+  min: 20
+  summary: The right tools are there, but they don't talk to each other yet.
+- id: pilote
+  label: Steered
+  min: 40
+  summary: You track your numbers. Preparing them still costs too much time.
+- id: automatise
+  label: Automated
+  min: 60
+  summary: Most of it updates itself. Now it needs to be shared.
+  blockedBy:
+    any:
+      - { fact: double_saisie }
+      - { fact: reporting_manuel }
+      - { fact: versions_multiples }
+  blockedReason: Some numbers are still handled by hand, or are not yet trusted.
+- id: data_driven
+  label: Data-driven
+  min: 80
+  summary: Your numbers drive your decisions. Well done.
+  blockedBy:
+    any:
+      - { fact: double_saisie }
+      - { fact: reporting_manuel }
+      - { fact: versions_multiples }
+      - { fact: dependance_personne }
+      - { fact: pilotage_annuel }
+  blockedReason: 'One weak spot holds you back: debated numbers, reliance on one person, or tracking too rarely.'

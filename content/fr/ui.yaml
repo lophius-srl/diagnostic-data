@@ -1,16 +1,23 @@
 # Textes d'interface (préparés pour une future version anglaise : content/en/ui.yaml). Courts, directs.
 brand: Lophius
+page_title: 'Diagnostic data gratuit | Lophius'
+page_description: "En 4 minutes, découvrez ce que vos données vous coûtent, et ce qu'elles pourraient vous rapporter."
 # Barre de navigation et pied de page : identiques à lophius.be (textes du site, en anglais).
 nav_about: about me
 nav_work: my work
 nav_contact: Contact Me
 nav_menu: Menu
+nav_label: Navigation principale
+lang_switch_label: Langue
 start_button: Commencer le diagnostic
 resume_button: Reprendre où j'en étais
 restart_button: Recommencer
 question_counter: 'Question {current} sur {total}'
 back_button: Précédent
 next_button: Suivant
+list_and: et
+list_other: autre
+list_others: autres
 multi_hint: Plusieurs réponses possibles
 feedback_label: Le regard de l'expert
 continue_button: Continuer
@@ -24,8 +31,7 @@ storage_unavailable: Progression non sauvegardée par votre navigateur. Gardez c
 # ---------- Résultats ----------
 results_eyebrow: Votre diagnostic data
 results_title_light: Votre niveau
-results_score: Score global
-results_score_unit: sur 100
+results_score_sr: 'Score global : {score} sur 100'
 results_levels_scale: Les 5 niveaux
 results_capped: 'Votre score vous placerait au niveau « {level} ».'
 results_dimensions: Vos 7 axes

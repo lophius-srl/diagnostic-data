@@ -1,0 +1,116 @@
+# Interface texts (English). Same keys as content/fr/ui.yaml (checked by tests). Short, direct.
+brand: Lophius
+page_title: 'Free data check-up | Lophius'
+page_description: 'In 4 minutes, find out what your data is costing your business, and what it could earn you.'
+nav_about: about me
+nav_work: my work
+nav_contact: Contact Me
+nav_menu: Menu
+nav_label: Main navigation
+lang_switch_label: Language
+start_button: Start the check-up
+resume_button: Pick up where I left off
+restart_button: Start over
+question_counter: 'Question {current} of {total}'
+back_button: Back
+next_button: Next
+list_and: and
+list_other: other
+list_others: others
+multi_hint: Several answers possible
+feedback_label: The expert's take
+continue_button: Continue
+suggestion_label: Inferred from your software
+suggestion_hint: Confirm with one click, or pick another answer.
+suggestion_badge: Likely answer
+live_profile_title: Your profile takes shape
+live_profile_hint: Updated with every answer.
+live_profile_waiting: Your radar appears after a few answers.
+storage_unavailable: Your browser is not saving progress. Keep this tab open.
+# ---------- Results ----------
+results_eyebrow: Your data check-up
+results_title_light: Your level
+results_score_sr: 'Overall score: {score} out of 100'
+results_levels_scale: The 5 levels
+results_capped: 'Your score alone would place you at level "{level}".'
+results_dimensions: Your 7 areas
+results_radar_label: '7-area radar: {values}'
+results_not_evaluated: not assessed
+results_reading: Your reading, area by area
+results_hidden_cost: Your hidden cost
+results_hidden_cost_unit: per year
+results_hidden_cost_detail: '{hours} h a year spent preparing numbers, at €{rate} an hour.'
+results_hourly_rate: Your hourly cost (€)
+results_hidden_cost_meaning: Time that could go into selling, looking after customers or deciding.
+results_architecture: Your numbers, today and tomorrow
+results_quick_wins: 3 actions to get started
+results_effort: Effort
+results_impact: Impact
+level_faible: low
+level_moyen: medium
+level_eleve: high
+results_roadmap: Your roadmap
+results_offers: To go faster
+results_offer_cta: Let's talk
+results_restart: Take the check-up again
+summary_strength: 'Strength: {dimension}.'
+summary_weakness: 'Biggest gain: {dimension}.'
+# ---------- Full report and lead capture ----------
+gate_title: Unlock your full report
+gate_intro: Detailed actions, target architecture, roadmap and PDF.
+gate_locked_target: Unlock the recommended target for your business.
+gate_locked_cta: Unlock the report
+lead_first_name: First name
+lead_last_name: Last name
+lead_email: Work email
+lead_company: Company
+lead_bce: Company number (BCE)
+lead_phone: Phone
+lead_first_name_placeholder: Your first name
+lead_last_name_placeholder: Your last name
+lead_email_placeholder: you@company.be
+lead_company_placeholder: Your company
+lead_bce_placeholder: 0123.456.749
+lead_phone_placeholder: '+32 4 …'
+lead_consent: I agree that Lophius SRL may use this information and my answers to send me this report and get back to me about it. Nothing else, never resold.
+lead_privacy_link: Privacy
+lead_submit: Get my report
+lead_sending: Sending…
+lead_error_required: Required.
+lead_error_email: Invalid email address.
+lead_error_bce: 'Invalid company number (e.g. 0123.456.749).'
+lead_error_phone: Invalid phone number.
+lead_error_consent: Your consent is required.
+lead_error_network: Sending failed. Please try again.
+lead_error_rate: Too many requests with this address. Try again in an hour.
+lead_error_summary: A few fields need fixing.
+lead_thanks_title: 'Thanks {firstName}, your report is unlocked.'
+lead_thanks_text: I'll get back to you personally. Want to talk right away?
+lead_booking: Book 30 minutes
+# ---------- Sharing ----------
+share_button: Share this result
+share_text: The link contains your answers; nothing is stored on our side.
+share_copied: Link copied.
+share_copy_label: Share link
+share_native_title: Our data check-up
+shared_banner: Check-up shared by someone else, with their own answers.
+shared_old_version: The questions have changed since this link was made; the result may differ slightly.
+shared_invalid: This share link is incomplete or damaged.
+shared_own_cta: Take my own check-up
+# ---------- PDF report ----------
+pdf_download: Download the PDF report
+pdf_working: Preparing…
+pdf_error: The report could not be generated. Please try again.
+# ---------- Footer (copy of lophius.be) ----------
+skip_link: Skip to content
+footer_name: Antoine Stas
+footer_tagline: Freelance Lead Developer specializing in building high-performance, data-driven digital solutions.
+footer_linkedin: LinkedIn
+footer_email: Email
+footer_links: Quick Links
+footer_home: Home
+footer_about: About me
+footer_work: My work
+footer_contact: Contact
+footer_privacy: Privacy
+footer_legal: '© {year} Antoine Stas'

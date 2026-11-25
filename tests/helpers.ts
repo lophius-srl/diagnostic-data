@@ -61,3 +61,8 @@ export function simulatedAnswers(count: number, seed = 42): Answers[] {
   }
   return result;
 }
+
+/** Nombre de mots d'un texte (apostrophes et tirets internes comptent dans le mot). */
+export function countWords(text: string): number {
+  return (text.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) ?? []).length;
+}
